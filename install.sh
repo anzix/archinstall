@@ -3,7 +3,9 @@
 #loadkeys ru
 #setfont cyr-sun16
 
-pacstrap /mnt base base-devel linux linux-firmware linux-headers btrfs-progs intel-ucode grub efibootmgr zsh git nano vim
+pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers btrfs-progs grub 
+efibootmgr zsh git nano vim
+
 
 
 genfstab -U /mnt >> /mnt/etc/fstab
