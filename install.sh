@@ -3,7 +3,7 @@
 #loadkeys ru
 #setfont cyr-sun16
 
-pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers btrfs-progs grub efibootmgr zsh git nano vim
+#pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers btrfs-progs grub efibootmgr zsh git nano vim
 
 
 
