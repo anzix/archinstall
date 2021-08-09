@@ -36,7 +36,7 @@ sh -c "sed -i '/\[multilib\]/,/Include/s/^[ ]*#//' /etc/pacman.conf"
 
 #Надо проверить строчку hooks
 echo -e "MODULES=(btrfs)\nHOOKS=(keymap)\nCOMPRESSION=\"cat\"" > /etc/mkinitcpio.conf
-mkinitcpio -p
+mkinitcpio -P
 
 echo root:anz | chpasswd
 
