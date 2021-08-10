@@ -35,11 +35,11 @@ pacman-key --init
 pacman-key --populate archlinux
 
 
-echo 'Color' >> /etc/pacman.conf
+#echo 'Color' >> /etc/pacman.conf
 #echo '[multilib]' >> /etc/pacman.conf
 #echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
 
-sh -c "sed -i '/\[multilib\]/,/Include/s/^[ ]*#//' /etc/pacman.conf"
+sh -c "sed -i '/\Color/,/[multilib\]/,/Include/s/^[ ]*#//' /etc/pacman.conf"
 
 
 #Надо проверить строчку hooks
@@ -67,6 +67,6 @@ grub-mkconfig -o /boot/grub/grub.cfg
 systemctl enable dhcpcd.service
 
 echo exit
-umount -R /mnt
-reboot
+echo umount -R /mnt
+echo reboot
 
