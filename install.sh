@@ -10,7 +10,7 @@
 #genfstab -U /mnt >> /mnt/etc/fstab
 
 #arch-chroot /mnt
-#ln -sf /usr/share/zoneinfo/Asia/Yekaterinburg /etc/localtime
+ln -sf /usr/share/zoneinfo/Asia/Yekaterinburg /etc/localtime
 
 
 timedatectl set-ntp true
@@ -31,25 +31,28 @@ echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf
 echo 'KEYMAP=ru' >> /etc/vconsole.conf
 echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
 
+pacman-key --init
+pacman-key --populate archlinux
 
-echo '[multilib]' >> /etc/pacman.conf
-echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
 
-#Если первая не сработает то включу вторую
-#sh -c "sed -i '/\[multilib\]/,/Include/s/^[ ]*#//' /etc/pacman.conf"
+echo 'Color' >> /etc/pacman.conf
+#echo '[multilib]' >> /etc/pacman.conf
+#echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
+
+sh -c "sed -i '/\[multilib\]/,/Include/s/^[ ]*#//' /etc/pacman.conf"
 
 
 #Надо проверить строчку hooks
-echo -e "MODULES=(btrfs)\nHOOKS=(keymap)\nCOMPRESSION=\"cat\"" > /etc/mkinitcpio.conf
+echo -e "MODULES=(btrfs)\nHOOKS=(keymap)\"" > /etc/mkinitcpio.conf
 mkinitcpio -P
 
 echo root:anz | chpasswd
 
-useradd -m -g users -G wheel -s /bin/bash anzix
+useradd -m -g users -G wheel -s /bin/zsh anzix
 
 echo "anzix:anz" | chpasswd
 
-sh -c "sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g' /etc/sudoers"
+sh -c "sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers"
 
 pacman -Syu
 pacman -S --noconfirm xorg-xinit xorg-server xorg-xrandr xdg-utils xdg-user-dirs links wget alacritty ranger pcmanfm-gtk3 gvfs file-roller unzip unrar pulseaudio alsa alsa-utils pulseaudio-alsa intel-ucode dhcpcd pavucontrol
@@ -61,12 +64,9 @@ grub-install --efi-directory=/boot/efi
 grub-mkconfig -o /boot/grub/grub.cfg
 
 
-systemctl enable dhcocd.service
+systemctl enable dhcpcd.service
 
 exit
 umount -R /mnt
 reboot
 
-#sudo pacman -Syu
-#sudo pacman -S wget --noconfirm
-#wget git.io/yay-install.sh && sh yay-install.sh --noconfirm
