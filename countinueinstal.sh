@@ -11,6 +11,7 @@ yay -S --noconfirm i3-gaps rofi xorg xorg-xinit xorg-xrandr dunst i3status picom
 
 systemctl enable ly.service
 
+echo reboot
 
 #sudo pacman -Syu
 #sudo pacman -S wget --noconfirm
