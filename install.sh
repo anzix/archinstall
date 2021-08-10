@@ -5,25 +5,24 @@
 
 #pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers btrfs-progs grub efibootmgr zsh git nano vim
 
-
-
 #genfstab -U /mnt >> /mnt/etc/fstab
 
 #arch-chroot /mnt
+
+#Время и дата
 ln -sf /usr/share/zoneinfo/Asia/Yekaterinburg /etc/localtime
-
-
-timedatectl set-ntp true
+timedatectl set-ntp true # Синхронизировать часы материнской платы
 hwclock --systohc --utc 
 
+#Имя нашего ПК
 echo "anzix" > /etc/hostname
 
-
+#Добавление строк в файл хост
 echo "127.0.0.1 localhost" >> /etc/hosts
 echo "::1       localhost" >> /etc/hosts
 echo "127.0.1.1 anzix.localdomain anzix" >> /etc/hosts
 
-
+#Локализация на Русский
 echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen 
 locale-gen
@@ -31,10 +30,11 @@ echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf
 echo 'KEYMAP=ru' >> /etc/vconsole.conf
 echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
 
+#Добавление ключей PGP
 pacman-key --init
 pacman-key --populate archlinux
 
-
+#Редактирование файла pacman (добавление multilib и цвета в pacman)
 #echo 'Color' >> /etc/pacman.conf
 #echo '[multilib]' >> /etc/pacman.conf
 #echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
@@ -42,16 +42,21 @@ pacman-key --populate archlinux
 sh -c "sed -i '/\Color/,/[multilib\]/,/Include/s/^[ ]*#//' /etc/pacman.conf"
 
 
-#Надо проверить строчку hooks
+#Добавление в mkinitcpio модуль btrfs и правка hooks
 echo -e "MODULES=(btrfs)\nHOOKS=(keymap)\"" > /etc/mkinitcpio.conf
+#Создание образа ранней загрузки
 mkinitcpio -P
 
+#Пароль для Root
 echo root:anz | chpasswd
 
+#Добавления нашего юзера
 useradd -m -g users -G wheel -s /bin/zsh anzix
 
+#Добавления пароля юзера
 echo "anzix:anz" | chpasswd
 
+#Удалить права пароля Sudo
 sh -c "sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers"
 
 pacman -Syu
