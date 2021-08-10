@@ -7,10 +7,10 @@
 
 
 
-genfstab -U /mnt >> /mnt/etc/fstab
+#genfstab -U /mnt >> /mnt/etc/fstab
 
-arch-chroot /mnt
-ln -sf /usr/share/zoneinfo/Asia/Yekaterinburg /etc/localtime
+#arch-chroot /mnt
+#ln -sf /usr/share/zoneinfo/Asia/Yekaterinburg /etc/localtime
 
 
 timedatectl set-ntp true
