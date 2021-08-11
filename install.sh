@@ -34,6 +34,10 @@ sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
 
+#Добавление ключей PGP
+pacman-key --init
+pacman-key --populate archlinux
+
 pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers btrfs-progs grub efibootmgr zsh git nano vim
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -60,10 +64,6 @@ locale-gen
 echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf
 echo 'KEYMAP=ru' >> /etc/vconsole.conf
 echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
-
-#Добавление ключей PGP
-pacman-key --init
-pacman-key --populate archlinux
 
 #Редактирование файла pacman (добавление multilib и цвета в pacman)
 #echo 'Color' >> /etc/pacman.conf
