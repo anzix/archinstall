@@ -91,11 +91,6 @@ echo "anzix:anz" | chpasswd
 #Удалить права пароля Sudo
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
 
-
-
-#pacman-key --init
-#pacman-key --populate archlinux
-
 pacman-key --init
 
 pacman-key --populate archlinux
