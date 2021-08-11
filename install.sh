@@ -3,11 +3,38 @@
 #loadkeys ru
 #setfont cyr-sun16
 
-#pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers btrfs-progs grub efibootmgr zsh git nano vim
 
-#genfstab -U /mnt >> /mnt/etc/fstab
+sgdisk --zap-all /dev/sda  # Delete tables
+printf "n\n1\n\n+100M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk /dev/sda
 
-#arch-chroot /mnt
+mkfs.fat -F32 /dev/sda1
+mkfs.ext4 /dev/sda2
+mkfs.btrfs -L Arch /dev/sda3
+
+mount /dev/sda3 /mnt
+
+cd /mnt
+
+btrfs su cr @
+btrfs su cr @home
+cd
+umount /mnt
+
+mount -o noatime,compress=zstd:2,space_cache=v2,discard=async,subvol=@ /dev/sda3 /mnt
+
+mkdir /mnt/{boot,home}
+
+mount -o noatime,compress=zstd:2,space_cache=v2,discard=async,subvol=@home /dev/sda3 /mnt/home
+
+mount /dev/sda2 /mnt/boot
+
+
+
+pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers btrfs-progs grub efibootmgr zsh git nano vim
+
+genfstab -U /mnt >> /mnt/etc/fstab
+
+arch-chroot /mnt
 
 #Время и дата
 ln -sf /usr/share/zoneinfo/Asia/Yekaterinburg /etc/localtime
