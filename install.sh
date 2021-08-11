@@ -29,7 +29,7 @@ mount -o noatime,compress=zstd:2,space_cache=v2,discard=async,subvol=@home /dev/
 
 mount /dev/sda2 /mnt/boot
 
-
+pacman -Syy
 
 pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers btrfs-progs grub efibootmgr zsh git nano vim
 
