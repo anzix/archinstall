@@ -5,10 +5,10 @@
 
 
 sgdisk --zap-all /dev/sda  # Delete tables
-#printf "n\n1\n\n+100M\nef00\nn\n\n2\n\n\n+300M\nef02\nn\n\n3\n\n\n\nw\ny\n" | gdisk /dev/sda
-printf "n\n1\n\n+100M\nef00" | gdisk /dev/sda
-printf "n\n2\n\n+300M\nef02" | gdisk /dev/sda
-printf "n\n3\n\n+14G\n8300" | gdisk /dev/sda
+printf "n\n1\n\n+100M\nef00\nn\n\n2\n\n+300M\nef02\nn\n\n3\n\n\n\nw\ny\n" | gdisk /dev/sda
+#printf "n\n1\n\n+100M\nef00\nn" | gdisk /dev/sda
+#printf "n\n2\n\n+300M\nef02\nn" | gdisk /dev/sda
+#printf "n\n3\n\n+14G\n8300\nn" | gdisk /dev/sda
 
 mkfs.fat -F32 /dev/sda1
 mkfs.ext4 /dev/sda2
