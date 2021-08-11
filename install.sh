@@ -30,13 +30,14 @@ mount -o noatime,compress=zstd:2,space_cache=v2,discard=async,subvol=@home /dev/
 mount /dev/sda2 /mnt/boot
 
 
+
 pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers btrfs-progs grub efibootmgr zsh git nano vim
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt
 
-sh -c "sed -i '/\/[multilib\]/,/Include/s/^[ ]*#//' /etc/pacman.conf"
+#sh -c "sed -i '/\/[multilib\]/,/Include/s/^[ ]*#//' /etc/pacman.conf"
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
