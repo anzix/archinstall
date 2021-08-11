@@ -43,10 +43,10 @@ pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers btrfs-p
 genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt /bin/bash << EOF
-
-
 #Добавление ключей PGP
+
 pacman-key --init
+
 pacman-key --populate archlinux
 
 
@@ -64,7 +64,7 @@ echo "::1       localhost" >> /etc/hosts
 echo "127.0.1.1 anzix.localdomain anzix" >> /etc/hosts
 
 #Локализация на Русский
-sed -i "s/#en_US/en_US/g; s/#ru_RU/ru_RU/g" /etc/locale.gen
+sed -i "s/#en_US.UTF-8 UTF-8/g; s/#ru_RU.UTF-8 UTF-8/g" /etc/locale.gen
 #echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 #echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen 
 locale-gen
@@ -91,6 +91,13 @@ echo "anzix:anz" | chpasswd
 #Удалить права пароля Sudo
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
 
+
+
+#pacman-key --init
+#pacman-key --populate archlinux
+
+
+
 pacman -Syu
 pacman -S --noconfirm xorg-xinit xorg-server xorg-xrandr xdg-utils xdg-user-dirs links wget alacritty ranger pcmanfm-gtk3 gvfs file-roller unzip unrar pulseaudio alsa alsa-utils pulseaudio-alsa intel-ucode dhcpcd pavucontrol
 
@@ -103,7 +110,6 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 systemctl enable dhcpcd.service
 
-echo exit
-echo umount -R /mnt
-echo reboot
+#echo exit
+#echo umount -R /mnt
 
