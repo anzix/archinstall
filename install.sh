@@ -34,7 +34,7 @@ sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
 sed -i "/\/[multilib\]/,/Include/s/^[ ]*#//" /etc/pacman.conf
 
-reflector --verbose -c ru,by,ua,de,pl -p https,http -l 10 --sort rate --save /etc/pacman.d/mirrorlist
+#reflector --verbose -c ru,by,ua,de,pl -p https,http -l 10 --sort rate --save /etc/pacman.d/mirrorlist
 
 pacman -Syy
 
@@ -96,7 +96,9 @@ sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /et
 #pacman-key --init
 #pacman-key --populate archlinux
 
+pacman-key --init
 
+pacman-key --populate archlinux
 
 pacman -Syu
 pacman -S --noconfirm xorg-xinit xorg-server xorg-xrandr xdg-utils xdg-user-dirs links wget alacritty ranger pcmanfm-gtk3 gvfs file-roller unzip unrar pulseaudio alsa alsa-utils pulseaudio-alsa intel-ucode dhcpcd pavucontrol
