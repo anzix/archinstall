@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#loadkeys ru
-#setfont cyr-sun16
+loadkeys ru
+setfont cyr-sun16
 
 
 sgdisk --zap-all /dev/sda  # Delete tables
