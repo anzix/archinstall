@@ -1,7 +1,11 @@
+#!/bin/bash
+
 #sh -c "sed -i '/\/[multilib\]/,/Include/s/^[ ]*#//' /etc/pacman.conf"
+
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
+sed -i "/\/[multilib\]/,/Include/s/^[ ]*#//" /etc/pacman.conf
 
 #Добавление ключей PGP
 pacman-key --init
@@ -38,7 +42,7 @@ echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
 #Добавление в mkinitcpio модуль btrfs и правка hooks
 echo -e "MODULES=(btrfs)\nHOOKS=(keymap)\"" > /etc/mkinitcpio.conf
 #Создание образа ранней загрузки
-mkinitcpio -P
+mkinitcpio -P linux-zen
 
 #Пароль для Root
 echo root:anz | chpasswd
