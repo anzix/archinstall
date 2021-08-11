@@ -32,7 +32,8 @@ mount /dev/sda2 /mnt/boot
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
-sed -i "/\/[multilib\]/,/Include/s/^[ ]*#//" /etc/pacman.conf
+sed -i "s/#[multilib]/[multilib]/g; s/#Include/Include" /etc/pacman.conf
+#sed -i "/[multilib\]/,/Include/s/^[ ]#//" /etc/pacman.conf
 
 #reflector --verbose -c ru,by,ua,de,pl -p https,http -l 10 --sort rate --save /etc/pacman.d/mirrorlist
 
@@ -64,7 +65,7 @@ echo "::1       localhost" >> /etc/hosts
 echo "127.0.1.1 anzix.localdomain anzix" >> /etc/hosts
 
 #Локализация на Русский
-sed -i "s/#en_US.UTF-8 UTF-8/g; s/#ru_RU.UTF-8 UTF-8/g" /etc/locale.gen
+sed -i "s/#en_US/en_US/g; s/#ru_RU/ru_RU/g" /etc/locale.gen
 #echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 #echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen 
 locale-gen
