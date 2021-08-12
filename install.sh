@@ -35,11 +35,17 @@ mkdir /mnt/{boot,home}
 mount -o noatime,compress=zstd:2,space_cache=v2,discard=async,subvol=@home /dev/sda3 /mnt/home
 mount /dev/sda2 /mnt/boot
 
+loadkeys ru
+setfont cyr-sun16
+
 #Правка конфига pacman
+
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
 sed -i "94,95s/^#//" /etc/pacman.conf # Раскоментирование строчки (В данном случае они именуются цифрами) multilib для запуска 32bit приложений
+
+#
 #sed -i "s/#[multilib]/[multilib]/g; s/#Include/Include/g" /etc/pacman.conf
 #sed -i "/[multilib\]/,/Include/s/^[ ]#//" /etc/pacman.conf
 
