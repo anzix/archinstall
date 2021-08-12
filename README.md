@@ -1,4 +1,4 @@
-# BashScriptForArchLinux
+# Bash script для ArchLinux
 UEFI + BTRFS
 Мой скрипт установки Arch Linux (Пока только проверял на виртуалке Vmware)
 
