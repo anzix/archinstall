@@ -122,6 +122,12 @@ echo "anzix:anz" | chpasswd
 #Удалить права пароля Sudo
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
 
+sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
+sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
+sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 7/g" /etc/pacman.conf  # Parallel downloads
+sed -i "94,95s/^#//" /etc/pacman.conf # Раскоментирование строчки (В данном случае они именуются цифрами) multilib для запуска 32bit приложений
+
+
 #pacman-key --init
 
 #pacman-key --populate archlinux
@@ -138,6 +144,6 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 systemctl enable dhcpcd.service
 
-#echo exit
-#echo umount -R /mnt
+echo exit
+echo umount -R /mnt
 
