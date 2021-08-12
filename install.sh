@@ -1,9 +1,10 @@
 #!/bin/bash
 
-#loadkeys ru
-#setfont cyr-sun16
+loadkeys ru
+setfont cyr-sun16
 
-#Схема разметки диска в gpt
+
+#Схема разметки диска в gpt используя gdisk
 #sda1 - efi 100m
 #sda2 - boot 300m
 #sda3 - btrfs - остальное
@@ -26,7 +27,7 @@ btrfs su cr @home
 cd
 umount /mnt
 
-#Доп настройки для оптимизации дисков (
+#Доп настройки для оптимизации дисков
 mount -o noatime,compress=zstd:2,space_cache=v2,discard=async,subvol=@ /dev/sda3 /mnt
 
 mkdir /mnt/{boot,home}
@@ -39,8 +40,10 @@ mount /dev/sda2 /mnt/boot
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
-sed -i "s/#[multilib]/[multilib]/g; s/#Include/Include/g" /etc/pacman.conf
+sed -i "93,94s/^#//" /etc/pacman.conf # Раскоментирование строчки (В данном случае они именуются цифрами) multilib для запуска 32bit приложений
+#sed -i "s/#[multilib]/[multilib]/g; s/#Include/Include/g" /etc/pacman.conf
 #sed -i "/[multilib\]/,/Include/s/^[ ]#//" /etc/pacman.conf
+
 
 #reflector --verbose -c ru,by,ua,de,pl -p https,http -l 10 --sort rate --save /etc/pacman.d/mirrorlist
 
@@ -75,7 +78,10 @@ echo "::1       localhost" >> /etc/hosts
 echo "127.0.1.1 anzix.localdomain anzix" >> /etc/hosts
 
 #Локализация на Русский
-sed -i "s/#en_US/en_US/g; s/#ru_RU/ru_RU/g" /etc/locale.gen
+sed -i "/en_US.UTF-8/s/^#//g" /etc/locale.gen
+sed -i "/ru_RU.UTF-8/s/^#//g" /etc/locale.gen
+#sed -i "/177;403s/^#//" /etc/locale.gen
+#sed -i "s/#en_US/en_US/g; s/#ru_RU/ru_RU/g" /etc/locale.gen
 #echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 #echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen 
 locale-gen
@@ -85,7 +91,8 @@ echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
 
 #Добавление в mkinitcpio модуль btrfs и правка hooks
 #echo -e "MODULES=(btrfs)\nHOOKS=(keymap)\"" > /etc/mkinitcpio.conf
-sed -i "s/^HOOKS.*/HOOKS=(keymap)/" /etc/mkinitcpio.conf
+sed -i "s/^HOOKS.*/HOOKS=(base udev autodetect modconf block filesystem keyboard keymap)/g" /etc/mkinitcpio.conf
+#sed -i "s/^HOOKS.*/HOOKS=(keymap)/" /etc/mkinitcpio.conf
 sed -i 's/^MODULES.*/MODULES=(btrfs)/' /etc/mkinitcpio.conf
 #Создание образа ранней загрузки
 mkinitcpio -P
@@ -102,9 +109,9 @@ echo "anzix:anz" | chpasswd
 #Удалить права пароля Sudo
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
 
-pacman-key --init
+#pacman-key --init
 
-pacman-key --populate archlinux
+#pacman-key --populate archlinux
 
 pacman -Syu
 pacman -S --noconfirm xorg-xinit xorg-server xorg-xrandr xdg-utils xdg-user-dirs links wget alacritty ranger pcmanfm-gtk3 gvfs file-roller unzip unrar pulseaudio alsa alsa-utils pulseaudio-alsa intel-ucode dhcpcd pavucontrol
