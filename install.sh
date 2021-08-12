@@ -3,6 +3,10 @@
 #loadkeys ru
 #setfont cyr-sun16
 
+#Схема разметки диска в gpt
+#sda1 - efi 100m
+#sda2 - boot 300m
+#sda3 - btrfs - остальное
 
 sgdisk --zap-all /dev/sda  # Delete tables
 printf "n\n1\n\n+100M\nef00\nn\n\n2\n\n+300M\nef02\nn\n\n3\n\n\n\nw\ny\n" | gdisk /dev/sda
@@ -16,11 +20,13 @@ mount /dev/sda3 /mnt
 
 cd /mnt
 
+#Создание subvolume'мов
 btrfs su cr @
 btrfs su cr @home
 cd
 umount /mnt
 
+#Доп настройки для оптимизации дисков (
 mount -o noatime,compress=zstd:2,space_cache=v2,discard=async,subvol=@ /dev/sda3 /mnt
 
 mkdir /mnt/{boot,home}
@@ -29,6 +35,7 @@ mount -o noatime,compress=zstd:2,space_cache=v2,discard=async,subvol=@home /dev/
 
 mount /dev/sda2 /mnt/boot
 
+#Правка конфига pacman
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
@@ -37,17 +44,20 @@ sed -i "s/#[multilib]/[multilib]/g; s/#Include/Include/g" /etc/pacman.conf
 
 #reflector --verbose -c ru,by,ua,de,pl -p https,http -l 10 --sort rate --save /etc/pacman.d/mirrorlist
 
+#Обновление пакетов
 pacman -Syy
 
+#Установка пакетов
 pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers btrfs-progs grub efibootmgr zsh git nano vim
 
+#Созлание genfstab
 genfstab -U /mnt >> /mnt/etc/fstab
 
+#Вход в root
 arch-chroot /mnt /bin/bash << EOF
+
 #Добавление ключей PGP
-
 pacman-key --init
-
 pacman-key --populate archlinux
 
 
