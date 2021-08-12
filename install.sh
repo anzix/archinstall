@@ -1,21 +1,10 @@
 #!/bin/bash
 
 
-loadkeys ru
-setfont cyr-sun16
+#loadkeys ru
+#setfont cyr-sun16
 
-#Локализация на Русский
-sed -i "/en_US.UTF-8/s/^#//g" /etc/locale.gen
 
-sed -i "/ru_RU.UTF-8/s/^#//g" /etc/locale.gen
-
-locale-gen
-
-echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf
-
-echo 'KEYMAP=ru' >> /etc/vconsole.conf
-
-echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
 
 #Схема разметки диска в gpt используя gdisk
 #sda1 - efi 100m
@@ -76,6 +65,19 @@ arch-chroot /mnt /bin/bash << EOF
 pacman-key --init
 pacman-key --populate archlinux
 
+#Локализация на Русский
+#sed -i "/en_US.UTF-8/s/^#//g" /etc/locale.gen
+sed -i "/^#\en_SG ISO/{N;s/\n#/\n/}" /etc/locale.gen
+
+sed -i "/ru_RU.UTF-8/s/^#//g" /etc/locale.gen
+
+locale-gen
+
+echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf
+
+echo 'KEYMAP=ru' >> /etc/vconsole.conf
+
+echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
 
 #Время и дата
 ln -sf /usr/share/zoneinfo/Asia/Yekaterinburg /etc/localtime
