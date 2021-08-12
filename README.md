@@ -1,4 +1,4 @@
-# Anzix
+# BashScriptForArchLinux
 Мой скрипт установки Arch Linux
 
 
