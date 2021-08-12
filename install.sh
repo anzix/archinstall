@@ -98,7 +98,7 @@ echo "127.0.1.1 anzix.localdomain anzix" >> /etc/hosts
 
 #Добавление в mkinitcpio модуль btrfs и правка hooks
 #echo -e "MODULES=(btrfs)\nHOOKS=(keymap)\"" > /etc/mkinitcpio.conf
-sed -i "s/^HOOKS.*/HOOKS=(base udev autodetect modconf block filesystem keyboard keymap)/g" /etc/mkinitcpio.conf
+sed -i "s/^HOOKS.*/HOOKS=(base udev autodetect modconf block filesystems keyboard keymap)/g" /etc/mkinitcpio.conf
 #sed -i "s/^HOOKS.*/HOOKS=(keymap)/" /etc/mkinitcpio.conf
 sed -i 's/^MODULES.*/MODULES=(btrfs)/' /etc/mkinitcpio.conf
 #Создание образа ранней загрузки
