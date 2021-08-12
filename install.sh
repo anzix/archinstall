@@ -1,8 +1,21 @@
 #!/bin/bash
 
+
 loadkeys ru
 setfont cyr-sun16
 
+#Локализация на Русский
+sed -i "/en_US.UTF-8/s/^#//g" /etc/locale.gen
+
+sed -i "/ru_RU.UTF-8/s/^#//g" /etc/locale.gen
+
+locale-gen
+
+echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf
+
+echo 'KEYMAP=ru' >> /etc/vconsole.conf
+
+echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
 
 #Схема разметки диска в gpt используя gdisk
 #sda1 - efi 100m
@@ -77,17 +90,12 @@ echo "127.0.0.1 localhost" >> /etc/hosts
 echo "::1       localhost" >> /etc/hosts
 echo "127.0.1.1 anzix.localdomain anzix" >> /etc/hosts
 
-#Локализация на Русский
-sed -i "/en_US.UTF-8/s/^#//g" /etc/locale.gen
-sed -i "/ru_RU.UTF-8/s/^#//g" /etc/locale.gen
+
 #sed -i "/177;403s/^#//" /etc/locale.gen
 #sed -i "s/#en_US/en_US/g; s/#ru_RU/ru_RU/g" /etc/locale.gen
 #echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 #echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen 
-locale-gen
-echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf
-echo 'KEYMAP=ru' >> /etc/vconsole.conf
-echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
+
 
 #Добавление в mkinitcpio модуль btrfs и правка hooks
 #echo -e "MODULES=(btrfs)\nHOOKS=(keymap)\"" > /etc/mkinitcpio.conf
