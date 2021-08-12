@@ -32,7 +32,7 @@ mount /dev/sda2 /mnt/boot
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
-sed -i "s/#[multilib]/[multilib]/g; s/#Include/Include" /etc/pacman.conf
+sed -i "s/#[multilib]/[multilib]/g; s/#Include/Include/g" /etc/pacman.conf
 #sed -i "/[multilib\]/,/Include/s/^[ ]#//" /etc/pacman.conf
 
 #reflector --verbose -c ru,by,ua,de,pl -p https,http -l 10 --sort rate --save /etc/pacman.d/mirrorlist
@@ -75,7 +75,7 @@ echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
 
 #Добавление в mkinitcpio модуль btrfs и правка hooks
 #echo -e "MODULES=(btrfs)\nHOOKS=(keymap)\"" > /etc/mkinitcpio.conf
-sed -i "s/^HOOKS.*/HOOKS=(keymap)/g" /etc/mkinitcpio.conf
+sed -i "s/^HOOKS.*/HOOKS=(keymap)/" /etc/mkinitcpio.conf
 sed -i 's/^MODULES.*/MODULES=(btrfs)/' /etc/mkinitcpio.conf
 #Создание образа ранней загрузки
 mkinitcpio -P
