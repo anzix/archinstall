@@ -3,6 +3,9 @@ UEFI + BTRFS + Subvolume + Zstd
 ----------------------------------
 Мой скрипт установки Arch Linux (Пока только проверял на виртуалке Vmware player 16)
 
+Если же хотите ручной установки от меня то вот ссылка на мой мануал в гугл документы
+https://docs.google.com/document/d/1c9yqKSz5LkS1Gd422w4TMdf-_76PHySzku4PsHbxZok/edit?usp=sharing
+
 Данный скрипт подразумевает установку тайлингового оконного менеджера i3
 
 
