@@ -9,7 +9,7 @@ https://docs.google.com/document/d/1c9yqKSz5LkS1Gd422w4TMdf-_76PHySzku4PsHbxZok/
 Данный скрипт подразумевает установку тайлингового оконного менеджера i3
 
 
-Пишем эту строчку в начальный экран установки Arch Linux
+Вводим эту строчку в начальный экран установки Arch Linux
 --------------------------------------------------------
 ````
 curl -O https://raw.githubusercontent.com/anzix/scriptinstall/main/install.sh
