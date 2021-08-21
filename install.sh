@@ -1,11 +1,5 @@
 #!/bin/bash
 
-
-#loadkeys ru
-#setfont cyr-sun16
-
-
-
 #Схема разметки диска в gpt используя gdisk
 #sda1 - efi 100m
 #sda2 - boot 300m
