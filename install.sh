@@ -144,6 +144,6 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 systemctl enable dhcpcd.service
 
-echo exit
+EOF
 echo umount -R /mnt
 
