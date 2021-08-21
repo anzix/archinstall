@@ -49,8 +49,8 @@ sed -i "94,95s/^#//" /etc/pacman.conf # Раскоментирование ст�
 #sed -i "s/#[multilib]/[multilib]/g; s/#Include/Include/g" /etc/pacman.conf
 #sed -i "/[multilib\]/,/Include/s/^[ ]#//" /etc/pacman.conf
 
-
-#reflector --verbose -c ru,by,ua,de,pl -p https,http -l 10 --sort rate --save /etc/pacman.d/mirrorlist
+pacman -Sy --noconfirm rsync
+reflector --verbose -c ru,by,ua,de,pl -p https,http -l 12 --sort rate --save /etc/pacman.d/mirrorlist
 
 #Обновление пакетов
 pacman -Syy
