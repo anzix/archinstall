@@ -65,7 +65,8 @@ sed -i "/ru_RU.UTF-8/s/^#//g" /etc/locale.gen
 
 locale-gen
 
-echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf
+echo 'LANG=ru_RU.UTF-8' > /etc/locale.conf
+echo 'LC_COLLATE=C' >> /etc/locale.conf
 
 echo 'KEYMAP=ru' >> /etc/vconsole.conf
 
