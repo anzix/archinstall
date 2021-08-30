@@ -8,8 +8,16 @@ https://docs.google.com/document/d/1c9yqKSz5LkS1Gd422w4TMdf-_76PHySzku4PsHbxZok/
 
 Данный скрипт подразумевает установку тайлингового оконного менеджера i3
 
+Для начала установим рус шрифт в начальный экран установки Arch Linux 
 
-Вводим эту строчку в начальный экран установки Arch Linux
+````
+loadkeys ru
+````
+````
+setfont cyr-syn16
+````
+Далее вводим эту строчку для скачивания скрипта
+
 --------------------------------------------------------
 ````
 curl -O https://gitlab.com/anzix/scriptinstall/-/raw/main/install.sh
