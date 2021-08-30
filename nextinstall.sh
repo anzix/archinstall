@@ -14,12 +14,14 @@ LC_ALL=C xdg-user-dirs-update --force
 rm -r Видео Документы Загрузки Изображения Музыка Общедоступные Рабочий\ стол/ Шаблоны
 
 # Установка i3
-yay -S --noconfirm i3-gaps rofi xorg xorg-xinit xorg-xrandr dunst i3status picom autotiling nitrogen timeshift timeshift-autosnap lxappearance clipit flameshot firefox polkit-gnome man-pages-ru kotatogram-desktop-bin bleachbit ttf-font-awesome ttf-opensans ttf-kochi-substitute otf-ipafont ttf-droid ttf-liberation ttf-dejavu ttf-ubuntu-font-family nerd-fonts-ubuntu-mono powerline powerline-fonts ly-git exfat-utils ntfs-3g --noconfirm
+yay -S --noconfirm i3-gaps rofi xorg xorg-xinit xorg-xrandr dunst i3status polybar picom autotiling nitrogen timeshift timeshift-autosnap lxappearance clipit flameshot ungoogled-chromium polkit-gnome man-pages-ru kotatogram-desktop-bin bleachbit ttf-font-awesome ttf-opensans ttf-kochi-substitute otf-ipafont ttf-droid ttf-liberation ttf-dejavu ttf-ubuntu-font-family nerd-fonts-ubuntu-mono powerline powerline-fonts ly-git materia-gtk-theme capitaine-cursors paper-icon-theme-git exfat-utils ntfs-3g --noconfirm
 
-#noto-fonts 
+#noto-fonts
 
 # Для VmWare (Закоментируйте если не надо)
 yay -S --noconfirm open-vm-tools xf86-video-vmware xf86-input-vmmouse xf86-video-vesa --noconfirm
+
+
 
 # Русская раскладка 
 sudo localectl set-x11-keymap --no-convert us,ru pc105 "" grp:alt_shift_toggle
