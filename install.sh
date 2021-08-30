@@ -112,7 +112,7 @@ sed -i "94,95s/^#//" /etc/pacman.conf # Раскоментирование ст�
 
 # Обноваление и установка необходимых пакетов (для установки i3 окружения)
 pacman -Syu
-pacman -S --noconfirm xorg-xinit xorg-server xorg-xrandr xdg-utils xdg-user-dirs links wget alacritty ranger pcmanfm-gtk3 gvfs file-roller unzip unrar pulseaudio alsa alsa-utils pulseaudio-alsa intel-ucode dhcpcd pavucontrol
+pacman -S --noconfirm xorg-xinit xorg-server xorg-xrandr xdg-utils xdg-user-dirs links wget kitty ranger pcmanfm-gtk3 gvfs file-roller unzip unrar pulseaudio alsa alsa-utils pulseaudio-alsa intel-ucode dhcpcd pavucontrol
 
 # Установка Grub
 mkdir /boot/efi
