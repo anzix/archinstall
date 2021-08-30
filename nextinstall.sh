@@ -29,6 +29,18 @@ sudo systemctl enable vmtoolsd
 sudo systemctl start vmtoolsd
 sudo systemctl enable ly.service
 
+touch .zprofile
+tee -a .zprofile << EOF
+if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+ exec startx
+fi
+EOF
+
+cp /etc/X11/xinit/xinitrc /home/anzix/.xinitrc
+chmod +x /home/anzix/.xinitrc
+sed -i 52,55d /home/anzix/.xinitrc
+echo "exec i3 " >> /home/anzix/.xinitrc
+
 # AutoStarX (Надо затестить)
 #cp /etc/X11/xinit/xinitrc /home/$username/.xinitrc
 #chown $username:users /home/$username/.xinitrc
