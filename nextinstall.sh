@@ -4,10 +4,12 @@
 git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si --noconfirm
+cd
 rm -rf yay 
 
 # Создания английских папок
 LC_ALL=C xdg-user-dirs-update --force
+
 # Удаляем рус папки
 rm -r Видео Документы Загрузки Изображения Музыка Общедоступные Рабочий\ стол/ Шаблоны
 
@@ -23,9 +25,9 @@ yay -S --noconfirm open-vm-tools xf86-video-vmware xf86-input-vmmouse xf86-video
 sudo localectl set-x11-keymap --no-convert us,ru pc105 "" grp:alt_shift_toggle
 
 # Включение дм и другие штуки
-sudo systemctl enable vmtoolsd --no-ask-password
-sudo systemctl start vmtoolsd --no-ask-password
-sudo systemctl enable ly.service --no-ask-password
+sudo systemctl enable vmtoolsd
+sudo systemctl start vmtoolsd
+sudo systemctl enable ly.service
 
 # AutoStarX (Надо затестить)
 #cp /etc/X11/xinit/xinitrc /home/$username/.xinitrc
