@@ -20,12 +20,12 @@ yay -S --noconfirm i3-gaps rofi xorg xorg-xinit xorg-xrandr dunst i3status picom
 yay -S --noconfirm open-vm-tools xf86-video-vmware xf86-input-vmmouse xf86-video-vesa --noconfirm
 
 # Русская раскладка 
-sudo --no-ask-password localectl set-x11-keymap --no-convert us,ru pc105 "" grp:alt_shift_toggle
+sudo localectl set-x11-keymap --no-convert us,ru pc105 "" grp:alt_shift_toggle
 
 # Включение дм и другие штуки
-sudo --no-ask-password systemctl enable vmtoolsd
-sudo --no-ask-password systemctl start vmtoolsd
-sudo --no-ask-password systemctl enable ly.service
+sudo systemctl enable vmtoolsd --no-ask-password
+sudo systemctl start vmtoolsd --no-ask-password
+sudo systemctl enable ly.service --no-ask-password
 
 # AutoStarX (Надо затестить)
 #cp /etc/X11/xinit/xinitrc /home/$username/.xinitrc
