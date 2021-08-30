@@ -29,8 +29,9 @@ sudo systemctl enable vmtoolsd
 sudo systemctl start vmtoolsd
 sudo systemctl enable ly.service
 
-touch .zprofile
-echo ' [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx ' >> /etc/.zrofile
+# AutoStartX DM (не запрашивает логин и пароль)
+sudo touch .zprofile
+sudo echo ' [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx ' >> /etc/.zrofile
 
 cp /etc/X11/xinit/xinitrc /home/anzix/.xinitrc
 chmod +x /home/anzix/.xinitrc
