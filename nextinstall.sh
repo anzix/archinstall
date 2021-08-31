@@ -14,7 +14,7 @@ LC_ALL=C xdg-user-dirs-update --force
 rm -r Видео Документы Загрузки Изображения Музыка Общедоступные Рабочий\ стол/ Шаблоны
 
 # Установка i3
-yay -S --noconfirm stow i3-gaps rofi xorg xorg-xinit xorg-xrandr dunst polybar picom autotiling nitrogen timeshift timeshift-autosnap lxappearance clipit flameshot ungoogled-chromium polkit-gnome man-pages-ru kotatogram-desktop-bin qbittorrent youtube-dl mpv spofity songrec bleachbit betterlockscreen ttf-font-awesome ttf-opensans ttf-sazanami ttf-droid ttf-liberation ttf-dejavu nerd-fonts-hack powerline powerline-fonts lsd materia-gtk-theme capitaine-cursors paper-icon-theme-git python-pillow exfat-utils ntfs-3g --noconfirm
+yay -Syyu --noconfirm stow i3-gaps rofi xorg xorg-xinit xorg-xrandr dunst polybar picom autotiling nitrogen timeshift timeshift-autosnap lxappearance clipit flameshot ungoogled-chromium polkit-gnome man-pages-ru kotatogram-desktop-bin qbittorrent youtube-dl mpv spofity songrec bleachbit betterlockscreen ttf-font-awesome ttf-opensans ttf-sazanami ttf-droid ttf-liberation ttf-dejavu nerd-fonts-hack powerline powerline-fonts lsd materia-gtk-theme capitaine-cursors paper-icon-theme-git python-pillow exfat-utils ntfs-3g --noconfirm
 
 #ttf-kochi-substitute otf-ipafont
 #ly-git
