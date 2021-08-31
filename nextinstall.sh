@@ -14,7 +14,7 @@ LC_ALL=C xdg-user-dirs-update --force
 rm -r Видео Документы Загрузки Изображения Музыка Общедоступные Рабочий\ стол/ Шаблоны
 
 # Установка i3
-yay -Syyu --noconfirm stow i3-gaps rofi xorg xorg-xinit xorg-xrandr dunst polybar picom autotiling nitrogen timeshift timeshift-autosnap lxappearance clipit flameshot ungoogled-chromium polkit-gnome man-pages-ru kotatogram-desktop-bin qbittorrent youtube-dl mpv spofity songrec bleachbit betterlockscreen ttf-font-awesome ttf-opensans ttf-sazanami ttf-droid ttf-liberation ttf-dejavu nerd-fonts-hack powerline powerline-fonts lsd materia-gtk-theme capitaine-cursors paper-icon-theme-git python-pillow exfat-utils ntfs-3g --noconfirm
+yay -Syyu --noconfirm stow i3-gaps rofi xorg xorg-xinit xorg-xrandr dunst polybar picom autotiling nitrogen htop neofetch timeshift timeshift-autosnap lxappearance clipit flameshot librewolf polkit-gnome man-pages-ru kotatogram-desktop-bin qbittorrent youtube-dl mpv spotify songrec bleachbit betterlockscreen ttf-font-awesome ttf-opensans ttf-sazanami ttf-droid ttf-liberation ttf-dejavu nerd-fonts-hack powerline powerline-fonts lsd materia-gtk-theme capitaine-cursors paper-icon-theme-git python-pillow exfat-utils ntfs-3g --noconfirm
 
 #ttf-kochi-substitute otf-ipafont
 #ly-git
@@ -37,7 +37,7 @@ sudo systemctl enable ly.service
 
 # AutoStartX DM (не запрашивает логин и пароль)
 sudo touch .zprofile
-sudo echo ' [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx ' >> /etc/.zrofile
+sudo bash -c 'echo "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx" >> /etc/.zrofile'
 
 cp /etc/X11/xinit/xinitrc /home/anzix/.xinitrc
 chmod +x /home/anzix/.xinitrc
@@ -46,9 +46,9 @@ echo "exec i3 " >> /home/anzix/.xinitrc
 
 sudo mkdir -p /etc/systemd/system/getty@tty1.service.d/
 sudo touch /etc/systemd/system/getty@tty1.service.d/override.conf
-sudo echo " [Service] " > /etc/systemd/system/getty@tty1.service.d/override.conf
-sudo echo " ExecStart=" >> /etc/systemd/system/getty@tty1.service.d/override.conf
-sudo echo   ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --autologin anzix --noclear %I $TERM >> /etc/systemd/system/getty@tty1.service.d/override.conf
+sudo bash -c 'echo  "[Service]" > /etc/systemd/system/getty@tty1.service.d/override.conf'
+sudo bash -c 'echo "ExecStart=" >> /etc/systemd/system/getty@tty1.service.d/override.conf'
+sudo bash -c 'echo "ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --autologin anzix --noclear %I $TERM" >> /etc/systemd/system/getty@tty1.service.d/override.conf'
 
 # Установка oh-my-zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
