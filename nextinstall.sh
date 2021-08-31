@@ -42,11 +42,17 @@ echo "exec i3 " >> /home/anzix/.xinitrc
 
 sudo mkdir -p /etc/systemd/system/getty@tty1.service.d/
 sudo touch /etc/systemd/system/getty@tty1.service.d/override.conf
-sudo tee -a /etc/systemd/system/getty@tty1.service.d/override.conf << END
-[Service]
-ExecStart=
-ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --autologin anzix --noclear %I $TERM
-END
+sudo echo " [Service] " > /etc/systemd/system/getty@tty1.service.d/override.conf
+sudo echo " ExecStart=" >> /etc/systemd/system/getty@tty1.service.d/override.conf
+sudo echo   ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --autologin anzix --noclear %I $TERM >> /etc/systemd/system/getty@tty1.service.d/override.conf
+
+#sudo tee -a /etc/systemd/system/getty@tty1.service.d/override.conf << END
+#[Service]
+#ExecStart=
+#ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --autologin anzix --noclear %I $TERM
+#END
+
+
 
 # AutoStarX (Надо затестить)
 #cp /etc/X11/xinit/xinitrc /home/$username/.xinitrc
