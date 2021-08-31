@@ -14,7 +14,7 @@ LC_ALL=C xdg-user-dirs-update --force
 rm -r Видео Документы Загрузки Изображения Музыка Общедоступные Рабочий\ стол/ Шаблоны
 
 # Установка i3
-yay -S --noconfirm i3-gaps rofi xorg xorg-xinit xorg-xrandr dunst polybar picom autotiling nitrogen timeshift timeshift-autosnap lxappearance clipit flameshot ungoogled-chromium polkit-gnome man-pages-ru kotatogram-desktop-bin qbittorrent youtube-dl mpv spofity songrec bleachbit betterlockscreen ttf-font-awesome ttf-opensans ttf-sazanami ttf-droid ttf-liberation ttf-dejavu powerline powerline-fonts materia-gtk-theme capitaine-cursors paper-icon-theme-git exfat-utils ntfs-3g --noconfirm
+yay -S --noconfirm stow i3-gaps rofi xorg xorg-xinit xorg-xrandr dunst polybar picom autotiling nitrogen timeshift timeshift-autosnap lxappearance clipit flameshot ungoogled-chromium polkit-gnome man-pages-ru kotatogram-desktop-bin qbittorrent youtube-dl mpv spofity songrec bleachbit betterlockscreen ttf-font-awesome ttf-opensans ttf-sazanami ttf-droid ttf-liberation ttf-dejavu nerd-fonts-hack powerline powerline-fonts lsd materia-gtk-theme capitaine-cursors paper-icon-theme-git python-pillow exfat-utils ntfs-3g --noconfirm
 
 #ttf-kochi-substitute otf-ipafont
 #ly-git
@@ -49,6 +49,23 @@ sudo touch /etc/systemd/system/getty@tty1.service.d/override.conf
 sudo echo " [Service] " > /etc/systemd/system/getty@tty1.service.d/override.conf
 sudo echo " ExecStart=" >> /etc/systemd/system/getty@tty1.service.d/override.conf
 sudo echo   ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --autologin anzix --noclear %I $TERM >> /etc/systemd/system/getty@tty1.service.d/override.conf
+
+# Установка oh-my-zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# Установка темы powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
+# Plugin Autosuggestions (Очень сильно экономит время) автозавершения команд на основе истории
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+# Plugin Syntax-highlighting (для подсветки синтаксиса команд в терминале)
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+# Установка моего dotfiles
+curl -O https://gitlab.com/anzix/dotfiles/-/raw/master/installdot.sh
+chmod +x installdot.sh
+./installdot.sh
 
 #sudo tee -a /etc/systemd/system/getty@tty1.service.d/override.conf << END
 #[Service]
