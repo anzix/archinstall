@@ -63,9 +63,11 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 # Установка моего dotfiles
-curl -O https://gitlab.com/anzix/dotfiles/-/raw/master/installdot.sh
-chmod +x installdot.sh
-./installdot.sh
+git clone https://gitlab.com/anzix/dotfiles.git
+cd dotfiles
+mv README.md ~/Downloads
+cd dotfiles
+stow --adopt -vt ~ *
 
 #sudo tee -a /etc/systemd/system/getty@tty1.service.d/override.conf << END
 #[Service]
