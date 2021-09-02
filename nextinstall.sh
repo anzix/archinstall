@@ -36,8 +36,8 @@ sudo systemctl start vmtoolsd
 sudo systemctl enable ly.service
 
 # AutoStartX DM (не запрашивает логин и пароль)
-sudo touch .zprofile
-sudo bash -c 'echo "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx" >> /etc/.zrofile'
+touch .zprofile
+echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' >> .zrofile
 
 cp /etc/X11/xinit/xinitrc /home/anzix/.xinitrc
 chmod +x /home/anzix/.xinitrc
@@ -46,7 +46,7 @@ echo "exec i3 " >> /home/anzix/.xinitrc
 
 sudo mkdir -p /etc/systemd/system/getty@tty1.service.d/
 sudo touch /etc/systemd/system/getty@tty1.service.d/override.conf
-sudo bash -c 'echo  "[Service]" > /etc/systemd/system/getty@tty1.service.d/override.conf'
+sudo bash -c 'echo "[Service]" > /etc/systemd/system/getty@tty1.service.d/override.conf'
 sudo bash -c 'echo "ExecStart=" >> /etc/systemd/system/getty@tty1.service.d/override.conf'
 sudo bash -c 'echo "ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --autologin anzix --noclear %I $TERM" >> /etc/systemd/system/getty@tty1.service.d/override.conf'
 
@@ -66,6 +66,10 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 git clone https://gitlab.com/anzix/dotfiles.git
 cd dotfiles
 mv README.md ~/Downloads
+
+cp .p10k.zsh ~
+cp .vimrc ~
+cp .xinitrc ~
 cd dotfiles
 stow --adopt -vt ~ *
 
