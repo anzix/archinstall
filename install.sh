@@ -58,9 +58,12 @@ pacman-key --init
 pacman-key --populate archlinux
 
 # Локализация на Русский
-sed -i "/^#\en_SG ISO/{N;s/\n#/\n/}" /etc/locale.gen
+sed -i "s/#\(en_US\.UTF-8\)/\1/" /etc/locale.gen
+sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
 
-sed -i "/ru_RU.UTF-8/s/^#//g" /etc/locale.gen
+#sed -i "/^#\en_SG ISO/{N;s/\n#/\n/}" /etc/locale.gen
+
+#sed -i "/ru_RU.UTF-8/s/^#//g" /etc/locale.gen
 
 locale-gen
 
