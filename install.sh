@@ -46,7 +46,7 @@ reflector --verbose -c ru,by,ua,pl -p https,http -l 15 --sort rate --save /etc/p
 pacman -Syy
 
 # Установка базовых пакетов
-pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers btrfs-progs grub efibootmgr zsh git nano vim terminus-font
+pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers btrfs-progs grub efibootmgr zsh git nano vim
 # Созлание genfstab
 genfstab -U /mnt >> /mnt/etc/fstab
 
@@ -111,7 +111,7 @@ sed -i "94,95s/^#//" /etc/pacman.conf # Раскоментирование ст�
 
 # Обноваление и установка необходимых пакетов (для установки i3 окружения)
 pacman -Syu
-pacman -S --noconfirm xorg-xinit xorg-server xorg-xrandr xdg-utils xdg-user-dirs links wget kitty ranger pcmanfm-gtk3 gvfs file-roller unzip unrar pulseaudio alsa alsa-utils pulseaudio-alsa intel-ucode dhcpcd pavucontrol
+pacman -S --noconfirm xorg-xinit xorg-server xorg-xrandr xdg-utils xdg-user-dirs links wget kitty ranger pcmanfm-gtk3 gvfs file-roller unzip unrar pulseaudio alsa alsa-utils pulseaudio-alsa intel-ucode dhcpcd pavucontrol terminus-font
 
 # Установка Grub
 mkdir /boot/efi
