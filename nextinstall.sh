@@ -69,6 +69,11 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 # Plugin Syntax-highlighting (для подсветки синтаксиса команд в терминале)
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
+# Установка vim-plug
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+
 # Установка моего dotfiles
 git clone https://gitlab.com/anzix/dotfiles.git
 cd dotfiles
@@ -76,7 +81,7 @@ mv README.md ~/Downloads
 
 cp .p10k.zsh ~
 cp .vimrc ~
-cp .xinitrc ~
+cp .zshrc ~
 cd dotfiles
 stow --adopt -vt ~ *
 
