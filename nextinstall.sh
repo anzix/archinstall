@@ -14,7 +14,11 @@ LC_ALL=C xdg-user-dirs-update --force
 rm -r Видео Документы Загрузки Изображения Музыка Общедоступные Рабочий\ стол/ Шаблоны
 
 # Установка i3
-yay -Syyu --noconfirm stow i3-gaps rofi xorg xorg-xinit xorg-xrandr dunst polybar picom autotiling nitrogen htop neofetch timeshift timeshift-autosnap lxappearance clipit flameshot firefox polkit-gnome man-pages-ru kotatogram-desktop-bin qbittorrent youtube-dl mpv spotify songrec bleachbit betterlockscreen terminus-font ttf-font-awesome ttf-opensans ttf-sazanami ttf-droid ttf-liberation ttf-dejavu nerd-fonts-hack powerline powerline-fonts lsd materia-gtk-theme capitaine-cursors paper-icon-theme-git python-pillow exfat-utils ntfs-3g --noconfirm
+yay -Syyu --noconfirm
+yay -S --noconfirm stow pacman-contrib i3-gaps rofi xorg xorg-xinit xorg-xrandr dunst polybar picom autotiling nitrogen htop neofetch timeshift timeshift-autosnap lxappearance clipit flameshot firefox polkit-gnome man-pages-ru kotatogram-desktop-bin qbittorrent youtube-dl mpv spotify ffmpeg songrec bleachbit betterlockscreen keepassxc lsd materia-gtk-theme capitaine-cursors paper-icon-theme-git python-pillow exfat-utils ntfs-3g --noconfirm
+
+# Установка шрифтов
+yay -S --noconfirm terminus-font ttf-roboto ttf-font-awesome ttf-opensans ttf-sazanami ttf-droid ttf-liberation ttf-dejavu nerd-fonts-hack powerline powerline-fonts --noconfirm
 
 #ttf-kochi-substitute otf-ipafont
 #ly-git
@@ -22,10 +26,9 @@ yay -Syyu --noconfirm stow i3-gaps rofi xorg xorg-xinit xorg-xrandr dunst polyba
 #i3status
 #ttf-ubuntu-font-family
 #nerd-fonts-ubuntu-mono
+
 # Для VmWare (Закоментируйте если не надо)
 yay -S --noconfirm open-vm-tools xf86-video-vmware xf86-input-vmmouse xf86-video-vesa --noconfirm
-
-
 
 # Русская раскладка 
 sudo localectl set-x11-keymap --no-convert us,ru pc105 "" grp:alt_shift_toggle
@@ -35,9 +38,6 @@ sudo localectl set-x11-keymap --no-convert us,ru pc105 "" grp:alt_shift_toggle
 sudo systemctl enable vmtoolsd
 sudo systemctl start vmtoolsd
 #sudo systemctl enable ly.service
-
-
-
 
 
 # AutoStartX DM (не запрашивает логин и пароль)
@@ -69,10 +69,12 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 # Plugin Syntax-highlighting (для подсветки синтаксиса команд в терминале)
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
+# Plugin k (Делает списки каталогов более читаемыми, добавляя немного цвета и некоторую информацию о состоянии GIT на файлах и каталогах)
+git clone https://github.com/supercrabtree/k $ZSH_CUSTOM/plugins/k
+
 # Установка vim-plug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
 
 # Установка моего dotfiles
 git clone https://gitlab.com/anzix/dotfiles.git
@@ -84,6 +86,11 @@ cp .vimrc ~
 cp .zshrc ~
 cd dotfiles
 stow --adopt -vt ~ *
+
+mkdir ~/Pictures/Screenshots
+
+# Обои (Не применятся при ребуте)
+nitrogen ~/dotfiles/Wallpaper/Ramen.jpg --set-auto
 
 #sudo tee -a /etc/systemd/system/getty@tty1.service.d/override.conf << END
 #[Service]
