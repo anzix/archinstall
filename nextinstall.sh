@@ -34,7 +34,7 @@ sudo localectl set-x11-keymap --no-convert us,ru pc105 "" grp:alt_shift_toggle
 #sudo usermod -aG libvirt anzix
 sudo systemctl enable vmtoolsd
 sudo systemctl start vmtoolsd
-sudo systemctl enable ly.service
+#sudo systemctl enable ly.service
 
 
 
@@ -56,7 +56,7 @@ sudo bash -c 'echo "ExecStart=" >> /etc/systemd/system/getty@tty1.service.d/over
 sudo bash -c 'echo "ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --autologin anzix --noclear %I $TERM" >> /etc/systemd/system/getty@tty1.service.d/override.conf'
 
 # Установка oh-my-zsh
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" 
 
 # Установка темы powerlevel10k
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
