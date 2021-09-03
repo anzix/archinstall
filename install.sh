@@ -40,7 +40,7 @@ sed -i "94,95s/^#//" /etc/pacman.conf # Раскоментирование ст�
 
 # Оптимизация зеркал с помощью Reflector
 pacman -Sy --noconfirm rsync
-reflector --verbose -c ru,by,ua,de,pl -p https,http -l 15 --sort rate --save /etc/pacman.d/mirrorlist
+reflector --verbose -c ru,by,ua,pl -p https,http -l 15 --sort rate --save /etc/pacman.d/mirrorlist
 
 # Обновление пакетов
 pacman -Syy
