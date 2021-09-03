@@ -31,9 +31,14 @@ yay -S --noconfirm open-vm-tools xf86-video-vmware xf86-input-vmmouse xf86-video
 sudo localectl set-x11-keymap --no-convert us,ru pc105 "" grp:alt_shift_toggle
 
 # Включение дм и другие штуки
+#sudo usermod -aG libvirt anzix
 sudo systemctl enable vmtoolsd
 sudo systemctl start vmtoolsd
 sudo systemctl enable ly.service
+
+
+
+
 
 # AutoStartX DM (не запрашивает логин и пароль)
 touch .zprofile
