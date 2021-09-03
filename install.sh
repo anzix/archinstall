@@ -39,15 +39,14 @@ sed -i "94,95s/^#//" /etc/pacman.conf # Раскоментирование ст�
 #sed -i "/[multilib\]/,/Include/s/^[ ]#//" /etc/pacman.conf
 
 # Оптимизация зеркал с помощью Reflector
-pacman -Sy --noconfirm rsync
+pacman -Sy --noconfirm reflector rsync
 reflector --verbose -c ru,by,ua,pl -p https,http -l 15 --sort rate --save /etc/pacman.d/mirrorlist
 
 # Обновление пакетов
 pacman -Syy
 
 # Установка базовых пакетов
-pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers btrfs-progs grub efibootmgr zsh git nano vim
-
+pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers btrfs-progs grub efibootmgr zsh git nano vim terminus-font
 # Созлание genfstab
 genfstab -U /mnt >> /mnt/etc/fstab
 
