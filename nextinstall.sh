@@ -42,7 +42,7 @@ sudo systemctl enable ly.service
 
 # AutoStartX DM (не запрашивает логин и пароль)
 touch .zprofile
-echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' >> .zrofile
+echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' >> .zprofile
 
 cp /etc/X11/xinit/xinitrc /home/anzix/.xinitrc
 chmod +x /home/anzix/.xinitrc
