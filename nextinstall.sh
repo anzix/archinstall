@@ -20,6 +20,9 @@ yay -S --noconfirm stow pacman-contrib i3-gaps rofi xorg xorg-xinit xorg-xrandr 
 # Установка шрифтов
 yay -S --noconfirm terminus-font ttf-roboto ttf-font-awesome ttf-opensans ttf-sazanami ttf-droid ttf-liberation ttf-dejavu nerd-fonts-hack powerline powerline-fonts --noconfirm
 
+# Доп штуки
+yay -S --noconfirm gtk-enguine-murrine
+
 #ttf-kochi-substitute otf-ipafont
 #ly-git
 #noto-fonts
