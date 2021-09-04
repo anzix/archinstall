@@ -33,6 +33,7 @@ mount /dev/sda2 /mnt/boot
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Делаем pacman красивее
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Добавляем цвета в pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Увеличение паралельных загрузок с 5 на 10
+sed -i "s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf # Более удобный просмотр лист пакетов
 sed -i "94,95s/^#//" /etc/pacman.conf # Раскоментирование строчки (В данном случае они именуются цифрами) multilib для запуска 32bit приложений
 
 #sed -i "s/#[multilib]/[multilib]/g; s/#Include/Include/g" /etc/pacman.conf
