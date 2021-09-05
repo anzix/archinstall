@@ -103,7 +103,7 @@ sed -i "s/^HOOKS.*/HOOKS=(base udev autodetect modconf block filesystems keyboar
 sed -i 's/^MODULES.*/MODULES=(btrfs)/' /etc/mkinitcpio.conf
 
 # Создание образа ранней загрузки
-mkinitcpio -P linux-zen
+mkinitcpio -p linux-zen
 
 # Пароль для Root
 echo root:anz | chpasswd
