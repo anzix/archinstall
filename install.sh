@@ -1,7 +1,7 @@
 #!/bin/bash
 
 loadkeys ru
-setfont cyr-syn16
+setfont cyr-sun16
 
 sed -i "s/#\(en_US\.UTF-8\)/\1/" /etc/locale.gen
 sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
