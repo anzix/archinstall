@@ -8,7 +8,8 @@ sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
 
 locale-gen
 
-export LANG=ru_RU.UTF-8
+export LC_ALL=ru_RU.UTF-8
+#export LANG=ru_RU.UTF-8
 
 # Схема разметки диска в gpt используя gdisk
 #sda1 - efi 100m
