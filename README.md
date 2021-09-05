@@ -14,7 +14,7 @@ https://docs.google.com/document/d/1c9yqKSz5LkS1Gd422w4TMdf-_76PHySzku4PsHbxZok/
 loadkeys ru
 ````
 ````
-setfont cyr-syn16
+setfont cyr-sun16
 ````
 Далее вводим эту строчку для скачивания скрипта
 
