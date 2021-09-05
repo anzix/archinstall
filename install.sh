@@ -1,5 +1,15 @@
 #!/bin/bash
 
+loadkeys ru
+setfont cyr-syn16
+
+sed -i "s/#\(en_US\.UTF-8\)/\1/" /etc/locale.gen
+sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
+
+locale-gen
+
+export LANG=ru_RU.UTF-8
+
 # Схема разметки диска в gpt используя gdisk
 #sda1 - efi 100m
 #sda2 - boot 300m
