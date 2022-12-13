@@ -376,15 +376,15 @@ sudo virsh net-start default
 
 # Install and configure desktop environment
 if [ ${DESKTOP_ENVIRONMENT} = "plasma" ]; then
-    curl -O https://gitlab.com/anzix/arch/-/raw/main/plasma_install.sh
+    curl -O https://raw.githubusercontent.com/anzix/scriptinstall/main/plasma_setup.sh
     chmod +x plasma_install.sh
     ./plasma_install.sh
 elif [ ${DESKTOP_ENVIRONMENT} = "gnome" ]; then
-    curl -O https://gitlab.com/anzix/arch/-/raw/main/gnome_install.sh
+    curl -O https://raw.githubusercontent.com/anzix/scriptinstall/main/gnome_setup.sh
     chmod +x gnome_install.sh
     ./gnome_install.sh
 elif [ ${DESKTOP_ENVIRONMENT} = "i3wm" ]; then
-    curl -O https://gitlab.com/anzix/arch/-/raw/main/i3wm_install.sh
+    curl -O https://raw.githubusercontent.com/anzix/scriptinstall/main/i3_setup.sh
     chmod +x i3wm_install.sh
     ./i3wm_install.sh
 fi
