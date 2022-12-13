@@ -1,123 +1,173 @@
 #!/bin/bash
 
-# Установка Yay
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si --noconfirm
-cd
-rm -rf yay 
+# Руссифицируемся
+sed -i "s/#\(en_US\.UTF-8\)/\1/; s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
+locale-gen
+tee /etc/locale.conf > /dev/null << EOF
+LANG=ru_RU.UTF-8
+LC_COLLATE=C
+EOF
 
-# Создания английских папок
-LC_ALL=C xdg-user-dirs-update --force
+# Смена раскладки клавиатуры в tty
+if [ ${XKB_LAYOUT} = '1' ]; then
+  echo "KEYMAP=ruwin_alt_sh-UTF-8" > /etc/vconsole.conf
+elif [[ ${XKB_LAYOUT} = '2' ]]; then
+  echo "KEYMAP=ruwin_cplk-UTF-8" > /etc/vconsole.conf
+fi
+echo "FONT=ter-v22b" >> /etc/vconsole.conf
 
-# Удаляем рус папки
-rm -r Видео Документы Загрузки Изображения Музыка Общедоступные Рабочий\ стол/ Шаблоны
+# Часовой пояс
+ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
+hwclock --systohc --utc 
 
-# Установка i3
-yay -Syyu --noconfirm
-yay -S --noconfirm stow pacman-contrib i3-gaps rofi xorg xorg-xinit xorg-xrandr dunst polybar picom autotiling nitrogen htop neofetch timeshift timeshift-autosnap lxappearance clipit flameshot firefox polkit-gnome man-pages-ru kotatogram-desktop-bin qbittorrent youtube-dl mpv spotify ffmpeg songrec bleachbit betterlockscreen keepassxc lsd materia-gtk-theme capitaine-cursors paper-icon-theme-git python-pillow exfat-utils ntfs-3g --noconfirm
-
-# Установка шрифтов
-yay -S --noconfirm terminus-font ttf-roboto ttf-font-awesome ttf-opensans ttf-sazanami ttf-droid ttf-liberation ttf-dejavu nerd-fonts-hack powerline powerline-fonts --noconfirm
-
-# Доп штуки
-yay -S --noconfirm gtk-enguine-murrine
-
-#ttf-kochi-substitute otf-ipafont
-#ly-git
-#noto-fonts
-#i3status
-#ttf-ubuntu-font-family
-#nerd-fonts-ubuntu-mono
-
-# Для VmWare (Закоментируйте если не надо)
-yay -S --noconfirm open-vm-tools xf86-video-vmware xf86-input-vmmouse xf86-video-vesa --noconfirm
-
-# Русская раскладка 
-sudo localectl set-x11-keymap --no-convert us,ru pc105 "" grp:alt_shift_toggle
-
-# Включение дм и другие штуки
-#sudo usermod -aG libvirt anzix
-sudo systemctl enable vmtoolsd
-sudo systemctl start vmtoolsd
-#sudo systemctl enable ly.service
-
-
-# AutoStartX DM (не запрашивает логин и пароль)
-touch .zprofile
-echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' >> .zprofile
-
-cp /etc/X11/xinit/xinitrc /home/anzix/.xinitrc
-chmod +x /home/anzix/.xinitrc
-sed -i 52,55d /home/anzix/.xinitrc
-echo "exec i3 " >> /home/anzix/.xinitrc
-
-sudo mkdir -p /etc/systemd/system/getty@tty1.service.d/
-sudo touch /etc/systemd/system/getty@tty1.service.d/override.conf
-sudo bash -c 'echo "[Service]" > /etc/systemd/system/getty@tty1.service.d/override.conf'
-sudo bash -c 'echo "ExecStart=" >> /etc/systemd/system/getty@tty1.service.d/override.conf'
-sudo bash -c 'echo "ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --autologin anzix --noclear %I $TERM" >> /etc/systemd/system/getty@tty1.service.d/override.conf'
-
-# Установка oh-my-zsh
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" << EOF
+# Имя хоста 
+echo $HOST_NAME > /etc/hostname
+tee /etc/hosts > /dev/null << EOF 
+127.0.0.1 localhost
+::1 localhost
+127.0.1.1 $HOST_NAME.localdomain $HOST_NAME
 
 EOF
 
-# Установка темы powerlevel10k
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+# Пароль root пользователя
+echo root:$USER_PASSWORD | chpasswd
 
-# Plugin Autosuggestions (Очень сильно экономит время) автозавершения команд на основе истории
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+# Инициализировать связку ключей Pacman
+pacman-key --init
+pacman-key --populate archlinux
 
-# Plugin Syntax-highlighting (для подсветки синтаксиса команд в терминале)
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+# Добавления юзера и присваивание групп к юзеру
+useradd -m -g users -G wheel,audio,video,input,optical,games -s /bin/zsh $USER_NAME
+echo $USER_NAME:$USER_PASSWORD | chpasswd
 
-# Plugin k (Делает списки каталогов более читаемыми, добавляя немного цвета и некоторую информацию о состоянии GIT на файлах и каталогах)
-git clone https://github.com/supercrabtree/k $ZSH_CUSTOM/plugins/k
+# Привелегии sudo
+if [ ${SUDO_PRIV} = 'y' ]; then
+  # Привилегии sudo с запросом пароля
+  sed -i 's/^# %wheel ALL=(ALL:ALL) ALL\.*/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
+elif [ ${SUDO_PRIV} = 'n' ]; then
+  # Привилегии sudo без запроса пароля
+  sed -i 's/^# %wheel ALL=(ALL:ALL) NOPASSWD: ALL\.*/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
+fi
 
-# Установка vim-plug
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# Создание пользовательских XDG директорий
+LC_ALL=C sudo -u $USER_NAME xdg-user-dirs-update --force
 
-# Установка моего dotfiles
-git clone https://gitlab.com/anzix/dotfiles.git
-cd dotfiles
-mv README.md ~/Downloads
+# Настройка pacman
+sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Делаем pacman красивее
+sed -i "s/#Color/Color/g" /etc/pacman.conf  # Добавляем цвета в pacman
+sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 8/g" /etc/pacman.conf  # Увеличение паралельных загрузок с 5 на 8
+sed -i "s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf # Более удобный просмотр лист пакетов
+sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf # Раскоментирование строчки multilib для запуска 32bit приложений
 
-cp .p10k.zsh ~
-cp .vimrc ~
-cp .zshrc ~
-cd dotfiles
-stow --adopt -vt ~ *
+# Синхронизация базы пакетов
+pacman -Syy
 
-mkdir ~/Pictures/Screenshots
+# Обнаружение виртуалки
+case $hypervisor in
+  kvm )     echo "==> KVM обнаружен."
+            echo "==> Устанавливаю гостевые инструменты."
+            pacman -S qemu-guest-agent spice-vdagent --noconfirm --needed
+            # В оконных менеджерах (WM) для активации Shared Clipboard в терминале надо ввести spice-vdagent
+            ;;
+  oracle )  echo "==> VirtualBox обнружен."
+            echo "==> Устанавливаю гостевые инструменты."
+            pacman -S virtualbox-guest-utils xf86-video-vmware --noconfirm --needed
+            # Shared Folder
+            usermod -a -G vboxsf $USER_NAME
+            ;;
+  * ) ;;
+esac
 
-# Обои (Не применятся при ребуте)
-nitrogen ~/dotfiles/Wallpaper/Ramen.jpg --set-auto
+# Правка mkinitcpio.conf
+if [ ${FS} = '2' ]; then
+  sed -i 's/^MODULES.*/MODULES=(btrfs amdgpu)/' /etc/mkinitcpio.conf
+  # Add the btrfs binary in order to do maintenence on system without mounting it
+  sed -i 's/^BINARIES=.*$/BINARIES=(btrfs)/' /etc/mkinitcpio.conf
+  sed -i "s/^HOOKS.*/HOOKS=(base consolefont udev autodetect modconf block filesystems keyboard keymap)/g" /etc/mkinitcpio.conf
+else
+  sed -i 's/^MODULES.*/MODULES=(amdgpu)/' /etc/mkinitcpio.conf
+  sed -i "s/^HOOKS.*/HOOKS=(base consolefont udev autodetect modconf block filesystems keyboard keymap fsck)/g" /etc/mkinitcpio.conf
+fi
+mkinitcpio -P
 
-#sudo tee -a /etc/systemd/system/getty@tty1.service.d/override.conf << END
-#[Service]
-#ExecStart=
-#ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --autologin anzix --noclear %I $TERM
-#END
+# Правка конфига reflector
+sed -i "s/^--protocol.*/--protocol http,https/" /etc/xdg/reflector/reflector.conf
+sed -i "s/# --country.*/--country ru,by/" /etc/xdg/reflector/reflector.conf
+sed -i "s/^--latest.*/--latest 12/" /etc/xdg/reflector/reflector.conf
+sed -i "s/^--sort.*/--sort rate/" /etc/xdg/reflector/reflector.conf
+
+mkdir /etc/pacman.d/hooks
+
+# Создаю Reflector хук
+tee /etc/pacman.d/hooks/mirrorupgrade.hook > /dev/null << EOF
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = pacman-mirrorlist
+
+[Action]
+Description = Updating pacman-mirrorlist with reflector and removing pacnew...
+When = PostTransaction
+Depends = reflector
+Exec = /bin/sh -c "systemctl start reflector.service; if [ -f /etc/pacman.d/mirrorlist.pacnew ]; then rm /etc/pacman.d/mirrorlist.pacnew; fi"
+EOF
+
+# Чистка кэша Pacman хук
+tee /etc/pacman.d/hooks/clean_package_cache.hook > /dev/null << EOF
+[Trigger]
+Type = Package
+Operation = Upgrade
+Operation = Install
+Operation = Remove
+Target = *
+
+[Action]
+Description = Очистка устаревших кэшированных пакетов (с сохранением двух последних)...
+When = PostTransaction
+Exec = /usr/bin/paccache -rk2
+EOF
+
+# Хук GRUB обновления
+tee /etc/pacman.d/hooks/92-grub-upgrade.hook > /dev/null << EOF
+[Trigger]
+Type = Package
+Operation = Upgrade
+Target = grub
+[Action]
+Description = Upgrading GRUB...
+When = PostTransaction
+Exec = /usr/bin/sh -c "grub-install --efi-directory=/boot/efi; grub-mkconfig -o /boot/grub/grub.cfg"
+EOF
+
+# Zram
+tee /etc/systemd/zram-generator.conf > /dev/null << EOF
+[zram0]
+zram-size = min(min(ram, 4096) + max(ram - 4096, 0) / 2, 32 * 1024)
+compression-algorithm = zstd
+EOF
+
+if [ "$(systemd-detect-virt)" = "none" ]; then
+# Настройка подкачки
+# https://ventureo.codeberg.page/source/generic-system-acceleration.html#swap
+tee /etc/sysctl.d/99-sysctl.conf > /dev/null << EOF
+vm.swappiness=10
+vm.vfs_cache_pressure=50 
+EOF
+fi
+
+# Добавления моих опций ядра grub
+sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 mitigations=off pcie_aspm=off intel_iommu=on iommu=pt audit=0 nowatchdog amdgpu.ppfeaturemask=0xffffffff cpufreq.default_governor=performance intel_pstate=passive zswap.enabled=0"/g' /etc/default/grub
+
+#sed -i -e 's/GRUB_GFXMODE=auto/GRUB_GFXMODE="1920x1080x32"/g' /etc/default/grub
+#sed -i -e 's/#GRUB_DISABLE_OS_PROBER/GRUB_DISABLE_OS_PROBER/' /etc/default/grub # Обнаруживать другие ОС и добавлять их в grub (нужен пакет os-prober)
+grub-install --efi-directory=/boot/efi
+grub-mkconfig -o /boot/grub/grub.cfg
 
 
-
-# AutoStarX (Надо затестить)
-#cp /etc/X11/xinit/xinitrc /home/$username/.xinitrc
-#chown $username:users /home/$username/.xinitrc
-#chmod +x /home/$username/.xinitrc
-#sed -i 52,55d /home/$username/.xinitrc
-#echo "exec i3 " >> /home/$username/.xinitrc
-#mkdir /etc/systemd/system/getty@tty1.service.d/
-#echo " [Service] " > /etc/systemd/system/getty@tty1.service.d/override.conf
-#echo " ExecStart=" >> /etc/systemd/system/getty@tty1.service.d/override.conf
-#echo   ExecStart=-/usr/bin/agetty --autologin $username --noclear %I 38400 linux >> /etc/systemd/system/getty@tty1.service.d/override.conf
-#echo ' [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx ' >> /etc/profile
-
-# Zsh дополнения
-#yay -S zsh-syntax-highlighting zsh-autosuggestions --noconfirm
-#echo 'source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh' >> /etc/zsh/zshrc
-#echo 'source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' >> /etc/zsh/zshrc
-#echo 'prompt adam2' >> /etc/zsh/zshrc
-
+# Врубаю сервисы
+# systemctl enable NetworkManager.service
+systemctl enable dhcpcd
+systemctl enable sshd
+systemctl enable fstrim.timer
+systemctl enable systemd-oomd.service
+systemctl enable dbus-broker.service
