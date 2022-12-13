@@ -9,7 +9,7 @@ chmod +x install.sh
 После перезагрузки идёт настройка (моё необходимое) и установка окружения
 
 ```bash
-curl -O
+curl -O https://raw.githubusercontent.com/anzix/scriptinstall/main/setup.sh
 ```
 
 После завершения ребутимся.
