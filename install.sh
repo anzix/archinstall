@@ -1,143 +1,148 @@
 #!/bin/bash
-
-loadkeys ru
+# Русские шрифты
 setfont cyr-sun16
-
-sed -i "s/#\(en_US\.UTF-8\)/\1/" /etc/locale.gen
-sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
-
+sed -i "s/#\(en_US\.UTF-8\)/\1/; s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
 locale-gen
-
 export LANG=ru_RU.UTF-8
+clear
 
-# Схема разметки диска в gpt используя gdisk
-#sda1 - efi 100m
-#sda2 - boot 300m
-#sda3 - btrfs - остальное
+# --- Переменные
 
-sgdisk --zap-all /dev/sda  # Delete tables
-printf "n\n1\n\n+100M\nef00\nn\n\n2\n\n+300M\nef02\nn\n\n3\n\n\n\nw\ny\n" | gdisk /dev/sda
+DISK=/dev/sda
+DISK_EFI=/dev/sda1
+DISK_MNT=/dev/sda2
+
+# Базовые пакеты в /mnt
+PKGS=(
+  base base-devel reflector pacman-contrib openssh
+#  linux linux-headers
+  linux-zen linux-zen-headers
+#  linux-lts linux-lts-headers
+  linux-firmware
+  zsh git wget vim neovim
+  ntfs-3g exfat-utils dosfstools # Поддержка NTFS, exFAT, vFAT
+#  os-prober mtools # Для Dual-Boot
+  grub efibootmgr
+  dhcpcd netctl
+  iptables-nft
+#  networkmanager
+  intel-ucode
+  xdg-user-dirs # Создание пользовательских XDG директории
+  terminus-font # Шрифты разных размеров с кириллицей для tty
+  ccache
+  zram-generator
+  dbus-broker
+)
+
+read -p "Имя хоста (hostname): " HOST_NAME
+export HOST_NAME
+
+read -p "Имя пользователя (Может быть только в нижнем регистре и без знаков): " USER_NAME
+export USER_NAME
+
+read -p "Пароль пользователя: " USER_PASSWORD
+export USER_PASSWORD
+
+read -p "Sudo с запросом пароля? [y/n]: " SUDO_PRIV
+export SUDO_PRIV
+
+read -p "Тип смены раскладки клавиатуры
+1 - Alt+Shift, 2 - Caps Lock: " XKB_LAYOUT
+export XKB_LAYOUT
+
+read -p "Файловая система
+1 - ext4, 2 - btrfs: " FS
+export FS
+
+# Обнаружение часового пояса
+export time_zone=$(curl -s https://ipinfo.io/timezone)
+
+# --- Разметка файловая система
+
+# Удаляем старую схему разделов и перечитываем таблицу разделов
+sgdisk --zap-all --clear $DISK  # Удаляет (уничтожает) структуры данных GPT и MBR
+wipefs --all --force $DISK # Стирает все доступные сигнатуры
+partprobe $DISK
+
+# Разметка диска и перечитываем таблицу разделов
+sgdisk -n 0:0:+512MiB -t 0:ef00 -c 0:boot $DISK
+sgdisk -n 0:0:0 -t 0:8300 -c 0:root $DISK
+partprobe $DISK
 
 
-mkfs.fat -F32 /dev/sda1
-mkfs.ext4 /dev/sda2
-mkfs.btrfs -L Arch /dev/sda3
+# Файловая система
+if [ ${FS} = '1' ]; then
+  yes | mkfs.ext4 -L Root $DISK_MNT
+  # yes | mkfs.ext4 -L home $H_DISK
+  mount -v $DISK_MNT /mnt
+  # mkdir /mnt/home
+  # mount $H_DISK /mnt/home
 
-mount /dev/sda3 /mnt
+  # При обнаружении приплюсовывается в список для pacstrap
+  PKGS+=(e2fsprogs)
+elif [ ${FS} = '2' ]; then
+  mkfs.btrfs -L archlinux -f $DISK_MNT
+  mount -v $DISK_MNT /mnt
+  
+  # Создание подтомов BTRFS
+  btrfs su cr /mnt/@
+  btrfs su cr /mnt/@home
+  btrfs su cr /mnt/@snapshots
+  btrfs su cr /mnt/@var_log
+  btrfs su cr /mnt/@libvirt
+  umount -v /mnt
 
-cd /mnt
+  # BTRFS сам обнаруживает SSD при монтировании
+  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@ $DISK_MNT /mnt
+  mkdir -pv /mnt/{home,.snapshots,var/log,var/lib/libvirt}
+  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
+  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots
+  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log $DISK_MNT /mnt/var/log
+  mount -v -o noatime,nodatacow,compress=zstd:2,space_cache=v2,subvol=@libvirt $DISK_MNT /mnt/var/lib/libvirt
 
-# Создание subvolume'мов
-btrfs su cr @
-btrfs su cr @home
-cd
-umount /mnt
+  # При обнаружении приплюсовывается в список для pacstrap
+  PKGS+=(btrfs-progs)
+else
+  echo "FS type"; exit 1
+fi
 
-# Доп настройки для оптимизации дисков
-mount -o noatime,compress=zstd:2,space_cache=v2,discard=async,subvol=@ /dev/sda3 /mnt
-mkdir /mnt/{boot,home}
-mount -o noatime,compress=zstd:2,space_cache=v2,discard=async,subvol=@home /dev/sda3 /mnt/home
-mount /dev/sda2 /mnt/boot
+# --- Форматирование и монтирование EFI/boot раздела
+yes | mkfs.fat -F32 -n BOOT $DISK_EFI
+mount -v --mkdir $DISK_EFI /mnt/boot/efi
 
-# Правка конфига pacman
+
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Делаем pacman красивее
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Добавляем цвета в pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Увеличение паралельных загрузок с 5 на 10
 sed -i "s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf # Более удобный просмотр лист пакетов
-sed -i "94,95s/^#//" /etc/pacman.conf # Раскоментирование строчки (В данном случае они именуются цифрами) multilib для запуска 32bit приложений
-
-#sed -i "s/#[multilib]/[multilib]/g; s/#Include/Include/g" /etc/pacman.conf
-#sed -i "/[multilib\]/,/Include/s/^[ ]#//" /etc/pacman.conf
 
 # Оптимизация зеркал с помощью Reflector
-pacman -Sy --noconfirm reflector rsync
-reflector --verbose -c ru,by,ua,pl -p https,http -l 15 --sort rate --save /etc/pacman.d/mirrorlist
+cp /mnt/etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist.backup
+reflector --verbose -c ru -p http,https -l 12 --sort rate --save /etc/pacman.d/mirrorlist
 
-# Обновление пакетов
+# Синхронизация базы пакетов
 pacman -Syy
 
-# Установка базовых пакетов
-pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers btrfs-progs grub efibootmgr zsh git nano vim terminus-font
-# Созлание genfstab
+# Установка базовых пакетов в /mnt
+pacstrap /mnt "${PKGS[@]}"
+
+# Генерирую fstab
 genfstab -U /mnt >> /mnt/etc/fstab
+# Make /tmp a ramdisk
+echo "
+tmpfs 	/tmp	tmpfs		rw,nodev,nosuid,size=8G	 0 0" >> /mnt/etc/fstab
 
-# Вход в root
-arch-chroot /mnt /bin/bash << EOF
+# Обнаружение виртуалки
+export hypervisor=$(systemd-detect-virt)
 
-# Добавление ключей PGP
-pacman-key --init
-pacman-key --populate archlinux
+# --- Chroot'имся
+curl -o /mnt/test_chroot.sh https://gitlab.com/anzix/arch/-/raw/main/test_chroot.sh
+chmod +x /mnt/test_chroot.sh
+arch-chroot /mnt /bin/bash /test_chroot.sh
 
-# Локализация на Русский
-sed -i "s/#\(en_US\.UTF-8\)/\1/" /etc/locale.gen
-sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
-
-#sed -i "/^#\en_SG ISO/{N;s/\n#/\n/}" /etc/locale.gen
-
-#sed -i "/ru_RU.UTF-8/s/^#//g" /etc/locale.gen
-
-locale-gen
-
-echo 'LANG=ru_RU.UTF-8' > /etc/locale.conf
-echo 'LC_COLLATE=C' >> /etc/locale.conf
-
-echo 'KEYMAP=ru' >> /etc/vconsole.conf
-
-echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
-
-# Время и дата
-ln -sf /usr/share/zoneinfo/Asia/Yekaterinburg /etc/localtime
-timedatectl set-ntp true # Синхронизировать часы материнской платы
-hwclock --systohc --utc 
-
-# Имя нашего ПК
-echo "anzix" > /etc/hostname
-
-#Добавление строк в файл хост
-echo "127.0.0.1 localhost" >> /etc/hosts
-echo "::1       localhost" >> /etc/hosts
-echo "127.0.1.1 anzix.localdomain anzix" >> /etc/hosts
-
-# Добавление в mkinitcpio модуль btrfs и правка hooks
-sed -i "s/^HOOKS.*/HOOKS=(base udev autodetect modconf block filesystems keyboard keymap)/g" /etc/mkinitcpio.conf
-sed -i 's/^MODULES.*/MODULES=(btrfs)/' /etc/mkinitcpio.conf
-
-# Создание образа ранней загрузки
-mkinitcpio -p linux-zen
-
-# Пароль для Root
-echo root:anz | chpasswd
-
-# Добавления нашего юзера
-useradd -m -g users -G wheel -s /bin/zsh anzix
-
-# Добавления пароля юзера
-echo "anzix:anz" | chpasswd
-
-# Sudo с запросом пароля
-sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
-
-# Правка конфига pacman
-sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Делаем pacman красивее
-sed -i "s/#Color/Color/g" /etc/pacman.conf  # Добавляем цвета в pacman
-sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 7/g" /etc/pacman.conf  # Увеличение паралельных загрузок 
-sed -i "94,95s/^#//" /etc/pacman.conf # Раскоментирование строчки (В данном случае они именуются цифрами) multilib для запуска 32bit приложений
-
-# Обноваление и установка необходимых пакетов (для установки i3 окружения)
-pacman -Syu
-pacman -S --noconfirm xorg-xinit xorg-server xorg-xrandr xdg-utils xdg-user-dirs links wget kitty ranger pcmanfm-gtk3 gvfs file-roller unzip unrar pulseaudio alsa alsa-utils pulseaudio-alsa intel-ucode dhcpcd pavucontrol terminus-font
-
-# Установка Grub
-mkdir /boot/efi
-mount /dev/sda1 /boot/efi
-grub-install --efi-directory=/boot/efi
-grub-mkconfig -o /boot/grub/grub.cfg
-
-# Включение dhcpcd
-systemctl enable dhcpcd.service
-
-EOF
-
-# Готово!
-umount -R /mnt
-
+# Действия после chroot
+if read -re -p "arch-chroot /mnt? [y/N]: " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then
+  arch-chroot /mnt
+else
+  umount -a # (-a) - безопасно размонтировать всё
+fi
