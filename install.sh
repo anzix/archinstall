@@ -31,7 +31,7 @@ PKGS=(
   terminus-font # Шрифты разных размеров с кириллицей для tty
   ccache
   zram-generator
-  dbus-broker
+  dbus-broker # Оптимизированная система шины сообщений
 )
 
 read -p "Имя хоста (hostname): " HOST_NAME
