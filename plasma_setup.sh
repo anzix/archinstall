@@ -60,7 +60,7 @@ sudo balooctl disable # Отключаем Baloo
 sudo balooctl purge # Чистим кэш
 
 
-for FIREFOX_PROFILE_PATH in /home/${NEW_USER}/.mozilla/firefox/*.default*
+for FIREFOX_PROFILE_PATH in $HOME/.mozilla/firefox/*.default*
 do
 # Install Firefox's Plasma Integration extension
 curl https://addons.mozilla.org/firefox/downloads/file/3859385/plasma_integration-latest.xpi -o ${FIREFOX_PROFILE_PATH}/extensions/plasma-browser-integration@kde.org.xpi
