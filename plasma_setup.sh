@@ -20,6 +20,7 @@ PKGS=(
     'konsole'
     'kate'
     'dolphin'
+    'ffmpegthumbs' # Предпросмотрщик видео для проводника dolphin
     'ark'
     'plasma-wayland-session'
     'kwalletmanager'
@@ -29,9 +30,11 @@ PKGS=(
     'plasma-browser-integration'
     'kdeplasma-addons'
     'plasma-firewall'
-    'kdeconnect' # Управление Linux со смарта
-    'sshfs' # Для доступа к ФС Android через kdeconnect
-    'libappindicator-gtk3'
+    'kdeconnect' # Управление Linux с Android
+    'sshfs'
+    'libappindicator-gtk2' # Для правильного отображения иконок в трее
+    'libappindicator-gtk3' # Для правильного отображения иконок в трее
+    'wl-clipboard' # Wayland clipboard copy+paste
 
     'sddm'
     'sddm-kcm' # KDE Config Module for SDDM
