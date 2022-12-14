@@ -4,6 +4,10 @@ setfont cyr-sun16
 sed -i "s/#\(en_US\.UTF-8\)/\1/; s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
 locale-gen
 export LANG=ru_RU.UTF-8
+
+# Set Time by NTP
+timedatectl set-ntp true
+
 clear
 
 # --- Переменные
