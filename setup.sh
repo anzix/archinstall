@@ -59,13 +59,14 @@ PKGS=(
         # 1) Pipewire
 
         'pipewire'
+	'lib32-pipewire'
         'wireplumber'       # Modular session / policy manager for PipeWire
         'pipewire-pulse'
         'pipewire-alsa'
         'pipewire-v4l2'     # Для правильной работы вебки в OBS
         'jack2'
+	'lib32-jack2'
         'jack2-dbus'        # Для dbus интеграции
-        'lib32-jack2'
         'gst-plugin-pipewire'
 
         # 2) PulseAudio
