@@ -279,7 +279,6 @@ PKGS=(
 
     # --- UTILITIES
 
-        'redshift-minimal'      # Беречь глаза при работе за ПК (минимальная версия)
         'mpdris2'               # Чтобы работал playerctl для mpd (+ вывод обложки в уведомлении)
 
     # --- THEMES
