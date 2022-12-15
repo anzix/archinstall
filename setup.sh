@@ -100,6 +100,12 @@ PKGS=(
         'lib32-gst-plugins-good'
         'gstreamer-vaapi'   # Эффективный плагин кодировщик для RDNA1 AMDGPU (для использования нужен AUR пакет obs-gstreamer)
 
+    # --- BLUETOOTH
+
+        'bluez'                 # Daemons for the bluetooth protocol stack
+        'bluez-utils'           # Bluetooth development and debugging utilities. Содержит bluetoothctl
+        'blueman'               # Bluetooth менеджер
+
     # --- GAMING and EMULATION
 
         'steam'
