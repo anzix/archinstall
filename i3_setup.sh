@@ -36,6 +36,7 @@ PKGS=(
         'screenkey'             # Показывать набранные клавиши
         'xclip'                 # System Clipboard (необходимо для neovim)
         'xsel'                  # Для копирования текста из neovim
+        'redshift'     		# Беречь глаза при работе за ПК
 
     # --- BLUETOOTH
 
