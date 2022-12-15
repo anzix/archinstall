@@ -38,12 +38,6 @@ PKGS=(
         'xsel'                  # Для копирования текста из neovim
         'redshift'     		# Беречь глаза при работе за ПК
 
-    # --- BLUETOOTH
-
-        'bluez'                 # Daemons for the bluetooth protocol stack
-        'bluez-utils'           # Bluetooth development and debugging utilities. Содержит bluetoothctl
-        'blueman'               # Bluetooth менеджер
-
 	# --- THEMES
 
         'breeze'                        # Для доступа к тёмной теме kdenlive
