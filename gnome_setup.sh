@@ -32,7 +32,7 @@ PKGS=(
     'qgnomeplatform-qt6' # Улучшает интеграцию приложений QT
     'kvantum' # Движок тем на основе SVG для Qt5/6 (включая инструмент настройки и дополнительные темы)
     'gnome-shell-extension-appindicator' # Расширение 'ApplIndicator and KStatusNotifierltem Support'
-    'libappindicator-gtk3' # Необходим для трея
+    'libappindicator-gtk3' # Better app indicator support
     'gnome-tweaks' # Экстра настройки Gnome (Навсякий)
     'webp-pixbuf-loader' # Включает поддержку WEBP изображений для eog
 )
