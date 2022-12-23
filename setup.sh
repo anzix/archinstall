@@ -88,7 +88,8 @@ PKGS=(
         'playerctl'         # Для работы fn+f6/7/8 и других приколюх
         'mediainfo'         # Информация о медиа
         'alsa-utils'        # Advanced Linux Sound Architecture (Чтобы убрать через alsamixer прослушивание себя через микро)
-        'alsa-plugins'      # ALSA plugins
+        'alsa-tools'        # Advanced tools for certain sound cards
+	'alsa-plugins'      # ALSA plugins
         'pavucontrol'       # GTK PulseAudio volume control
 
         'gstreamer'
