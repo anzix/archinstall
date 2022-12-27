@@ -122,11 +122,11 @@ PKGS=(
 
     # --- UTILITIES
 
-        'stow'                       # Manager sim-link а также для менеджмента dotfiles
+        'stow'                       # Менеджер sim-link'ов (для менеджмента dotfiles)
         'pacman-contrib'             # Скрипты и инструменты для Pacman
         'rebuild-detector'           # Показывает лист AUR пакетов которые были собраны на старых версиях зависимостей, для их дальнейшей пересборки
-        'reflector'                  # Инструмент для зеркал Pacman
-        'rsync'                      # Необходимо для reflector
+        'reflector'                  # Инструмент для оптимизации зеркал Pacman
+        'rsync'                      # Быстрый и универсальный инструмент для копирования удаленных и локальных файлов
         'radeontop'                  # Мониторинг AMD GPU        
         'xdg-utils'                  # Command line tools that assist applications with a variety of desktop integration tasks
         'htop'                       # Простой консольный диспетчер задач
@@ -162,9 +162,9 @@ PKGS=(
         'ncdu'                       # TUI анализатор свободного места
         'zbar'                       # Сканер QR кодов (для maim)
         'tesseract'                  # OCR сканер
-        'tesseract-data-rus'
-        'tesseract-data-eng'
-        'tesseract-data-jpn'
+        'tesseract-data-rus'         # Данные языка
+        'tesseract-data-eng'         # Данные языка
+        'tesseract-data-jpn'         # Данные языка
         'jq'                         # (Необходимо для mpv-webtorrent-hook)
         'testdisk'                   # Востановления данных
         'aspell-ru'                  # Русский словарь для проверки орфографии (работает только с UTF8 кодировкой)
@@ -182,7 +182,7 @@ PKGS=(
 #        'system-config-printer'       # Менеджер принтеров
 #        'cups'                        # Модульная система печати для принтеров
 #        'cups-pdf'                    # Поддержка печати PDF файлов
-        'cdemu-client'                # Эмуляция iso образов
+        'cdemu-client'                # Эмуляция образов
         'transmission-cli'            # Для замены passkey в торрент файлах и многое другое
         'mame-tools'                  # Конвертирование .iso / .cue образов PS2 игр в сжатый .chd образ (chdman)
         'jre-openjdk'                 # Для работы Minecraft
@@ -231,7 +231,7 @@ PKGS=(
         'gimp'
 #        'audacity'
         'kdenlive'
-        'corectrl'                       # GUI управление GPU/CPU
+        'corectrl'                       # GUI управление AMD GPU/CPU
 #        'piper'                          # Настройка мышки Logitech
 #        'discord'                        # Chat for gamers
         'telegram-desktop'
@@ -251,8 +251,8 @@ PKGS=(
         'xidel'                   # (Необходимо для mpv-webtorrent-hook)
         'inxi'                    # Системная информация PC
         'obfs4proxy'              # Обфускация трафика тор
-        'ventoy-bin'              # Создание загрузочной флешки для WIN/Linux образов
-        'obs-gstreamer'           # Более эффективный плагин кодировщик для OBS
+        'ventoy-bin'              # Создание загрузочной флешки для Win/Linux образов
+        'obs-gstreamer'           # Более эффективный плагин кодировщик для OBS (Для RDNA 1)
         'obs-vkcapture'           # OBS плагин для захвата напрямую через API OpenGL/Vulkan (минимизирует затраты)
         'lib32-obs-vkcapture'
         'amd-vulkan-prefixes'     # Быстрое переключение icd драйверов AMD используя переменные (RADV: vk_radv, AMDVLK: vk_amdvlk, AMDGPU-PRO: vk_pro)
@@ -286,12 +286,11 @@ PKGS=(
 
     # --- UTILITIES
 
-        'mpdris2'               # Чтобы работал playerctl для mpd (+ вывод обложки в уведомлении)
+        'mpdris2'               # MPRIS2 поддержка для MPD
 
     # --- THEMES
     # --- OTHER
 
-        'man-pages-ru'                  # Russian Linux man pages
         'chromium-widevine'             # Плагин для работы DRM контента в браузере ungoogled-chromium
 #        'kyocera-print-driver'          # Драйвер для Kyocera FS-1060DN
 
