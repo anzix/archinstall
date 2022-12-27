@@ -197,8 +197,8 @@ PKGS=(
         'nftables' 
         'iptables-nft'
         'dmidecode' 
-        'edk2-ovmf'
-        'swtpm'
+        'edk2-ovmf'		      # Поддержка UEFI для QEMU
+        'swtpm'			      # Поддержка TPM для QEMU
 
     # --- FONTS
 
