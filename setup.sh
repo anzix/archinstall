@@ -357,10 +357,10 @@ wget -qO- https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | sud
 
 
 # Добавление доп. разделов
-echo "\nUUID=F46C28716C2830B2         /media/Distrib    ntfs-3g        rw,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0" | sudo tee -a /etc/fstab >/dev/null
-echo "UUID=CA8C4EB58C4E9BB7       /media/Other    ntfs-3g        rw,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0" | sudo tee -a /etc/fstab >/dev/null
-echo "UUID=A81C9E2F1C9DF890    /media/Media    ntfs-3g        rw,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0" | sudo tee -a /etc/fstab >/dev/null
-echo "UUID=30C4C35EC4C32546          /media/Games    ntfs-3g        rw,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0" | sudo tee -a /etc/fstab >/dev/null
+echo "\nUUID=F46C28716C2830B2         /media/Distrib    ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0" | sudo tee -a /etc/fstab >/dev/null
+echo "UUID=CA8C4EB58C4E9BB7       /media/Other    ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0" | sudo tee -a /etc/fstab >/dev/null
+echo "UUID=A81C9E2F1C9DF890    /media/Media    ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0" | sudo tee -a /etc/fstab >/dev/null
+echo "UUID=30C4C35EC4C32546          /media/Games    ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0" | sudo tee -a /etc/fstab >/dev/null
 
 
 # Настройка libvirt/QEMU/KVM для виртуализции win10/11
