@@ -140,7 +140,7 @@ tmpfs 	/tmp	tmpfs		rw,nodev,nosuid,size=8G	 0 0" >> /mnt/etc/fstab
 export hypervisor=$(systemd-detect-virt)
 
 # --- Chroot'имся
-curl -o /mnt/chroot.sh https://github.com/anzix/scriptinstall/raw/main/chroot.sh
+curl -o /mnt/chroot.sh https://raw.githubusercontent.com/anzix/scriptinstall/main/chroot.sh
 chmod +x /mnt/chroot.sh
 arch-chroot /mnt /bin/bash /chroot.sh
 
