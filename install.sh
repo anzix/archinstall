@@ -5,7 +5,7 @@ sed -i "s/#\(en_US\.UTF-8\)/\1/; s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
 locale-gen
 export LANG=ru_RU.UTF-8
 
-# Set Time by NTP
+# Синхронизация системных часов
 timedatectl set-ntp true
 
 clear
@@ -126,7 +126,7 @@ cp -v /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist.bak
 reflector --verbose -c ru -p http,https -l 12 --sort rate --save /etc/pacman.d/mirrorlist
 
 # Синхронизация базы пакетов
-pacman -Syy reflector
+pacman -Syy
 
 # Установка базовых пакетов в /mnt
 pacstrap /mnt "${PKGS[@]}"
