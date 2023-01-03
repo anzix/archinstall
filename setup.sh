@@ -279,6 +279,7 @@ PKGS=(
         'joycond-git'               # Альтернатива BetterJoy
         'joycond-cemuhook-git'      # Для подключания геймпада 8BitDo Pro 2 по DSU для работы гироскопа
 #        'flashplayer-standalone'    # Запуск локальных .swf (Flash) файлов
+#        'ruffle-nightly-bin'	     # Современный эмулятор Flash плеера для запуска .swf файлов
 
     # --- FONTS
 
