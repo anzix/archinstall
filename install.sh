@@ -121,7 +121,7 @@ sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # �
 sed -i "s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf # Более удобный просмотр лист пакетов
 
 # Оптимизация зеркал с помощью Reflector
-cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist.backup
+cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist.bak
 reflector --verbose -c ru -p http,https -l 12 --sort rate --save /etc/pacman.d/mirrorlist
 
 # Синхронизация базы пакетов
