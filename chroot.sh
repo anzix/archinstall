@@ -18,7 +18,7 @@ echo "FONT=ter-v22b" >> /etc/vconsole.conf
 
 # Часовой пояс
 ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
-hwclock --systohc --utc 
+hwclock --systohc
 
 # Имя хоста 
 echo $HOST_NAME > /etc/hostname
