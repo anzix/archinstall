@@ -140,9 +140,9 @@ tmpfs 	/tmp	tmpfs		rw,nodev,nosuid,size=8G	 0 0" >> /mnt/etc/fstab
 export hypervisor=$(systemd-detect-virt)
 
 # --- Chroot'имся
-curl -o /mnt/test_chroot.sh https://gitlab.com/anzix/arch/-/raw/main/test_chroot.sh
-chmod +x /mnt/test_chroot.sh
-arch-chroot /mnt /bin/bash /test_chroot.sh
+curl -o /mnt/chroot.sh https://github.com/anzix/scriptinstall/raw/main/chroot.sh
+chmod +x /mnt/chroot.sh
+arch-chroot /mnt /bin/bash /chroot.sh
 
 # Действия после chroot
 if read -re -p "arch-chroot /mnt? [y/N]: " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then
