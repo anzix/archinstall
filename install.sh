@@ -76,7 +76,7 @@ partprobe $DISK
 
 # Файловая система
 if [ ${FS} = '1' ]; then
-  yes | mkfs.ext4 -L Root $DISK_MNT
+  yes | mkfs.ext4 -L ArchLinux $DISK_MNT
   # yes | mkfs.ext4 -L home $H_DISK
   mount -v $DISK_MNT /mnt
   # mkdir /mnt/home
@@ -85,7 +85,7 @@ if [ ${FS} = '1' ]; then
   # При обнаружении приплюсовывается в список для pacstrap
   PKGS+=(e2fsprogs)
 elif [ ${FS} = '2' ]; then
-  mkfs.btrfs -L archlinux -f $DISK_MNT
+  mkfs.btrfs -L ArchLinux -f $DISK_MNT
   mount -v $DISK_MNT /mnt
   
   # Создание подтомов BTRFS
