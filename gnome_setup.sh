@@ -90,17 +90,18 @@ EOF
 
 
 # Смена раскладки языка
-# Настройка раскладки
-# if grep -q ruwin_alt_sh-UTF-8 "/etc/vconsole.conf"; then
-#     # Переключение раскладки по Alt+Shift
-# 	gsettings set org.gnome.desktop.input-sources xkb-options "['grp:alt_shift_toggle']"
-# 	gsettings set org.gnome.desktop.wm.keybindings switch-input-source "['<Shift>Alt_L', 'XF86Keyboard']"
-# 	gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Alt>Shift_L', 'XF86Keyboard']"
-# elif
-#     grep -q ruwin_cplk-UTF-8 "/etc/vconsole.conf"; then
-# 	# Переключение раскладки CapsLock (Чтобы набирать капсом Shift+CapsLock)
-#     gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
-#  fi
+if grep -q ruwin_alt_sh-UTF-8 "/etc/vconsole.conf"; then
+      # Переключение раскладки Alt+Shift
+ 	gsettings set org.gnome.desktop.input-sources xkb-options "['grp:alt_shift_toggle']"
+ 	gsettings set org.gnome.desktop.wm.keybindings switch-input-source "['<Shift>Alt_L', 'XF86Keyboard']"
+ 	gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Alt>Shift_L', 'XF86Keyboard']"
+elif
+     grep -q ruwin_cplk-UTF-8 "/etc/vconsole.conf"; then
+      # Переключение раскладки CapsLock (Чтобы набирать капсом Shift+CapsLock)
+	gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
+	gsettings set org.gnome.desktop.wm.keybindings switch-input-source "[]"
+	gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "[]"
+fi
 
 
 # Создание пользовательского профиля
