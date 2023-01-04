@@ -76,6 +76,21 @@ user_pref("media.hardwaremediakeys.enabled", false);
 EOF
 done
 
+# Dolphin Root доступ
+echo '[Desktop Entry]
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+X-KDE-Priority=TopLevel
+Type=Service
+MimeType=all/all
+Actions=EditFromRoot
+Icon=folder-red
+
+[Desktop Action EditFromRoot]
+Name=Edit from root
+Name[ru]=Dolphin-Root
+Icon=folder-red
+Exec=pkexec env DISPLAY="$DISPLAY" XAUTHORITY="$XAUTHORITY" KDE_SESSION_VERSION=5 KDE_FULL_SESSION=true dbus-launch dolphin' | sudo tee -a /usr/share/kservices5/ServiceMenus/Dolphin-Root.desktop >/dev/null
+
 
 # Скорость печатания
 kwriteconfig5 --file kcminputrc --group Keyboard --key RepeatDelay "210"
