@@ -122,6 +122,8 @@ sed -i "s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf # Более уд
 
 # Оптимизация зеркал с помощью Reflector
 reflector --verbose -c ru -p http,https -l 12 --sort rate --save /etc/pacman.d/mirrorlist
+#echo "Server = https://mirror.yandex.ru/archlinux/\$repo/os/\$arch
+#Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 
 # Синхронизация базы пакетов
 pacman -Syy
