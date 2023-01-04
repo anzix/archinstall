@@ -32,6 +32,9 @@ cd ~ && rm -rf yay-bin
 # --batchinstall - Ставит каждый собранный пакеты в очередь для установки (легче мониторить что происходит)
 yay --save --nodiffmenu --nocleanmenu --removemake --batchinstall
 
+# Синхронизация базы пакетов
+yay -Syy
+
 echo "==> Установка основных пакетов Pacman"
 PKGS=(
 
@@ -105,7 +108,6 @@ PKGS=(
 
         'bluez'                 # Daemons for the bluetooth protocol stack
         'bluez-utils'           # Bluetooth development and debugging utilities. Содержит bluetoothctl
-        'blueman'               # Bluetooth менеджер
 
     # --- GAMING and EMULATION
 
@@ -141,7 +143,8 @@ PKGS=(
         'f2fs-tools'                 # Поддержка файловой системы f2fs
         'gvfs-mtp'                   # MTP backend; Android, media player
         'gvfs'                       # Подсистема среды рабочего стола GNOME (является trashcan для фм pcmanfm)
-        'wget'                       # Для скачивания файлов
+        'gtk2'
+	'wget'                       # Для скачивания файлов
         'unzip'                      # Архивирование и распаковка файлов zip
         'unrar'                      # Архивирование и распаковка файлов rar
         'p7zip'                      # Архивирование и распаковка файлов 7z
@@ -191,7 +194,7 @@ PKGS=(
         'lib32-sdl2'                  # Для работы steamcmd
         'lib32-dbus'                  # Для работы steamcmd
         'virt-manager'                # Менеджер виртуальных машин
-        'qemu'                        # Виртуализация
+        'qemu-desktop'                # Виртуализация
         'qemu-emulators-full'         # Поддержка всех архитектур для виртуализации
         'dnsmasq' 
         'nftables' 
@@ -319,14 +322,12 @@ cd ~
 git clone --recurse-submodules https://gitlab.com/anzix/dotfiles.git
 cd dotfiles/base
 # Вытягиваю только zsh конфиг
-stow -vt ~ zsh
+stow -vt ~ zsh gtk
 ln -siv $HOME/dotfiles/base/zsh/.config/zsh/profile.zsh ~/.zprofile
 
 
 # Настройка Firefox
-cd ~/dotfiles
-chmod +x firefox_setup
-./firefox_setup
+./dotfiles/firefox_setup
 
 
 mkdir -p ~/Pictures/{Screenshots/mpv,Gif}
@@ -374,29 +375,56 @@ sudo usermod -aG libvirt,kvm $(whoami)
 sudo sed -i '/fe80::1%lo0 localhost/d;/0.0.0.0 27--01bbcpolice.powercoremedia.com/d;/0.0.0.0 www.27--01bbcpolice.powercoremedia.com/d' /etc/hosts
 # Запускаем сервис
 sudo systemctl enable --now libvirtd
-# Автозапуск вирт. сети [default] при запуске системы 
-sudo virsh net-autostart default
-# Включить [default] вирт. сеть
-sudo virsh net-start default
 
-
-
-# Install and configure desktop environment
-if [ ${DESKTOP_ENVIRONMENT} = "plasma" ]; then
-    curl -O https://raw.githubusercontent.com/anzix/scriptinstall/main/plasma_setup.sh
-    chmod +x plasma_install.sh
-    ./plasma_install.sh
-elif [ ${DESKTOP_ENVIRONMENT} = "gnome" ]; then
-    curl -O https://raw.githubusercontent.com/anzix/scriptinstall/main/gnome_setup.sh
-    chmod +x gnome_install.sh
-    ./gnome_install.sh
-elif [ ${DESKTOP_ENVIRONMENT} = "i3wm" ]; then
-    curl -O https://raw.githubusercontent.com/anzix/scriptinstall/main/i3_setup.sh
-    chmod +x i3wm_install.sh
-    ./i3wm_install.sh
+read -p "Дефолтная сеть или мост для VM?
+1 - Default, 2 - Bridge: " NETWORK_VM
+export NETWORK_VM
+if [ ${NETWORK_VM} = '1' ]; then
+  # Автозапуск вирт. сети [default] при запуске системы 
+  sudo virsh net-autostart default
+  # Включить [default] вирт. сеть
+  sudo virsh net-start default
+elif [ ${NETWORK_VM} = '2' ]; then
+  echo "Создане моста и настройка сети на ваших виртуальных машинах"
+  touch ~/.config/br10.xml
+  tee -a ~/.config/br10.xml << END
+<network>
+<name>br10</name>
+<forward mode='nat'>
+<nat>
+    <port start='1024' end='65535'/>
+</nat>
+</forward>
+<bridge name='br10' stp='on' delay='0'/>
+<ip address='192.168.30.1' netmask='255.255.255.0'>
+<dhcp>
+    <range start='192.168.30.50' end='192.168.30.200'/>
+</dhcp>
+</ip>
+</network>
+END
+  echo "Добавление и автозапуск моста"
+  sudo virsh net-define ~/.config/br10.xml
+  sudo virsh net-autostart --network br10
+  sudo virsh net-autostart --network default
 fi
 
-# Обнаружение фс
+# Установка и настройка окружения
+if [ ${DESKTOP_ENVIRONMENT} = "plasma" ]; then
+    curl -o ~/plasma_setup.sh https://raw.githubusercontent.com/anzix/scriptinstall/main/plasma_setup.sh
+    chmod +x ~/plasma_setup.sh
+    ~/plasma_install.sh
+elif [ ${DESKTOP_ENVIRONMENT} = "gnome" ]; then
+    curl -o ~/gnome_setup.sh https://raw.githubusercontent.com/anzix/scriptinstall/main/gnome_setup.sh
+    chmod +x ~/gnome_setup.sh
+    ~/gnome_install.sh
+elif [ ${DESKTOP_ENVIRONMENT} = "i3wm" ]; then
+    curl -o ~/i3_setup.sh https://raw.githubusercontent.com/anzix/scriptinstall/main/i3_setup.sh
+    chmod +x ~/i3_setup.sh
+    ~/i3wm_install.sh
+fi
+
+# Обнаружение файловой системы
 if grep -q ext4 "/etc/fstab"; then
   yay -S timeshift-bin --noconfirm --needed
 elif
@@ -440,21 +468,13 @@ elif
   sudo systemctl enable snapper-cleanup.timer
 
   # Enable GRUB-BTRFS service
-  sudo systemctl enable grub-btrfs.path
+  sudo systemctl enable grub-btrfsd.service
 
   # Configure initramfs to boot into snapshots using overlayfs (read-only mode)
   sudo sed -i "s|keymap)|keymap grub-btrfs-overlayfs)|g" /etc/mkinitcpio.conf
 
   # Пересоздаём initramfs
   sudo mkinitcpio -P
-fi
-
-# Устранение ошибки
-# No Sound or pactl info shows Failure: Connection refused
-if ! command -v pipewire &> /dev/null
-then
-    systemctl --user enable pipewire-pulse.service
-    exit
 fi
 
 
