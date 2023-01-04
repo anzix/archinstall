@@ -65,7 +65,7 @@ rm -rf KvLibadwaita
 echo 'theme=KvLibadwaita' > ~/.config/Kvantum/kvantum.kvconfig
 
 
-# Создаю шаблоны для использования из под меню для проводника Gnome Файлы
+# Создаю шаблоны для использования из под контекстное меню проводника Gnome Файлы (nautilus)
 touch $(xdg-user-dir TEMPLATES)/Новый\ файл
 tee $(xdg-user-dir TEMPLATES)/Пустой\ Bash\ файл > /dev/null << EOF
 #!/bin/bash
