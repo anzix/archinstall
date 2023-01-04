@@ -81,6 +81,10 @@ done
 kwriteconfig5 --file kcminputrc --group Keyboard --key RepeatDelay "210"
 kwriteconfig5 --file kcminputrc --group Keyboard --key RepeatRate "35"
 
+# Шрифты
+# Моноширинный (терминал) для поддержки powerlevel10k
+kwriteconfig5 --file kdeglobals --group General --key fixed "Насk Nerd Font,10,-1,5,50,0,0,0,0,0"
+
 # Отключает одиночный клик для открытия файлов/папок
 kwriteconfig5 --file kdeglobals --group KDE --key SingleClick --type bool false
 
