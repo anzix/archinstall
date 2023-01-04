@@ -112,6 +112,12 @@ fi
 # Ставит тему Breeze для SDDM
 sudo kwriteconfig5 --file /etc/sddm.conf.d/kde_settings.conf --group Theme --key "Current" "breeze"
 
+# Тёмная тема для SDDM
+sudo cp /usr/share/wallpapers/Next/contents/images_dark/1920x1080.png /usr/share/sddm/themes/breeze/
+echo "[General]
+background=1920x1080.png
+type=image " | sudo tee -a /usr/share/sddm/themes/breeze/theme.conf.user >/dev/null
+
 # Тёмная тема Plasma
 kwriteconfig5 --file kdeglobals --group KDE --key LookAndFeelPackage "org.kde.breezedark.desktop"
 
