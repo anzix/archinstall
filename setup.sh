@@ -344,7 +344,7 @@ sudo rmmod hid_uclogic
 sudo mkinitcpio -P
 
 
-echo "==> Окрашиваю GTK тему к root приложениям"
+echo "==> Применение GTK тем к root программам"
 #GTK 2.0
 sudo rm -r /usr/share/gtk-2.0/gtkrc
 sudo ln -sv ~/.config/gtk-2.0/gtkrc-2.0 /usr/share/gtk-2.0/gtkrc
