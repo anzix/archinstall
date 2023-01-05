@@ -476,5 +476,7 @@ elif
   sudo mkinitcpio -P
 fi
 
+# Врубаю сервисы
+sudo systemctl enable bluetooth
 
 echo -e "\e[1;32m----------Установка системы завершена! Выполните ребут----------\e[0m"
