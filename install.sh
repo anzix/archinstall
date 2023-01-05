@@ -135,7 +135,7 @@ pacstrap /mnt "${PKGS[@]}"
 genfstab -U /mnt >> /mnt/etc/fstab
 # Make /tmp a ramdisk
 echo "
-tmpfs 	/tmp	tmpfs		rw,nodev,nosuid,size=8G	 0 0" >> /mnt/etc/fstab
+tmpfs 	/tmp	tmpfs		rw,nodev,nosuid,noatime,size=8G,mode=1777	 0 0" >> /mnt/etc/fstab
 
 # Обнаружение виртуалки
 export hypervisor=$(systemd-detect-virt)
