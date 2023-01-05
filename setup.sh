@@ -478,6 +478,9 @@ elif
   sudo mkinitcpio -P
 fi
 
+# Отключить мониторный режим микрофона Samson C01U Pro при старте окружения
+amixer sset -c 3 Mic mute
+
 # Врубаю сервисы
 sudo systemctl enable bluetooth
 
