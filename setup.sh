@@ -320,8 +320,12 @@ echo "==> Установка моего dotfiles"
 cd ~
 git clone --recurse-submodules https://gitlab.com/anzix/dotfiles.git
 cd dotfiles/base
-# Вытягиваю только zsh конфиг
-stow -vt ~ zsh gtk
+# Вытягиваю только необходимые конфиги
+stow -vt ~ zsh gtk \
+	mpd mpDris2 ncmpcpp nvim pipewire wireplumber mpv `# Media` \
+	mangohud vkBasalt otd `# Gaming` \
+	npm browser-flags corectrl wget
+# Переменные при активной сессии Xorg или Wayland
 ln -siv $HOME/dotfiles/base/zsh/.config/zsh/profile.zsh ~/.zprofile
 
 
@@ -362,7 +366,7 @@ echo "
 UUID=F46C28716C2830B2   /media/Distrib  ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
 UUID=CA8C4EB58C4E9BB7   /media/Other    ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
 UUID=A81C9E2F1C9DF890   /media/Media    ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
-UUID=30C4C35EC4C32546   /media/Games    ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0" | tee -a ~/fstab.txt >/dev/null
+UUID=30C4C35EC4C32546   /media/Games    ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0" | sudo tee -a /etc/fstab >/dev/null
 
 # Настройка libvirt/QEMU/KVM для виртуализции win10/11
 sudo cp /etc/libvirt/libvirtd.conf /etc/libvirt/libvirtd.conf.bak
@@ -476,6 +480,9 @@ elif
 
   # Пересоздаём initramfs
   sudo mkinitcpio -P
+  
+  # Пересоздаём grub.cfg для включения под-меню grub
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
 fi
 
 # Отключить мониторный режим микрофона Samson C01U Pro при старте окружения
@@ -483,7 +490,8 @@ amixer sset -c 3 Mic mute
 
 # Врубаю сервисы
 sudo systemctl enable bluetooth
-# sudo systemctl --user enable --now mpDris2.service
-# sudo systemctl --user enable --now mpd
+# systemctl --user enable --now mpDris2.service
+# systemctl --user enable --now mpd
+# systemctl --user enable opentabletdriver.service
 
 echo -e "\e[1;32m----------Установка системы завершена! Выполните ребут----------\e[0m"
