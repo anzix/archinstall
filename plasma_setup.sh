@@ -139,6 +139,12 @@ kwriteconfig5 --file kdeglobals --group KDE --key LookAndFeelPackage "org.kde.br
 # Увеличение скорости анимации
 kwriteconfig5 --file kdeglobals --group KDE --key AnimationDurationFactor "0.5"
 
+# Ночной режим
+kwriteconfig5 --file kwinrc --group NightColor --key "Active" "true"
+kwriteconfig5 --file kwinrc --group NightColor --key LatitudeAuto 54.799
+kwriteconfig5 --file kwinrc --group NightColor --key LongtitudeAuto 55.9053
+kwriteconfig5 --file kwinrc --group NightColor --key Mode Location
+
 # Change window decorations
 kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnLeft ""
 kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnRight "IAX"
