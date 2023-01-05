@@ -32,9 +32,11 @@ PKGS=(
     'qgnomeplatform-qt6' # Улучшает интеграцию приложений QT
     'kvantum' # Движок тем на основе SVG для Qt5/6 (включая инструмент настройки и дополнительные темы)
     'gnome-shell-extension-appindicator' # Расширение 'ApplIndicator and KStatusNotifierltem Support'
-    'libappindicator-gtk3' # Better app indicator support
-    'gnome-tweaks' # Экстра настройки Gnome (Навсякий)
-    'webp-pixbuf-loader' # Включает поддержку WEBP изображений для eog
+    'libappindicator-gtk2' # Для правильного отображения иконок в трее
+    'libappindicator-gtk3' # Для правильного отображения иконок в трее
+    'gnome-tweaks' # Экстра настройки Gnome
+    'webp-pixbuf-loader' # Поддержка WEBP изображений для eog
+    'wl-clipboard' # Wayland clipboard copy+paste
 )
 sudo pacman -S "${PKGS[@]}" --noconfirm --needed
 
