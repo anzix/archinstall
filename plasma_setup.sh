@@ -96,9 +96,9 @@ Exec=pkexec env DISPLAY="$DISPLAY" XAUTHORITY="$XAUTHORITY" KDE_SESSION_VERSION=
 kwriteconfig5 --file kcminputrc --group Keyboard --key RepeatDelay "210"
 kwriteconfig5 --file kcminputrc --group Keyboard --key RepeatRate "35"
 
-# Шрифты
+# Шрифты (Не применяются, лучше вводить вручную)
 # Моноширинный (терминал) для поддержки powerlevel10k
-kwriteconfig5 --file kdeglobals --group General --key fixed "Насk Nerd Font,14,-1,5,50,0,0,0,0,0"
+# kwriteconfig5 --file kdeglobals --group General --key fixed "Насk Nerd Font,14,-1,5,50,0,0,0,0,0"
 
 # Отключает одиночный клик для открытия файлов/папок
 kwriteconfig5 --file kdeglobals --group KDE --key SingleClick --type bool false
