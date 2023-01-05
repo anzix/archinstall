@@ -165,8 +165,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 
 # Врубаю сервисы
-# systemctl enable NetworkManager.service
-systemctl enable dhcpcd
+systemctl enable NetworkManager.service
+# systemctl enable dhcpcd
 systemctl enable sshd
 systemctl enable fstrim.timer
 systemctl enable systemd-oomd.service
