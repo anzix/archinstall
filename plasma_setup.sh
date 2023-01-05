@@ -30,7 +30,7 @@ PKGS=(
     'plasma-browser-integration'
     'kdeplasma-addons'
     'plasma-firewall'
-    'kdeconnect' # Управление Linux с Android
+#    'kdeconnect' # Управление Linux с Android
     'sshfs'
     'libappindicator-gtk2' # Для правильного отображения иконок в трее
     'libappindicator-gtk3' # Для правильного отображения иконок в трее
