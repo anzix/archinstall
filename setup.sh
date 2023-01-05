@@ -483,5 +483,7 @@ amixer sset -c 3 Mic mute
 
 # Врубаю сервисы
 sudo systemctl enable bluetooth
+# sudo systemctl --user enable --now mpDris2.service
+# sudo systemctl --user enable --now mpd
 
 echo -e "\e[1;32m----------Установка системы завершена! Выполните ребут----------\e[0m"
