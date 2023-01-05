@@ -171,4 +171,3 @@ systemctl enable sshd
 systemctl enable fstrim.timer
 systemctl enable systemd-oomd.service
 systemctl enable dbus-broker.service
-systemctl enable bluetooth
