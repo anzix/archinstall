@@ -66,12 +66,12 @@ export time_zone=$(curl -s https://ipinfo.io/timezone)
 # Удаляем старую схему разделов и перечитываем таблицу разделов
 sgdisk --zap-all --clear $DISK  # Удаляет (уничтожает) структуры данных GPT и MBR
 wipefs --all --force $DISK # Стирает все доступные сигнатуры
-partprobe $DISK
+partprobe $DISK # Информировать ОС об изменениях в таблице разделов
 
 # Разметка диска и перечитываем таблицу разделов
 sgdisk -n 0:0:+512MiB -t 0:ef00 -c 0:boot $DISK
 sgdisk -n 0:0:0 -t 0:8300 -c 0:root $DISK
-partprobe $DISK
+partprobe $DISK # Информировать ОС об изменениях в таблице разделов
 
 
 # Файловая система
