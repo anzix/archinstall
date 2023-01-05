@@ -358,22 +358,24 @@ wget -qO- https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | sud
 
 
 # Добавление доп. разделов
-echo "\nUUID=F46C28716C2830B2         /media/Distrib    ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0" | sudo tee -a /etc/fstab >/dev/null
-echo "UUID=CA8C4EB58C4E9BB7       /media/Other    ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0" | sudo tee -a /etc/fstab >/dev/null
-echo "UUID=A81C9E2F1C9DF890    /media/Media    ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0" | sudo tee -a /etc/fstab >/dev/null
-echo "UUID=30C4C35EC4C32546          /media/Games    ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0" | sudo tee -a /etc/fstab >/dev/null
-
+echo "
+UUID=F46C28716C2830B2   /media/Distrib  ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
+UUID=CA8C4EB58C4E9BB7   /media/Other    ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
+UUID=A81C9E2F1C9DF890   /media/Media    ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
+UUID=30C4C35EC4C32546   /media/Games    ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0" | tee -a ~/fstab.txt >/dev/null
 
 # Настройка libvirt/QEMU/KVM для виртуализции win10/11
-sudo sed -i 's/^#unix_sock_group/unix_sock_group/' /etc/libvirt/libvirtd.conf
-sudo sed -i 's/^#unix_sock_rw_perms/unix_sock_rw_perms/' /etc/libvirt/libvirtd.conf
-sudo sed -i "s|^#user = .*|user = \"${USERNAME}\"|g" /etc/libvirt/qemu.conf
-sudo sed -i "s|^#group = .*|group = \"wheel\"|g" /etc/libvirt/qemu.conf
+sudo cp /etc/libvirt/libvirtd.conf /etc/libvirt/libvirtd.conf.bak
+sudo sed -i 's|^#unix_sock_group|unix_sock_group|' /etc/libvirt/libvirtd.conf
+sudo sed -i 's|^#unix_sock_rw_perms|unix_sock_rw_perms|' /etc/libvirt/libvirtd.conf
+sudo cp /etc/libvirt/qemu.conf /etc/libvirt/qemu.conf.bak
+sudo sed -i 's|#user = .*|user = "'$(id -un)'"|g' /etc/libvirt/qemu.conf
+sudo sed -i 's|^#group = .*|group = "'wheel'"|g' /etc/libvirt/qemu.conf
 sudo usermod -aG libvirt,kvm $(whoami)
 # Убираю конфликтующие строки с hosts для правильной работы dnsmasq
 sudo sed -i '/fe80::1%lo0 localhost/d;/0.0.0.0 27--01bbcpolice.powercoremedia.com/d;/0.0.0.0 www.27--01bbcpolice.powercoremedia.com/d' /etc/hosts
 # Запускаем сервис
-sudo systemctl enable --now libvirtd
+sudo systemctl enable libvirtd
 
 read -p "Дефолтная сеть или мост для VM?
 1 - Default, 2 - Bridge: " NETWORK_VM
