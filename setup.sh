@@ -193,7 +193,7 @@ PKGS=(
         'lib32-sdl2'                  # Для работы steamcmd
         'lib32-dbus'                  # Для работы steamcmd
         'virt-manager'                # Менеджер виртуальных машин
-        'qemu-desktop'                # Виртуализация
+        'qemu-base'                   # Виртуализация
         'qemu-emulators-full'         # Поддержка всех архитектур для виртуализации
         'dnsmasq' 
         'nftables' 
