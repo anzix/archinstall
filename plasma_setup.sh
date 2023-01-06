@@ -145,6 +145,11 @@ kwriteconfig5 --file kwinrc --group NightColor --key LatitudeAuto 54.799
 kwriteconfig5 --file kwinrc --group NightColor --key LongtitudeAuto 55.9053
 kwriteconfig5 --file kwinrc --group NightColor --key Mode Location
 
+# Увеличить время простоя энергосбережение монитора DPMS (600 - 10мин, 900 - 15мин)
+kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "DPMSControl" --key "idleTime" "900"
+# Отключить энергосбережение монитора DPMS
+# kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "DPMSControl" --key "idleTime" --delete
+
 # Change window decorations
 kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnLeft ""
 kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnRight "IAX"
