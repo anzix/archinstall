@@ -56,6 +56,7 @@ PKGS=(
         'lf'                         # Удобный TUI файлоый менеджер
         'ueberzug'                   # Необходим для предпросмотра картинок в LF
         'pulsemixer'                 # TUI PulseAudio volume control
+	'network-manager-applet'     # Аплет NetworkManager
 )
 sudo pacman -S "${PKGS[@]}" --noconfirm --needed
 
