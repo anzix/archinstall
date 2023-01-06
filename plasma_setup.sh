@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Пов
+
 echo "==> Установка пакетов для окружения KDE Plasma"
 PKGS=(
     'plasma-desktop'
