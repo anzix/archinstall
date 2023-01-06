@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# Позаимствовано
+# https://github.com/gjpin/arch-linux/blob/main/setup_gnome.sh
+
 echo "==> Установка пакетов для окружения Gnome"
 PKGS=(
     'eog' # Просмоторщик изображений
@@ -209,6 +213,7 @@ idle-delay=uint32 600" | sudo tee -a /etc/dconf/db/local.d/01-custom >/dev/null
 
 
 # Конфигурации Gnome для конкретных ноутбуков
+# https://wiki.archlinux.org/title/Libinput#Touchpad_not_working_in_GNOME
 if cat /sys/class/dmi/id/chassis_type | grep 10 > /dev/null; then
 echo -e "[org/gnome/desktop/peripherals/touchpad]
 tap-to-click=true
