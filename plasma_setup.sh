@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Пов
+# Позаимствовано
+# https://github.com/gjpin/arch-linux/blob/main/setup_plasma.sh
 
 echo "==> Установка пакетов для окружения KDE Plasma"
 PKGS=(
