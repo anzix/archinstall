@@ -73,6 +73,9 @@ PKGS=(
 )
 yay -S "${PKGS[@]}" --noconfirm --needed
 
+# Вытягиваю мои конфиги для i3-wm
+cd dotfiles/base
+stow -vt ~ x alacritty dunst rofi feh greenclip i3 polybar picom sxhkd lf libfm nitrogen nsxiv zathura qt5ct redshift
 
 echo "==> Включаю AMD Tear Free и VRR"
 sudo bash -c 'cat <<EOF > /etc/X11/xorg.conf.d/20-amdgpu.conf
