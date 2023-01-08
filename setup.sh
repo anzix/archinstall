@@ -271,16 +271,17 @@ PKGS=(
         'protonup-qt'               # Удобная утилитка для скачки runner'ов wine
 #        'goverlay-bin'              # GUI настройка оверлей mangohud
         'mangohud'                  # Мониторинг для игр
-        'lib32-mangohud'
+        'lib32-mangohud'	    # Мониторинг для 32bin'ных игр
         'vkbasalt'                  # Постпроцессинг для игр
-        'lib32-vkbasalt'
-        'game-devices-udev'         # Udev правила для работы контроллеров в Steam
+        'lib32-vkbasalt' 	    # Постпроцессинг для 32bin'ных игр
+	'reshade-shaders-git'	    # Набор шейдеров необходимых для VkBasalt
+	'game-devices-udev'         # Udev правила для работы контроллеров в Steam
 #        'rpcs3-bin'                 # PS3 Эмулятор
 #        'cemu-git'                  # Wii U Эмулятор
 #        'hid-nintendo-dkms'         # Драйвер для правильной работы геймпада 8BitDo Pro 2 режиме Switch в эмуляторах и играх
         'joycond-git'               # Альтернатива BetterJoy
         'joycond-cemuhook-git'      # Для подключания геймпада 8BitDo Pro 2 по DSU для работы гироскопа
-#        'flashplayer-standalone'    # Запуск локальных .swf (Flash) файлов
+#        'flashplayer-standalone'    # (Устаревшее) Запуск локальных .swf (Flash) файлов
 #        'ruffle-nightly-bin'	     # Современный эмулятор Flash плеера для запуска .swf файлов
 
     # --- FONTS
