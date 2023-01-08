@@ -5,9 +5,6 @@ sed -i "s/#\(en_US\.UTF-8\)/\1/; s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
 locale-gen
 export LANG=ru_RU.UTF-8
 
-# Синхронизация системных часов
-timedatectl set-ntp true
-
 clear
 
 # --- Переменные
