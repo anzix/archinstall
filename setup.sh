@@ -256,14 +256,13 @@ PKGS=(
         'obs-gstreamer'           # Более эффективный плагин кодировщик для OBS (Для RDNA 1)
         'obs-vkcapture'           # OBS плагин для захвата напрямую через API OpenGL/Vulkan (минимизирует затраты)
         'lib32-obs-vkcapture'
-        'amd-vulkan-prefixes'     # Быстрое переключение icd драйверов AMD используя переменные (RADV: vk_radv, AMDVLK: vk_amdvlk, AMDGPU-PRO: vk_pro)
+        'amd-vulkan-prefixes'     # Быстрое переключение icd драйверов AMD используя переменные (vk_radv, vk_amdvlk, vk_pro)
 #        'cpu-x'                   # CPU-Z для Linux
 #        'android-apktool'         # Для декомпиляции apk файлов
 
     # --- GAMING
 
-#        'lgogdownloader'            # CLI обвёртка GOG (не работает login)
-#        'lgogdownloader-qt5'        # CLI обвёртка GOG (рабочий login)
+#        'lgogdownloader-qt5'        # CLI обвёртка GOG (с рабочим логином)
         'heroic-games-launcher-bin' # Удобный EGS / GOG лаунчер для Linux
 #        'tlauncher'                # Legacy TL Minecraft лаунчер 
         'dxvk-bin'                  # Свежий dxvk для ручных префиксов wine
@@ -303,31 +302,17 @@ PKGS=(
 yay -S "${PKGS[@]}" --noconfirm --needed
 
 
-
-# Corectrl без запроса пароля root
-sudo bash -c 'cat <<EOF > /etc/polkit-1/rules.d/90-corectrl.rules
-polkit.addRule(function(action, subject) {
-	if ((action.id == "org.corectrl.helper.init" ||
-     	action.id == "org.corectrl.helperkiller.init") &&
-    	subject.local == true &&
-    	subject.active == true &&
-    	subject.isInGroup("wheel")) {
-           return polkit.Result.YES;
-	}
-});
-EOF'
-
-
 echo "==> Установка моего dotfiles"
 cd ~
 git clone --recurse-submodules https://gitlab.com/anzix/dotfiles.git
 cd dotfiles/base
 # Вытягиваю только необходимые конфиги
 stow -vt ~ zsh gtk \
-	mpd mpDris2 ncmpcpp nvim pipewire wireplumber mpv `# Media` \
+	mpd mpDris2 ncmpcpp nvim pipewire wireplumber mpv `# Media & Sound` \
 	mangohud vkBasalt otd `# Gaming` \
-	npm browser-flags corectrl wget
+	npm browser-flags wget
 # Переменные при активной сессии Xorg или Wayland
+# Некоторые ДМ экспортируют только ~/.profile независимо от используемого $SHELL'а, измените если необходимо
 ln -siv $HOME/dotfiles/base/zsh/.config/zsh/profile.zsh ~/.zprofile
 
 
@@ -392,7 +377,7 @@ if [ ${NETWORK_VM} = '1' ]; then
   # Включить [default] вирт. сеть
   sudo virsh net-start default
 elif [ ${NETWORK_VM} = '2' ]; then
-  echo "Создане моста и настройка сети на ваших виртуальных машинах"
+  echo "==> Создане моста и настройка сети на ваших виртуальных машинах"
   touch ~/.config/br10.xml
   tee -a ~/.config/br10.xml << END
 <network>
@@ -410,7 +395,7 @@ elif [ ${NETWORK_VM} = '2' ]; then
 </ip>
 </network>
 END
-  echo "Добавление и автозапуск моста"
+  echo "==> Добавление и автозапуск моста"
   sudo virsh net-define ~/.config/br10.xml
   sudo virsh net-autostart --network br10
   sudo virsh net-autostart --network default
@@ -438,6 +423,7 @@ elif
   grep -q btrfs "/etc/fstab"; then
   yay -S snapper snap-pac grub-btrfs snp snapper-gui-git --noconfirm --needed
   
+  echo "==> Настройка Snapper"
   # Unmount .snapshots
   sudo umount -v /.snapshots
   sudo rm -rfv /.snapshots
