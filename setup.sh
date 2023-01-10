@@ -207,7 +207,7 @@ PKGS=(
         'terminus-font'                 # Позволяет выбрать более крупный шрифт для небольших экранов HiDPI
         'ttf-hack-nerd'                 # Шрифты для иконок в терминале
         'ttf-sourcecodepro-nerd'        # Шрифты для иконок в терминале
-        'ttf-roboto'                    # Шрифты Google
+#        'ttf-roboto'                    # Шрифты Google
         'ttf-font-awesome'              # Для появления значков (Из https://fontawesome.com/v5/cheatsheet) из тем и i3 статус баром появляться
         'ttf-opensans'                  # Шрифты для Телеграмма
         'ttf-droid'                     # Android'ский шрифт не имеющий нуля с прорезью, поэтому 0 и O не различимы
@@ -233,7 +233,7 @@ PKGS=(
         'gimp'
 #        'audacity'
         'kdenlive'
-        'corectrl'                       # GUI управление AMD GPU/CPU
+#        'corectrl'                       # GUI управление AMD GPU/CPU (Заменён на radeon-profile)
 #        'piper'                          # Настройка мышки Logitech
 #        'discord'                        # Chat for gamers
         'telegram-desktop'
@@ -246,7 +246,7 @@ PKGS=(
 
     # --- DESKTOP RELATED
 
-        'ungoogled-chromium-bin'  # Chromium но без Google
+        'ungoogled-chromium-bin'  # Вычещенный Chromium от Google
 #        'czkawka-gui-bin'         # Удобный инструмент для удаления дубликатов
         'opentabletdriver'        # Драйвер для граф. планшета XP-PEN G640
         'webtorrent-cli'          # Просмотр онлайн торренты (Необходимо для mpv-webtorrent-hook) 
@@ -290,13 +290,15 @@ PKGS=(
 
     # --- UTILITIES
 
-        'mpdris2'               # MPRIS2 поддержка для MPD
+	'radeon-profile-git'	    # Графическое ПО управление питанием и вентиляторами AMDGPU
+	'radeon-profile-daemon-git' # Демон для управление питанием и вентиляторами AMDGPU
+        'mpdris2'                   # MPRIS2 поддержка для MPD
 
     # --- THEMES
     # --- OTHER
 
-        'chromium-widevine'             # Плагин для работы DRM контента в браузере ungoogled-chromium
-#        'kyocera-print-driver'          # Драйвер для Kyocera FS-1060DN
+        'chromium-widevine'          # Плагин для работы DRM контента в браузере ungoogled-chromium
+#        'kyocera-print-driver'       # Драйвер для Kyocera FS-1060DN
 
 )
 yay -S "${PKGS[@]}" --noconfirm --needed
@@ -490,9 +492,10 @@ fi
 amixer sset -c 3 Mic mute
 
 # Врубаю сервисы
-sudo systemctl enable bluetooth
-# systemctl --user enable --now mpDris2.service
-# systemctl --user enable --now mpd
-# systemctl --user enable opentabletdriver.service
+sudo systemctl enable bluetooth.service
+sudo systemctl enable --now radeon-profile-daemon
+systemctl --user enable --now mpDris2.service
+systemctl --user enable --now mpd
+systemctl --user enable opentabletdriver.service
 
 echo -e "\e[1;32m----------Установка системы завершена! Выполните ребут----------\e[0m"
