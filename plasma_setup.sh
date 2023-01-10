@@ -94,6 +94,14 @@ Name[ru]=Dolphin-Root
 Icon=folder-red
 Exec=pkexec env DISPLAY="$DISPLAY" XAUTHORITY="$XAUTHORITY" KDE_SESSION_VERSION=5 KDE_FULL_SESSION=true dbus-launch dolphin' | sudo tee -a /usr/share/kservices5/ServiceMenus/Dolphin-Root.desktop >/dev/null
 
+# Автозапуск
+mkdir -pv ~/.config/autostart/
+cd /usr/share/applications/
+sudo cp steam.desktop ~/.config/autostart/
+# Тихий запуск Steam
+sed -i 's|^Exec=/usr/bin/steam-runtime %U|Exec=/usr/bin/steam-runtime -silent %U|g' ~/.config/autostart/steam.desktop
+
+cd ~
 
 # Скорость печатания
 kwriteconfig5 --file kcminputrc --group Keyboard --key RepeatDelay "210"
