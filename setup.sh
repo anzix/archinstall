@@ -71,6 +71,7 @@ PKGS=(
 	'lib32-jack2'
         'jack2-dbus'        # Для dbus интеграции
         'gst-plugin-pipewire'
+	'qpwgraph'	    # Графический интерфейс PipeWire Graph Qt
 
         # 2) PulseAudio
 
