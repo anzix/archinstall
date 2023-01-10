@@ -233,7 +233,6 @@ PKGS=(
         'gimp'
 #        'audacity'
         'kdenlive'
-#        'corectrl'                       # GUI управление AMD GPU/CPU (Заменён на radeon-profile)
 #        'piper'                          # Настройка мышки Logitech
 #        'discord'                        # Chat for gamers
         'telegram-desktop'
