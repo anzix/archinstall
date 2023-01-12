@@ -214,8 +214,7 @@ PKGS=(
         'ttf-droid'                     # Android'ский шрифт не имеющий нуля с прорезью, поэтому 0 и O не различимы
         'ttf-liberation'                # Начальный набор шрифтов 
         'ttf-dejavu'                    # Начальный набор шрифтов 
-        'adobe-source-han-sans-jp-fonts' # Японские шрифты
-#        'noto-fonts-cjk'                # Набор Азиатских шрифтов, много весят
+        'noto-fonts-cjk'                # Набор Азиатских шрифтов, много весят
         'noto-fonts-emoji'              # Смайлы в терминал     
 #       'noto-fonts'                     # (Захламляет кучу других шрифтов, весит 100мб) Без него всё текста тёмные в i3status
 
@@ -225,18 +224,18 @@ PKGS=(
         'firefox-i18n-ru'                # Руссификация Firefox
 #        'libreoffice-fresh'              # Документы
 #        'libreoffice-fresh-ru'           # Руссификация LibreOffice
-        'obs-studio'                     # Запись и трансляции
+        'obs-studio'                     # Запись видео и трансляции
         'mpv'                            # Лучший видеопроигрыватель
         'songrec'                        # Shazam но для Linux
-        'keepassxc'                      # Локально пароли
+        'keepassxc'                      # Локальный менеджер паролей
         'qbittorrent'                    # Торрент клиент
         'bleachbit'                      # Чистильщик для Linux
-        'gimp'
-#        'audacity'
-        'kdenlive'
+#        'gimp'                           # Фоторедактор
+#        'audacity'                       # Продвинутый аудиорекордер
+#        'kdenlive'                       # Видеоредактор
 #        'piper'                          # Настройка мышки Logitech
-#        'discord'                        # Chat for gamers
-        'telegram-desktop'
+#        'discord'                        # Чат для геймеров
+        'telegram-desktop'		 # 
 )
 sudo pacman -S "${PKGS[@]}" --noconfirm --needed
 
