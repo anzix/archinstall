@@ -243,22 +243,13 @@ sudo pacman -S "${PKGS[@]}" --noconfirm --needed
 echo "==> Установка AUR пакетов"
 PKGS=(
 
-    # --- DESKTOP RELATED
+    # --- APPS
 
-        'ungoogled-chromium-bin'  # Вычещенный Chromium от Google
+        'ungoogled-chromium-bin'  # Полностью вычещенный без Google браузер Chromium 
 #        'czkawka-gui-bin'         # Удобный инструмент для удаления дубликатов
         'opentabletdriver'        # Драйвер для граф. планшета XP-PEN G640
-        'webtorrent-cli'          # Просмотр онлайн торренты (Необходимо для mpv-webtorrent-hook) 
-        'xidel'                   # (Необходимо для mpv-webtorrent-hook)
-        'inxi'                    # Системная информация PC
-        'obfs4proxy'              # Обфускация трафика тор
         'ventoy-bin'              # Создание загрузочной флешки для Win/Linux образов
-        'obs-gstreamer'           # Более эффективный плагин кодировщик для OBS (Для RDNA 1)
-        'obs-vkcapture'           # OBS плагин для захвата напрямую через API OpenGL/Vulkan (минимизирует затраты)
-        'lib32-obs-vkcapture'
-        'amd-vulkan-prefixes'     # Быстрое переключение icd драйверов AMD используя переменные (vk_radv, vk_amdvlk, vk_pro)
 #        'cpu-x'                   # CPU-Z для Linux
-#        'android-apktool'         # Для декомпиляции apk файлов
 
     # --- GAMING
 
@@ -290,12 +281,21 @@ PKGS=(
 
 	'radeon-profile-git'	    # Графическое ПО управление питанием и вентиляторами AMDGPU
 	'radeon-profile-daemon-git' # Демон для управление питанием и вентиляторами AMDGPU
-        'mpdris2'                   # MPRIS2 поддержка для MPD
-
+	'inxi'                      # Системная информация PC
+        'obfs4proxy'                # Обфускация трафика тор
+        'webtorrent-cli'            # Просмотр онлайн торренты (Необходимо для mpv-webtorrent-hook) 
+        'xidel'                     # (Необходимо для mpv-webtorrent-hook)
+        'obs-gstreamer'             # Более эффективный плагин кодировщик для OBS (Для RDNA 1)
+        'obs-vkcapture'             # OBS плагин для захвата напрямую через API OpenGL/Vulkan (минимизирует затраты)
+        'lib32-obs-vkcapture'
+        'amd-vulkan-prefixes'       # Быстрое переключение icd драйверов AMD используя переменные (vk_radv, vk_amdvlk, vk_pro)
+#        'android-apktool'           # Декомпиляция apk файлов
+	
     # --- THEMES
     # --- OTHER
 
         'chromium-widevine'          # Плагин для работы DRM контента в браузере ungoogled-chromium
+	'mpdris2'                    # MPRIS2 поддержка для MPD
 #        'kyocera-print-driver'       # Драйвер для Kyocera FS-1060DN
 
 )
