@@ -235,7 +235,7 @@ PKGS=(
 #        'kdenlive'                       # Видеоредактор
 #        'piper'                          # Настройка мышки Logitech
 #        'discord'                        # Чат для геймеров
-        'telegram-desktop'		 # 
+        'telegram-desktop'		 # Мессенджер
 )
 sudo pacman -S "${PKGS[@]}" --noconfirm --needed
 
