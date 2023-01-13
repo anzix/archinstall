@@ -7,6 +7,9 @@ export LANG=ru_RU.UTF-8
 
 clear
 
+# Синхронизация системных часов
+timedatectl set-ntp true
+
 # --- Переменные
 
 DISK=/dev/sda
