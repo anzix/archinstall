@@ -29,7 +29,7 @@ PKGS=(
   grub efibootmgr
   dhcpcd netctl
   iptables-nft
-#  networkmanager # Для подключения к wifi с ноута: sudo nmtui
+#  networkmanager modemmanager # Для подключения к wifi с ноута: sudo nmtui
 #  wpa_supplicant  # Пакеты для ноутбуков
   intel-ucode
   xdg-user-dirs # Создание пользовательских XDG директории
