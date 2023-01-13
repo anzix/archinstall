@@ -18,7 +18,6 @@ echo "FONT=ter-v22b" >> /etc/vconsole.conf
 
 # Часовой пояс и апаратные часы
 ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
-timedatectl set-ntp true # Синхронизация системных часов
 hwclock --systohc # Эта команда предполагает, что аппаратные часы настроены в формате UTC.
 
 # Имя хоста 
