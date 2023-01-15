@@ -117,10 +117,12 @@ PKGS=(
         'wine-gecko'
         'wine-mono'
         'winetricks'            # Протаскивать библиотеки/dll'ки в префикс
-        'gamemode'              # +FPS для игр
+	'gamemode'              # +FPS для игр
         'lib32-gamemode'
+#        'gameconqueror'         # (Не)Альтернатива Cheat Engine
 #        'pcsx2'                 # PS2 Эмулятор
 #        'dolphin-emu'           # Gamecube Эмулятор
+
 
     # --- UTILITIES
 
@@ -208,25 +210,26 @@ PKGS=(
         'terminus-font'                 # Позволяет выбрать более крупный шрифт для небольших экранов HiDPI
         'ttf-hack-nerd'                 # Шрифты для иконок в терминале
         'ttf-sourcecodepro-nerd'        # Шрифты для иконок в терминале
-#        'ttf-roboto'                    # Шрифты Google
+#        'ttf-roboto'                    # Шрифт Google
         'ttf-font-awesome'              # Для появления значков (Из https://fontawesome.com/v5/cheatsheet) из тем и i3 статус баром появляться
-        'ttf-opensans'                  # Шрифты для Телеграмма
+        'ttf-opensans'                  # Шрифт для Телеграмма
         'ttf-droid'                     # Android'ский шрифт не имеющий нуля с прорезью, поэтому 0 и O не различимы
         'ttf-liberation'                # Начальный набор шрифтов 
         'ttf-dejavu'                    # Начальный набор шрифтов 
         'noto-fonts-cjk'                # Набор Азиатских шрифтов, много весят
         'noto-fonts-emoji'              # Смайлы в терминал     
-#       'noto-fonts'                     # (Захламляет кучу других шрифтов, весит 100мб) Без него всё текста тёмные в i3status
+        'noto-fonts'                    # Необходимые шрифты, разные иероглифы и т.д
 
     # --- APPS
 
         'firefox'                        # Браузер
         'firefox-i18n-ru'                # Руссификация Firefox
-#        'libreoffice-fresh'              # Документы
+#        'libreoffice-fresh'              # Офис
 #        'libreoffice-fresh-ru'           # Руссификация LibreOffice
         'obs-studio'                     # Запись видео и трансляции
         'mpv'                            # Лучший видеопроигрыватель
         'songrec'                        # Shazam но для Linux
+	'qmmp'                           # Современный аудиопроигрыватель строй школы с поддержкой скинов т.е Winamp
         'keepassxc'                      # Локальный менеджер паролей
         'qbittorrent'                    # Торрент клиент
         'bleachbit'                      # Чистильщик для Linux
@@ -245,7 +248,7 @@ PKGS=(
 
     # --- APPS
 
-        'ungoogled-chromium-bin'  # Полностью вычещенный без Google браузер Chromium 
+        'ungoogled-chromium-bin'  # Полностью вычещенный от Гуглятины браузер Chromium 
 #        'czkawka-gui-bin'         # Удобный инструмент для удаления дубликатов
         'opentabletdriver'        # Драйвер для граф. планшета XP-PEN G640
         'ventoy-bin'              # Создание загрузочной флешки для Win/Linux образов
@@ -264,12 +267,12 @@ PKGS=(
         'vkbasalt'                  # Постпроцессинг для игр
         'lib32-vkbasalt' 	    # Постпроцессинг для 32bin'ных игр
 	'reshade-shaders-git'	    # Набор шейдеров необходимых для VkBasalt
-	'game-devices-udev'         # Udev правила для работы контроллеров в Steam
 #        'rpcs3-bin'                 # PS3 Эмулятор
-#        'cemu-git'                  # Wii U Эмулятор
+#        'cemu'                      # Wii U Эмулятор
 #        'hid-nintendo-dkms'         # Драйвер для правильной работы геймпада 8BitDo Pro 2 режиме Switch в эмуляторах и играх
-        'joycond-git'               # Альтернатива BetterJoy
-        'joycond-cemuhook-git'      # Для подключания геймпада 8BitDo Pro 2 по DSU для работы гироскопа
+	'game-devices-udev'         # Udev правила для работы контроллеров в Steam
+	'joycond-git'               # Альтернатива BetterJoy
+        'joycond-cemuhook-git'      # Для работы по UDP геймпада 8BitDo Pro 2 в режиме гироскопа
 #        'flashplayer-standalone'    # (Устаревшее) Запуск локальных .swf (Flash) файлов
 #        'ruffle-nightly-bin'	     # Современный эмулятор Flash плеера для запуска .swf файлов
 
@@ -328,13 +331,13 @@ mkdir ~/.config/mpd/playlists
 sudo pacman -Fy
 
 
-# Для работы OpenTabletDriver граф. планшета Xp-Pen G640
+echo "==> Настройка граф. планшета Xp-Pen G640 для работы OpenTabletDriver"
 echo "blacklist hid_uclogic" | sudo tee -a /etc/modprobe.d/blacklist.conf >/dev/null
 sudo rmmod hid_uclogic
 sudo mkinitcpio -P
 
 
-echo "==> Применение GTK тем к root программам"
+echo "==> Настройка оформления GTK к root окружению"
 #GTK 2.0
 sudo rm -r /usr/share/gtk-2.0/gtkrc
 sudo ln -sv ~/.config/gtk-2.0/gtkrc-2.0 /usr/share/gtk-2.0/gtkrc
@@ -355,7 +358,7 @@ UUID=CA8C4EB58C4E9BB7   /media/Other    ntfs-3g        rw,nofail,noatime,preallo
 UUID=A81C9E2F1C9DF890   /media/Media    ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
 UUID=30C4C35EC4C32546   /media/Games    ntfs-3g        rw,nofail,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0" | sudo tee -a /etc/fstab >/dev/null
 
-# Настройка libvirt/QEMU/KVM для виртуализции win10/11
+echo "==> Настройка libvirt/QEMU/KVM для виртуализции"
 sudo cp /etc/libvirt/libvirtd.conf /etc/libvirt/libvirtd.conf.bak
 sudo sed -i 's|^#unix_sock_group|unix_sock_group|' /etc/libvirt/libvirtd.conf
 sudo sed -i 's|^#unix_sock_rw_perms|unix_sock_rw_perms|' /etc/libvirt/libvirtd.conf
