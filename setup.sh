@@ -269,10 +269,9 @@ PKGS=(
 	'reshade-shaders-git'	    # Набор шейдеров необходимых для VkBasalt
 #        'rpcs3-bin'                 # PS3 Эмулятор
 #        'cemu'                      # Wii U Эмулятор
-#        'hid-nintendo-dkms'         # Драйвер для правильной работы геймпада 8BitDo Pro 2 режиме Switch в эмуляторах и играх
 	'game-devices-udev'         # Udev правила для работы контроллеров в Steam
 	'joycond-git'               # Альтернатива BetterJoy
-        'joycond-cemuhook-git'      # Для работы по UDP геймпада 8BitDo Pro 2 в режиме гироскопа
+        'joycond-cemuhook-git'      # Для работы по UDP Switch контроллера (8BitDo Pro 2) в режиме гироскопа
 #        'flashplayer-standalone'    # (Устаревшее) Запуск локальных .swf (Flash) файлов
 #        'ruffle-nightly-bin'	     # Современный эмулятор Flash плеера для запуска .swf файлов
 
