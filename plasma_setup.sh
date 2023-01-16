@@ -52,7 +52,7 @@ sudo pacman -S "${PKGS[@]}" --noconfirm --needed
 echo "==> Установка AUR пакетов для окружения KDE Plasma"
 PKGS=(
 
-    'kde-cdemu-manager' # CDEmu интеграция (эмуляция образов)
+#    'kde-cdemu-manager' # CDEmu интеграция (эмуляция образов)
 )
 yay -S "${PKGS[@]}" --noconfirm --needed
 
