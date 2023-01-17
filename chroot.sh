@@ -136,7 +136,10 @@ Target = grub
 [Action]
 Description = Upgrading GRUB...
 When = PostTransaction
+# UEFI/GPT
 Exec = /usr/bin/sh -c "grub-install --efi-directory=/boot/efi; grub-mkconfig -o /boot/grub/grub.cfg"
+# BIOS/MBR
+# Exec = /usr/bin/sh -c "grub-install --target=i386-pc /dev/sda; grub-mkconfig -o /boot/grub/grub.cfg"
 EOF
 
 # Zram
@@ -160,7 +163,8 @@ sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 
 
 #sed -i -e 's/GRUB_GFXMODE=auto/GRUB_GFXMODE="1920x1080x32"/g' /etc/default/grub
 #sed -i -e 's/#GRUB_DISABLE_OS_PROBER/GRUB_DISABLE_OS_PROBER/' /etc/default/grub # Обнаруживать другие ОС и добавлять их в grub (нужен пакет os-prober)
-grub-install --efi-directory=/boot/efi
+grub-install --efi-directory=/boot/efi # UEFI/GPT
+# grub-install --target=i386-pc /dev/sda # BIOS/MBR
 grub-mkconfig -o /boot/grub/grub.cfg
 
 
