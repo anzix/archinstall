@@ -28,7 +28,7 @@ PKGS=(
 #  os-prober mtools # Для Dual-Boot
   grub efibootmgr
   dhcpcd netctl
-  iptables-nft
+  iptables-nft nftables
 #  networkmanager modemmanager # Для подключения к wifi с ноута: sudo nmtui
 #  wpa_supplicant  # Пакеты для ноутбуков
   intel-ucode
