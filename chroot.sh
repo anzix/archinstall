@@ -74,6 +74,7 @@ case $hypervisor in
             pacman -S virtualbox-guest-utils xf86-video-vmware --noconfirm --needed
             # Shared Folder
             usermod -a -G vboxsf $USER_NAME
+            # systemctl enable vboxservice.service
             ;;
   * ) ;;
 esac
