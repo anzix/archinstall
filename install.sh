@@ -24,13 +24,13 @@ PKGS=(
 #  linux-lts linux-lts-headers
   linux-firmware
   zsh git wget vim neovim
-  ntfs-3g exfat-utils dosfstools # Поддержка NTFS, exFAT, vFAT
-#  os-prober mtools # Для Dual-Boot
+  ntfs-3g exfat-utils dosfstools mtools # Поддержка NTFS, exFAT, vFAT, MS-DOS дисков
+#  os-prober # Для Dual-Boot
   grub efibootmgr
-  dhcpcd netctl
   iptables-nft nftables
-#  networkmanager modemmanager # Для подключения к wifi с ноута: sudo nmtui
-#  wpa_supplicant  # Пакеты для ноутбуков
+  networkmanager modemmanager netctl # Для подключения к wifi с ноута: sudo nmtui
+#  wpa_supplicant wireless_tools # Пакеты для ноутбуков
+#  dhcpcd
   intel-ucode
   xdg-user-dirs # Создание пользовательских XDG директории
   terminus-font # Шрифты разных размеров с кириллицей для tty
