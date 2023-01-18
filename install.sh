@@ -33,6 +33,7 @@ PKGS=(
 #  dhcpcd
   intel-ucode
   xdg-user-dirs # Создание пользовательских XDG директории
+  man-pages man-db # Мануалы
   terminus-font # Шрифты разных размеров с кириллицей для tty
   ccache
   zram-generator
