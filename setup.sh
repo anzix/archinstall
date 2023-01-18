@@ -116,7 +116,7 @@ PKGS=(
         'wine-staging'
         'wine-gecko'
         'wine-mono'
-        'winetricks'            # Протаскивать библиотеки/dll'ки в префикс
+        'winetricks'            # Протаскивать библиотеки/dll'ки в префикс Wine
 	'gamemode'              # +FPS для игр
         'lib32-gamemode'
 #        'gameconqueror'         # (Не)Альтернатива Cheat Engine
@@ -259,7 +259,8 @@ PKGS=(
         'heroic-games-launcher-bin' # Удобный EGS / GOG лаунчер для Linux
 #        'tlauncher'                # Legacy TL Minecraft лаунчер 
         'dxvk-bin'                  # Свежий dxvk для ручных префиксов wine
-        'protonup-qt'               # Удобная утилитка для скачки runner'ов wine
+        'protontricks'              # Протаскивать библиотеки/dll'ки в префикс Steam Proton
+	'protonup-qt'               # Удобная утилитка для скачки runner'ов wine
 #        'goverlay-bin'              # GUI настройка оверлей mangohud
         'mangohud'                  # Мониторинг для игр
         'lib32-mangohud'	    # Мониторинг для 32bin'ных игр
