@@ -129,7 +129,8 @@ PKGS=(
         'stow'                       # Менеджер sim-link'ов (для менеджмента dotfiles)
         'pacman-contrib'             # Скрипты и инструменты для Pacman
         'rebuild-detector'           # Показывает лист AUR пакетов которые были собраны на старых версиях зависимостей, для их дальнейшей пересборки
-        'reflector'                  # Инструмент для оптимизации зеркал Pacman
+        'archlinux-wallpaper'        # Arch Linux обои
+	'reflector'                  # Инструмент для оптимизации зеркал Pacman
         'rsync'                      # Быстрый и универсальный инструмент для копирования удаленных и локальных файлов
         'radeontop'                  # Мониторинг AMD GPU        
         'xdg-utils'                  # Command line tools that assist applications with a variety of desktop integration tasks
