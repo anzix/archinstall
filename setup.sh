@@ -344,6 +344,12 @@ sudo rmmod pcspkr
 
 sudo mkinitcpio -P
 
+echo "==> Оптимизация записи на диск"
+sudo sed -i -e s"/\Storage=.*/Storage=none/"g /etc/systemd/coredump.conf
+sudo sed -i -e s"/\Storage=.*/Storage=none/"g /etc/systemd/journald.conf
+sudo sed -i -e s"/\Seal=.*/Seal=no/"g /etc/systemd/journald.conf
+
+
 echo "==> Настройка оформления GTK к root окружению"
 #GTK 2.0
 sudo rm -r /usr/share/gtk-2.0/gtkrc
