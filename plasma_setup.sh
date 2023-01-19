@@ -98,9 +98,10 @@ Exec=pkexec env DISPLAY="$DISPLAY" XAUTHORITY="$XAUTHORITY" KDE_SESSION_VERSION=
 # Автозапуск
 mkdir -pv ~/.config/autostart/
 cd /usr/share/applications/
-sudo cp steam.desktop ~/.config/autostart/
+sudo ln -svi steam.desktop \
+             radeon-profile.desktop ~/.config/autostart/
 # Тихий запуск Steam
-sed -i 's|^Exec=/usr/bin/steam-runtime %U|Exec=/usr/bin/steam-runtime -silent %U|g' ~/.config/autostart/steam.desktop
+sudo sed -i 's|^Exec=/usr/bin/steam-runtime %U|Exec=/usr/bin/steam-runtime -silent %U|g' /usr/share/applications/steam.desktop
 
 cd ~
 
