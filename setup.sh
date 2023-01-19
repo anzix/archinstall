@@ -337,8 +337,12 @@ sudo pacman -Fy
 echo "==> Настройка граф. планшета Xp-Pen G640 для работы OpenTabletDriver"
 echo "blacklist hid_uclogic" | sudo tee -a /etc/modprobe.d/blacklist.conf >/dev/null
 sudo rmmod hid_uclogic
-sudo mkinitcpio -P
 
+# Отключение системного звукового сигнала
+echo "blacklist pcspkr" | sudo tee -a /etc/modprobe.d/nobeep.conf
+sudo rmmod pcspkr
+
+sudo mkinitcpio -P
 
 echo "==> Настройка оформления GTK к root окружению"
 #GTK 2.0
