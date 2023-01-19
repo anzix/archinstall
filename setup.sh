@@ -38,7 +38,7 @@ yay -Syy
 echo "==> Установка основных пакетов Pacman"
 PKGS=(
 
-    # --- Graphics driver
+    # --- Graphics driver / Hardware encoding
         
         'mesa'                    # Open source version of OpenGL
         'libva-mesa-driver'       # VA-API драйвер
