@@ -24,6 +24,7 @@ PKGS=(
     'kate'
     'dolphin'
     'ffmpegthumbs' # Предпросмотрщик видео для проводника dolphin
+    'kdialog' # GUI диалоги
     'ark'
     'plasma-wayland-session'
     'kwalletmanager'
