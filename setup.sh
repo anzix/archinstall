@@ -318,6 +318,10 @@ stow -vt ~ zsh gtk \
 ln -siv $HOME/dotfiles/base/zsh/.config/zsh/profile.zsh ~/.zprofile
 
 
+# Дать возможность gamemode выставлять приоритет процесса игры (renice)
+# https://wiki.archlinux.org/title/Gamemode#Renicing
+sudo usermod -aG gamemode $(whoami)
+
 # Настройка Firefox
 ./dotfiles/firefox_setup
 
