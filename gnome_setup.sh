@@ -23,6 +23,7 @@ PKGS=(
     'gnome-shell-extensions'
     'gnome-system-monitor'
     'gnome-text-editor'
+#    'gnome-themes-extra' # Экстра темы для Gnome
     'grilo-plugins'
     'malcontent'
     'mutter'
