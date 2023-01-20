@@ -347,7 +347,6 @@ sudo mkinitcpio -P
 echo "==> Оптимизация записи на диск"
 sudo sed -i -e s"/\Storage=.*/Storage=none/"g /etc/systemd/coredump.conf
 sudo sed -i -e s"/\Storage=.*/Storage=none/"g /etc/systemd/journald.conf
-sudo sed -i -e s"/\Seal=.*/Seal=no/"g /etc/systemd/journald.conf
 
 
 echo "==> Настройка оформления GTK к root окружению"
@@ -498,5 +497,11 @@ sudo systemctl enable --now radeon-profile-daemon
 systemctl --user enable --now mpDris2.service
 systemctl --user enable --now mpd
 systemctl --user enable opentabletdriver.service
+
+# Чистка
+sudo pacman -Qtdq &&
+    sudo pacman -Rns --noconfirm $(/bin/pacman -Qttdq)
+# Очистить заархивированный журнал
+sudo journalctl --rotate --vacuum-time=0.1
 
 echo -e "\e[1;32m----------Установка системы завершена! Выполните ребут----------\e[0m"
