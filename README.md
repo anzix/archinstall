@@ -1,15 +1,13 @@
 # Мой скрипт установки Arch Linux + мой dotfiles (Для личного использования)
 
 ```bash
-curl -O https://raw.githubusercontent.com/anzix/scriptinstall/main/install.sh
-chmod +x install.sh
-./install
+pacman -Sy git
+git clone https://github.com/anzix/scriptinstall
 ```
 
 После перезагрузки идёт настройка (моё необходимое) и установка окружения
 
 ```bash
-curl -O https://raw.githubusercontent.com/anzix/scriptinstall/main/setup.sh
 ```
 
 После завершения ребутимся.
