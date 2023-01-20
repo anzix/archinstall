@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Позаимствовано
+# https://github.com/YurinDoctrine/arch-linux-base-setup/blob/main/arch-linux-base-setup.sh
+
 clear >$(tty)
 
 read -p "Desktop environment (plasma / gnome / i3wm): " DESKTOP_ENVIRONMENT
