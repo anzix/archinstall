@@ -480,6 +480,10 @@ elif
 
   # Enable GRUB-BTRFS service
   sudo systemctl enable grub-btrfsd.service
+  
+  # Btrfs твики
+  sudo systemctl enable btrfs-scrub@home.timer 
+  sudo systemctl enable btrfs-scrub@-.timer 
 
   # Configure initramfs to boot into snapshots using overlayfs (read-only mode)
   sudo sed -i "s|keymap)|keymap grub-btrfs-overlayfs)|g" /etc/mkinitcpio.conf
