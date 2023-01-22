@@ -211,7 +211,8 @@ PKGS=(
 
         'terminus-font'                 # Позволяет выбрать более крупный шрифт для небольших экранов HiDPI
         'ttf-hack-nerd'                 # Шрифты для иконок в терминале
-        'ttf-sourcecodepro-nerd'        # Шрифты для иконок в терминале
+	'ttf-jetbrains-mono-nerd'       # Шрифт для коректной работы иконок в exa и p10k
+	'ttf-sourcecodepro-nerd'        # Шрифты для иконок в терминале
 #        'ttf-roboto'                    # Шрифт Google
         'ttf-font-awesome'              # Для появления значков (Из https://fontawesome.com/v5/cheatsheet) из тем и i3 статус баром появляться
         'ttf-opensans'                  # Шрифт для Телеграмма
@@ -279,9 +280,6 @@ PKGS=(
 #        'ruffle-nightly-bin'	     # Современный эмулятор Flash плеера для запуска .swf файлов
 
     # --- FONTS
-
-        'nerd-fonts-jetbrains-mono' # Шрифт для коректной работы иконок в exa и p10k
-
     # --- UTILITIES
 
 	'radeon-profile-git'	    # Графическое ПО управление питанием и вентиляторами AMDGPU
