@@ -41,8 +41,15 @@ yay -Syy
 echo "==> Установка основных пакетов Pacman"
 PKGS=(
 
-    # --- Graphics driver / Hardware encoding
-        
+    # --- XORG / Graphics driver / Hardware encoding
+	
+        'xterm'                   # Терминал для TTY
+        'xorg-server'             # XOrg сервер
+        'xorg-xinit'              # XOrg инициализация
+        'xorg-xrandr'             # Менять разрешение
+        'xorg-xinput'             # Для работы граф.планшета XP-PEN G640 + OpenTabletDriver
+        'xf86-video-amdgpu'       # Открытые драйвера AMDGPU
+
         'mesa'                    # Open source version of OpenGL
         'libva-mesa-driver'       # VA-API драйвер
         'lib32-libva-mesa-driver' # VA-API драйвер (32bit)
@@ -87,7 +94,7 @@ PKGS=(
 #        'alsa-firmware'
 #        'alsa-card-profiles'
 
-    # --- AUDIO Other
+    # --- AUDIO Разное / Кодеки
 
         'mpd'               # Музыкальный сервер к которому можно конектится
         'mpc'               # Контроллер управления музыкой через терминал
