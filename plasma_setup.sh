@@ -20,6 +20,7 @@ PKGS=(
     'powerdevil'
     'xdg-desktop-portal'
     'xdg-desktop-portal-kde'
+    'okteta' # QT Hex редактор
     'konsole'
     'kate'
 #    'doublecmd-qt5' # Альтернатива Total Commander
