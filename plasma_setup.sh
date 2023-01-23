@@ -32,6 +32,7 @@ PKGS=(
     'spectacle'
     'okular'
     'gwenview'
+    'partitionmanager' # Менеджер дисков KDE
     'plasma-browser-integration'
     'kdeplasma-addons'
     'plasma-firewall'
