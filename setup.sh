@@ -492,6 +492,7 @@ elif
   sudo systemctl enable btrfs-scrub@-.timer 
 
   # Configure initramfs to boot into snapshots using overlayfs (read-only mode)
+  # Source: https://github.com/Antynea/grub-btrfs/blob/master/initramfs/readme.md
   sudo sed -i "s|keymap)|keymap grub-btrfs-overlayfs)|g" /etc/mkinitcpio.conf
 
   # Пересоздаём initramfs
