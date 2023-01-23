@@ -9,6 +9,7 @@ LC_COLLATE=C
 EOF
 
 # Смена раскладки клавиатуры в tty
+# TODO: ru-mab — кодировка UTF-8 переключение на Ctrl+Shift
 if [ ${XKB_LAYOUT} = '1' ]; then
   echo "KEYMAP=ruwin_alt_sh-UTF-8" > /etc/vconsole.conf
 elif [ ${XKB_LAYOUT} = '2' ]; then
