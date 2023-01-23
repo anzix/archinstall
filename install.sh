@@ -7,7 +7,7 @@ export LANG=ru_RU.UTF-8
 
 clear
 
-# Синхронизация системных часов
+# Синхронизация часов материнской платы
 timedatectl set-ntp true
 
 # --- Переменные
