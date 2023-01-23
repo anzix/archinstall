@@ -22,6 +22,7 @@ PKGS=(
     'xdg-desktop-portal-kde'
     'konsole'
     'kate'
+#    'doublecmd-qt5' # Альтернатива Total Commander
     'dolphin'
     'ffmpegthumbs' # Предпросмотрщик видео для проводника dolphin
     'kdialog' # GUI диалоги
