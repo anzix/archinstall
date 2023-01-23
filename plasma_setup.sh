@@ -26,6 +26,7 @@ PKGS=(
     'ffmpegthumbs' # Предпросмотрщик видео для проводника dolphin
     'kdialog' # GUI диалоги
     'ark'
+    'kcalc'
     'plasma-wayland-session'
     'kwalletmanager'
     'spectacle'
