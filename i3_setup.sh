@@ -1,16 +1,6 @@
 #!/bin/bash
 echo "==> Установка пакетов для окружения i3-wm"
 PKGS=(
-
-    # --- XORG
-
-        'xterm'                   # Терминал для TTY
-        'xorg-server'             # XOrg сервер
-        'xorg-xinit'              # XOrg инициализация
-        'xorg-xrandr'             # Менять разрешение
-        'xorg-xinput'             # Для работы граф.планшета XP-PEN G640 + OpenTabletDriver
-        'xf86-video-amdgpu'       # Открытые драйвера AMDGPU
-
 	# --- i3-wm
 
         'i3-wm'                 # i3wm с отступами (gaps)
