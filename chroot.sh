@@ -34,7 +34,7 @@ echo root:$USER_PASSWORD | chpasswd
 
 # Инициализировать связку ключей Pacman
 pacman-key --init
-pacman-key --populate
+pacman-key --populate archlinux
 
 # Добавления юзера и присваивание групп к юзеру
 useradd -m -g users -G wheel,audio,video,input,optical,games -s /bin/zsh $USER_NAME
