@@ -127,8 +127,8 @@ PKGS=(
         'wine-gecko'
         'wine-mono'
         'winetricks'            # Протаскивать библиотеки/dll'ки в префикс Wine
-	'gamemode'              # +FPS для игр
-        'lib32-gamemode'
+	'gamemode'              # Игровой режим для игр
+        'lib32-gamemode'        # Игровой режим для 32 bit'ных игр
 #        'gameconqueror'         # (Не)Альтернатива Cheat Engine
 #        'pcsx2'                 # PS2 Эмулятор
 #        'dolphin-emu'           # Gamecube Эмулятор
@@ -218,7 +218,7 @@ PKGS=(
 
         'terminus-font'                 # Позволяет выбрать более крупный шрифт для небольших экранов HiDPI
         'ttf-hack-nerd'                 # Шрифты для иконок в терминале
-	'ttf-jetbrains-mono-nerd'       # Шрифт для коректной работы иконок в exa и p10k
+	'ttf-jetbrains-mono-nerd'       # Шрифты для иконок в терминале
 	'ttf-sourcecodepro-nerd'        # Шрифты для иконок в терминале
 #        'ttf-roboto'                    # Шрифт Google
         'ttf-font-awesome'              # Для появления значков (Из https://fontawesome.com/v5/cheatsheet) из тем и i3 статус баром появляться
