@@ -502,6 +502,9 @@ elif
   sudo grub-mkconfig -o /boot/grub/grub.cfg
 fi
 
+# Усиление защиты
+sudo sed -ri -e "s/^#PermitRootLogin.*/PermitRootLogin\ no/g" /etc/ssh/sshd_config
+
 # Отключить мониторный режим микрофона Samson C01U Pro при старте окружения
 amixer sset -c 3 Mic mute
 
