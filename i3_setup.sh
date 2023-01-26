@@ -67,14 +67,13 @@ yay -S "${PKGS[@]}" --noconfirm --needed
 cd dotfiles/base
 stow -vt ~ x alacritty dunst rofi feh greenclip i3 polybar picom sxhkd lf libfm nitrogen nsxiv zathura qt5ct redshift
 
-echo "==> Включаю AMD Tear Free и VRR"
+echo "==> Настройка Xorg для AMDGPU"
 sudo bash -c 'cat <<EOF > /etc/X11/xorg.conf.d/20-amdgpu.conf
 Section "Device"
      Identifier "AMD"
      Driver "amdgpu"
-     Option "TearFree" "true"
-     Option "VariableRefresh" "true"
-     Option "DRI" "3"
+     Option "TearFree" "false"
+     Option "EnablePageFlip" "off"
 EndSection
 EOF'
 
