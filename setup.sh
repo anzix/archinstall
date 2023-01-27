@@ -48,6 +48,7 @@ PKGS=(
         'xorg-xinit'              # XOrg инициализация
         'xorg-xrandr'             # Менять разрешение
         'xorg-xinput'             # Для работы граф.планшета XP-PEN G640 + OpenTabletDriver
+	'xorg-xgamma'             # Позволяет менять и исправлять гамму для игр используя Lutris
         'xf86-video-amdgpu'       # Открытые драйвера AMDGPU
 
         'mesa'                    # Open source version of OpenGL
@@ -356,7 +357,7 @@ sudo mkinitcpio -P
 echo "==> Оптимизация записи на диск"
 sudo sed -i -e s"/\Storage=.*/Storage=none/"g /etc/systemd/coredump.conf
 sudo sed -i -e s"/\Storage=.*/Storage=none/"g /etc/systemd/journald.conf
-
+sudo systemctl daemon-reload
 
 echo "==> Настройка оформления GTK к root окружению"
 #GTK 2.0
