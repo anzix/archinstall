@@ -441,6 +441,10 @@ elif [ ${DESKTOP_ENVIRONMENT} = "i3wm" ]; then
     ~/i3wm_install.sh
 fi
 
+
+# skip snapshots from updatedb (mlocate/plocate)
+#sudo sed -i -e 's/PRUNENAMES = "/PRUNENAMES = "/.snapshots /g' /etc/updatedb.conf
+
 # Обнаружение файловой системы
 if grep -q ext4 "/etc/fstab"; then
   yay -S timeshift-bin --noconfirm --needed
