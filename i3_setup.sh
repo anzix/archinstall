@@ -74,6 +74,7 @@ Section "Device"
      Driver "amdgpu"
      Option "TearFree" "false"
      Option "EnablePageFlip" "off"
+     Option "VariableRefresh" "true"
 EndSection
 EOF'
 
