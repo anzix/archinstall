@@ -442,8 +442,10 @@ elif [ ${DESKTOP_ENVIRONMENT} = "i3wm" ]; then
 fi
 
 
-# skip snapshots from updatedb (mlocate/plocate)
-#sudo sed -i -e 's/PRUNENAMES = "/PRUNENAMES = "/.snapshots /g' /etc/updatedb.conf
+# Пропускать снапшоты с updatedb (Предотвращает замедление моментальных снимков)
+#sudo sed -i 's/PRUNEPATHS = "/PRUNEPATHS = "\/.snapshots /' /etc/updatedb.conf
+#sudo updatedb
+#sudo systemctl enable updatedb.timer
 
 # Обнаружение файловой системы
 if grep -q ext4 "/etc/fstab"; then
