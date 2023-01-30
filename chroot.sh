@@ -152,7 +152,7 @@ compression-algorithm = zstd
 EOF
 
 if [ "$(systemd-detect-virt)" = "none" ]; then
-# Syslog оптимизации
+# Sysctl оптимизации
 # https://ventureo.codeberg.page/source/generic-system-acceleration.html#swap
 # https://wiki.archlinux.org/title/Sysctl#Improving_performance
 
