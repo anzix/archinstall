@@ -157,10 +157,10 @@ if [ "$(systemd-detect-virt)" = "none" ]; then
 # https://wiki.archlinux.org/title/Sysctl#Improving_performance
 
 tee /etc/sysctl.d/99-sysctl.conf > /dev/null << EOF
-vm.swappiness=10
-vm.vfs_cache_pressure=50
-vm.dirty_ratio=10
-vm.dirty_background_ratio=5
+vm.swappiness = 10
+vm.vfs_cache_pressure = 50
+vm.dirty_ratio = 10
+vm.dirty_background_ratio = 5
 
 # Увеличение длины очереди входящих пакетов.
 # После получения пакетов из кольцевого буфера сетевой карты они помещаются в специальную очередь в ядре.
@@ -171,6 +171,40 @@ net.core.netdev_max_backlog = 16384
 # Максимальное число входящих соединений, ожидающих приёма (accept) программой, на одном сокете: (default 4096):
 net.core.somaxconn = 8192
 
+# Скрывает любые сообщения ядра с консоли.
+kernel.printk = 3 3 3 3
+
+# TCP Fast Open — это расширение протокола управления передачей (TCP), которое помогает уменьшить задержки в сети,
+# позволяя начать передачу данных сразу при отправке клиентом первого TCP SYN [3].
+# Значение 3 вместо стандартного 1 включит TCP Fast Open как для входящих, так и для исходящих соединений:
+net.ipv4.tcp_fastopen = 3
+
+# Включение BBR
+# Алгоритм управления перегрузками BBR может помочь достичь более высокой пропускной способности и более низких задержек для интернет-трафика.
+net.core.default_qdisc = cake
+net.ipv4.tcp_congestion_control = bbr
+
+# Защита от tcp time-wait assassination hazards, отбрасывание RST-пакетов для сокетов в состоянии time-wait.
+# За пределами Linux поддерживается не очень широко, но соответствует RFC:
+net.ipv4.tcp_rfc1337 = 1
+
+# При включении reverse path filtering ядро будет проверять источник пакетов, полученных со всех интерфейсов машины.
+# Это может защитить от злоумышленников, которые используют методы подмены IP-адресов для нанесения вреда.
+net.ipv4.conf.default.rp_filter = 1
+net.ipv4.conf.all.rp_filter = 1
+
+# Отключение перенаправлений ICMP
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.default.accept_redirects = 0
+net.ipv4.conf.all.secure_redirects = 0
+net.ipv4.conf.default.secure_redirects = 0
+net.ipv6.conf.all.accept_redirects = 0
+net.ipv6.conf.default.accept_redirects = 0
+net.ipv4.conf.all.send_redirects = 0
+net.ipv4.conf.default.send_redirects = 0
+
+# To use the new FQ-PIE Queue Discipline (>= Linux 5.6) in systems with systemd (>= 217), will need to replace the default fq_codel.
+net.core.default_qdisc = fq_pie
 EOF
 fi
 
