@@ -152,8 +152,9 @@ compression-algorithm = zstd
 EOF
 
 if [ "$(systemd-detect-virt)" = "none" ]; then
-# Настройка подкачки
+# Настройка подкачки и Virtual memory
 # https://ventureo.codeberg.page/source/generic-system-acceleration.html#swap
+# https://wiki.archlinux.org/title/Sysctl#Virtual_memory
 
 tee /etc/sysctl.d/99-sysctl.conf > /dev/null << EOF
 vm.swappiness=10
