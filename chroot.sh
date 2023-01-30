@@ -152,15 +152,25 @@ compression-algorithm = zstd
 EOF
 
 if [ "$(systemd-detect-virt)" = "none" ]; then
-# Настройка подкачки и Virtual memory
+# Syslog оптимизации
 # https://ventureo.codeberg.page/source/generic-system-acceleration.html#swap
-# https://wiki.archlinux.org/title/Sysctl#Virtual_memory
+# https://wiki.archlinux.org/title/Sysctl#Improving_performance
 
 tee /etc/sysctl.d/99-sysctl.conf > /dev/null << EOF
 vm.swappiness=10
 vm.vfs_cache_pressure=50
 vm.dirty_ratio=10
 vm.dirty_background_ratio=5
+
+# Increasing the size of the receive queue.
+# The received frames will be stored in this queue after taking them from the ring buffer on the network card.
+# Increasing this value for high speed cards may help prevent losing packets:
+net.core.netdev_max_backlog=16384
+
+# Increase the maximum connections
+#The upper limit on how many connections the kernel will accept (default 128):
+net.core.somaxconn=8192
+
 EOF
 fi
 
