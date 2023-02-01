@@ -461,7 +461,9 @@ elif
 
   # Create Snapper config
   sudo snapper -c root create-config /
-
+  # Информация о размере снапшота btrfs
+  #btrfs quota enable /
+  
   # Delete Snapper's .snapshots subvolume
   sudo btrfs subvolume delete /.snapshots
 
