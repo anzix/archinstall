@@ -476,7 +476,7 @@ elif
   sudo btrfs subvol get-def /
 
   # Access for non-root users
-  sudo chown :wheel /.snapshots
+  sudo chown -R :wheel /.snapshots
 
   # Configure Snapper
   # Позволять группе wheel использовать snapper ls non-root пользователю
