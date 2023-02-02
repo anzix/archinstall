@@ -24,6 +24,7 @@ PKGS=(
     'konsole'
     'kate'
 #    'doublecmd-qt5' # Альтернатива Total Commander
+    'kdiskmark' # Бенчмарк для накопителей
     'dolphin'
     'ffmpegthumbs' # Предпросмотрщик видео для проводника dolphin
     'kdialog' # GUI диалоги
