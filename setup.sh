@@ -404,7 +404,7 @@ if [ ${NETWORK_VM} = '1' ]; then
 elif [ ${NETWORK_VM} = '2' ]; then
   echo "==> Создане моста и настройка сети на ваших виртуальных машинах"
   touch ~/.config/br10.xml
-  tee -a ~/.config/br10.xml << END
+  tee -a ~/.config/br10.xml > /dev/null << END
 <network>
 <name>br10</name>
 <forward mode='nat'>
