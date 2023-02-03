@@ -522,7 +522,7 @@ sudo systemctl enable bluetooth.service
 sudo systemctl enable --now radeon-profile-daemon
 systemctl --user enable --now mpDris2.service
 systemctl --user enable --now mpd
-systemctl --user enable --now cdemu-daemon.service
+#systemctl --user enable --now cdemu-daemon.service
 systemctl --user enable opentabletdriver.service
 
 
