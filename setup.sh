@@ -109,10 +109,11 @@ PKGS=(
         'gstreamer'
         'gst-libav'
         'gst-plugins-base'
-        'gst-plugins-good'
+        'lib32-gst-plugins-base'
+	'gst-plugins-good'
+	'lib32-gst-plugins-good'
         'gst-plugins-bad'   # Библеотеки для воспроизведения мультимедия (для запуска старья)
         'gst-plugins-ugly'  # Библеотеки для воспроизведения мультимедия (для запуска старья)
-        'lib32-gst-plugins-good'
         'gstreamer-vaapi'   # Эффективный плагин кодировщик для RDNA1 AMDGPU (для использования нужен AUR пакет obs-gstreamer)
 
     # --- BLUETOOTH
