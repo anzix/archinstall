@@ -149,6 +149,7 @@ PKGS=(
         'htop'                       # Простой консольный диспетчер задач
         'btop'                       # TUI Диспетчер задач
         'neofetch'                   # Чтобы выпендриватся
+	'inxi'                       # Системная информация PC
         'exfat-utils'                # Поддержка файловой системы exFAT (Для sd-карт)
         'ntfs-3g'                    # Поддержка файловой системы NTFS (Для Windows)
         'e2fsprogs'                  # Поддержка файловой системы ext4
@@ -294,7 +295,6 @@ PKGS=(
 
 	'radeon-profile-git'	    # Графическое ПО управление питанием и вентиляторами AMDGPU
 	'radeon-profile-daemon-git' # Демон для управление питанием и вентиляторами AMDGPU
-	'inxi'                      # Системная информация PC
         'obfs4proxy'                # Обфускация трафика тор
         'webtorrent-cli'            # Просмотр онлайн торренты (Необходимо для mpv-webtorrent-hook) 
         'xidel'                     # (Необходимо для mpv-webtorrent-hook)
