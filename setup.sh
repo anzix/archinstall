@@ -274,6 +274,7 @@ PKGS=(
         'heroic-games-launcher-bin' # Удобный EGS / GOG лаунчер для Linux
 #        'tlauncher'                # Legacy TL Minecraft лаунчер 
         'dxvk-bin'                  # Свежий dxvk для ручных префиксов wine
+	'vkd3d-proton'              # Свежий vkd3d-proton (форк vkd3d) для ручных префиксов wine
         'protontricks'              # Протаскивать библиотеки/dll'ки в префикс Steam Proton
 	'protonup-qt'               # Удобная утилитка для скачки runner'ов wine
 #        'goverlay-bin'              # GUI настройка оверлей mangohud
