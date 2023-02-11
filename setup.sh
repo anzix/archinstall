@@ -292,6 +292,9 @@ PKGS=(
 #        'ruffle-nightly-bin'	     # Современный эмулятор Flash плеера для запуска .swf файлов
 
     # --- FONTS
+    
+    	'otf-monocraft'             # Пиксельный шрифт для Mangohud
+	
     # --- UTILITIES
 
 	'radeon-profile-git'	    # Графическое ПО управление питанием и вентиляторами AMDGPU
