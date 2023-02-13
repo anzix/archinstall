@@ -303,8 +303,8 @@ PKGS=(
         'webtorrent-cli'            # Просмотр онлайн торренты (Необходимо для mpv-webtorrent-hook) 
         'xidel'                     # (Необходимо для mpv-webtorrent-hook)
         'obs-gstreamer'             # Более эффективный плагин кодировщик для OBS (Для RDNA 1)
-        'obs-vkcapture'             # OBS плагин для захвата напрямую через API OpenGL/Vulkan (минимизирует затраты)
-        'lib32-obs-vkcapture'
+        'obs-vkcapture-git'         # OBS плагин для захвата напрямую через API OpenGL/Vulkan (минимизирует затраты)
+        'lib32-obs-vkcapture-git'
         'amd-vulkan-prefixes'       # Быстрое переключение icd драйверов AMD используя переменные (vk_radv, vk_amdvlk, vk_pro)
 #        'android-apktool'           # Декомпиляция apk файлов
 	
