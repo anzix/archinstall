@@ -51,6 +51,8 @@ PKGS=(
     'plasma5-applets-window-buttons' # Апплет смены раскладки клавиатуры
     'breeze-gtk' # Improve integration of GTK applications
     'kde-gtk-config' # GTK2 and GTK3 Configurator for KDE
+    
+#    'flatpak-kcm' # Интеграция разрешений Flatpak
 )
 sudo pacman -S "${PKGS[@]}" --noconfirm --needed
 
