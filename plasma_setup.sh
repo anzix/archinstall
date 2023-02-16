@@ -27,7 +27,7 @@ PKGS=(
     'kdiskmark' # Бенчмарк для накопителей
     'dolphin'
     'ffmpegthumbs' # Предпросмотрщик видео для проводника dolphin
-	'icoutils' # Отобраения иконок для wine (exe файлов) в dolphin
+    'icoutils' # Отобраения иконок для wine (exe файлов) в dolphin
     'kdialog' # GUI диалоги
     'ark'
     'kcalc'
