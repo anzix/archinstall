@@ -46,7 +46,6 @@ PKGS=(
     'libappindicator-gtk3' # Для правильного отображения иконок в трее
     'wl-clipboard' # Wayland clipboard copy+paste
 
-    'sddm'
     'sddm-kcm' # KDE Config Module for SDDM
 
     'plasma5-applets-window-buttons' # Апплет смены раскладки клавиатуры
@@ -58,7 +57,8 @@ sudo pacman -S "${PKGS[@]}" --noconfirm --needed
 
 echo "==> Установка AUR пакетов для окружения KDE Plasma"
 PKGS=(
-
+    
+    'sddm-git' # Git версия дисплей менеджера (с исправленным долгим выключением)
 #    'kde-cdemu-manager' # CDEmu интеграция (эмуляция образов)
 )
 yay -S "${PKGS[@]}" --noconfirm --needed
