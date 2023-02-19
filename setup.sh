@@ -125,12 +125,13 @@ PKGS=(
 
         'steam'
         'lutris'                # GUI обвёртка Wine
-        'wine-staging'
+        'wine-staging'          # Тестовый Wine с последними исправлениями и функциями
         'wine-gecko'
         'wine-mono'
         'winetricks'            # Протаскивать библиотеки/dll'ки в префикс Wine
 	'gamemode'              # Игровой режим для игр
         'lib32-gamemode'        # Игровой режим для 32 bit'ных игр
+	'zerotier-one'          # Создание и подключение к виртуальным сетям (для игр с друзьями)
 #        'gameconqueror'         # (Не)Альтернатива Cheat Engine
 #        'pcsx2'                 # PS2 Эмулятор
 #        'dolphin-emu'           # Gamecube Эмулятор
@@ -272,12 +273,12 @@ PKGS=(
 
 #        'lgogdownloader-qt5'        # CLI обвёртка GOG (с рабочим логином)
         'heroic-games-launcher-bin' # Удобный EGS / GOG лаунчер для Linux
-#        'tlauncher'                # Legacy TL Minecraft лаунчер 
-        'dxvk-bin'                  # Свежий dxvk для ручных префиксов wine
-	'vkd3d-proton'              # Свежий vkd3d-proton (форк vkd3d) для ручных префиксов wine
+        'tlauncher'                # Legacy TL Minecraft лаунчер 
+        'dxvk-bin'                  # Свежий dxvk для ручных префиксов Wine
+        'vkd3d-proton'              # Свежий vkd3d-proton (форк vkd3d) для ручных префиксов Wine
         'protontricks'              # Протаскивать библиотеки/dll'ки в префикс Steam Proton
-	'protonup-qt'               # Удобная утилитка для скачки runner'ов wine
-#        'goverlay-bin'              # GUI настройка оверлей mangohud
+	'protonup-qt'               # Удобная утилитка для скачки runner'ов Wine
+#        'goverlay-bin'              # GUI настройка оверлея MangoHud
         'mangohud'                  # Мониторинг для игр
         'lib32-mangohud'	    # Мониторинг для 32bin'ных игр
         'vkbasalt'                  # Постпроцессинг для игр
@@ -525,6 +526,7 @@ amixer sset -c 3 Mic mute
 # Врубаю сервисы
 sudo systemctl enable bluetooth.service
 sudo systemctl enable --now radeon-profile-daemon
+#sudo systemctl enable --now zerotier-one.service
 systemctl --user enable --now mpDris2.service
 systemctl --user enable --now mpd
 #systemctl --user enable --now cdemu-daemon.service
