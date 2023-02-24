@@ -204,7 +204,7 @@ kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Overview" "Meta+Tab,
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window Close" "Meta+Shift+Q,none,Close Window"
 
 # Включает 2 рабочих стола
-kwriteconfig5 --file kwinrc --group Desktops --key Name_2 "Desktop 2"
+kwriteconfig5 --file kwinrc --group Desktops --key Name_2 "Рабочий стол 2"
 kwriteconfig5 --file kwinrc --group Desktops --key Number "2"
 kwriteconfig5 --file kwinrc --group Desktops --key Rows "1"
 
