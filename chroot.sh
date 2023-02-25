@@ -38,7 +38,7 @@ pacman-key --init
 pacman-key --populate archlinux
 
 # Добавления юзера и присваивание групп к юзеру
-useradd -m -g users -G wheel,audio,video,input,optical,games -s /bin/zsh $USER_NAME
+useradd -m -g users -G wheel,audio,video,input,optical,uucp,games -s /bin/zsh $USER_NAME
 echo $USER_NAME:$USER_PASSWORD | chpasswd
 
 # Привелегии sudo
