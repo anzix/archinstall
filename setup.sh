@@ -137,7 +137,7 @@ PKGS=(
 #        'dolphin-emu'           # Gamecube Эмулятор
 
 
-    # --- UTILITIES
+    # --- UTILITIES AND STUFF
 
         'stow'                       # Менеджер sim-link'ов (для менеджмента dotfiles)
         'pacman-contrib'             # Скрипты и инструменты для Pacman
@@ -209,7 +209,8 @@ PKGS=(
         'java-runtime-common'
         'lib32-sdl2'                  # Для работы steamcmd
         'lib32-dbus'                  # Для работы steamcmd
-        'virt-manager'                # Менеджер виртуальных машин
+        'v4l2loopback-dkms'           # Для поддержки виртуальной камеры для OBS
+	'virt-manager'                # Менеджер виртуальных машин
         'qemu-base'                   # Виртуализация
         'qemu-emulators-full'         # Поддержка всех архитектур для виртуализации
         'dnsmasq' 
