@@ -288,7 +288,7 @@ PKGS=(
 	'reshade-shaders-git'	    # Набор шейдеров необходимых для VkBasalt
 #        'rpcs3-bin'                 # PS3 Эмулятор
 #        'cemu'                      # Wii U Эмулятор
-#	'game-devices-udev'         # (Не нужно) Udev правила для работы контроллеров в Steam
+	'game-devices-udev'         # Udev правила для работы контроллеров 8BitDo в эмуляторов Cemu и других
 	'joycond-git'               # Альтернатива BetterJoy
         'joycond-cemuhook-git'      # Для работы по UDP Switch контроллера (8BitDo Pro 2) в режиме гироскопа
 #        'flashplayer-standalone'    # (Устаревшее) Запуск локальных .swf (Flash) файлов
