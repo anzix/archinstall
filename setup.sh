@@ -124,6 +124,8 @@ PKGS=(
     # --- GAMING and EMULATION
 
         'steam'
+	'mangohud'              # Мониторинг для игр
+	'lib32-mangohud'	# Мониторинг для 32bin'ных игр
         'lutris'                # GUI обвёртка Wine
         'wine-staging'          # Тестовый Wine с последними исправлениями и функциями
         'wine-gecko'
@@ -281,8 +283,6 @@ PKGS=(
         'protontricks'              # Протаскивать библиотеки/dll'ки в префикс Steam Proton
 	'protonup-qt'               # Удобная утилитка для скачки runner'ов Wine
 #        'goverlay-bin'              # GUI настройка оверлея MangoHud
-        'mangohud'                  # Мониторинг для игр
-        'lib32-mangohud'	    # Мониторинг для 32bin'ных игр
         'vkbasalt'                  # Постпроцессинг для игр
         'lib32-vkbasalt' 	    # Постпроцессинг для 32bin'ных игр
 	'reshade-shaders-git'	    # Набор шейдеров необходимых для VkBasalt
