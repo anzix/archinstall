@@ -41,10 +41,10 @@ PKGS=(
 )
 
 read -p "Имя хоста (hostname): " HOST_NAME
-export HOST_NAME
+export HOST_NAME=${HOST_NAME:-arch} 
 
 read -p "Имя пользователя (Может быть только в нижнем регистре и без знаков): " USER_NAME
-export USER_NAME
+export USER_NAME=${USER_NAME:-user} 
 
 read -p "Пароль пользователя: " USER_PASSWORD
 export USER_PASSWORD
@@ -53,12 +53,12 @@ read -p "Sudo с запросом пароля? [y/n]: " SUDO_PRIV
 export SUDO_PRIV
 
 read -p "Тип смены раскладки клавиатуры
-1 - Alt+Shift, 2 - Caps Lock: " XKB_LAYOUT
-export XKB_LAYOUT
+1 - Alt+Shift (по дефолту), 2 - Caps Lock: " XKB_LAYOUT
+export XKB_LAYOUT=${XKB_LAYOUT:-1} 
 
 read -p "Файловая система
-1 - ext4, 2 - btrfs: " FS
-export FS
+1 - ext4 (по дефолту), 2 - btrfs: " FS
+export FS=${FS:-1} 
 
 # Обнаружение часового пояса
 export time_zone=$(curl -s https://ipinfo.io/timezone)
