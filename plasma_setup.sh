@@ -26,8 +26,9 @@ PKGS=(
 #    'doublecmd-qt5' # Альтернатива Total Commander
     'kdiskmark' # Бенчмарк для накопителей
     'dolphin'
+    'kio-admin' # Поддержка управления файлами от имени администратора для dolphin
     'ffmpegthumbs' # Предпросмотрщик видео для проводника dolphin
-    'icoutils' # Отобраения иконок для wine (exe файлов) в dolphin
+#    'icoutils' # Отобраения иконок для wine (exe файлов) в dolphin
     'kdialog' # GUI диалоги
     'ark'
     'kcalc'
@@ -54,18 +55,10 @@ PKGS=(
     'kde-gtk-config' # GTK2 and GTK3 Configurator for KDE
     
 #    'flatpak-kcm' # Интеграция разрешений Flatpak
+
+    'sddm' # Дисплей менеджер
 )
 sudo pacman -S "${PKGS[@]}" --noconfirm --needed
-
-
-echo "==> Установка AUR пакетов для окружения KDE Plasma"
-PKGS=(
-    
-    'sddm-git' # Git версия дисплей менеджера (с исправленным долгим выключением)
-#    'kde-cdemu-manager' # CDEmu интеграция (эмуляция образов)
-)
-yay -S "${PKGS[@]}" --noconfirm --needed
-
 
 # Отключает baloo (файловый индекстор)
 sudo balooctl suspend # Усыпляем работу индексатора
@@ -89,20 +82,20 @@ user_pref("media.hardwaremediakeys.enabled", false);
 EOF
 done
 
-# Dolphin Root доступ
-echo '[Desktop Entry]
-X-KDE-ServiceTypes=KonqPopupMenu/Plugin
-X-KDE-Priority=TopLevel
-Type=Service
-MimeType=all/all
-Actions=EditFromRoot
-Icon=folder-red
-
-[Desktop Action EditFromRoot]
-Name=Edit from root
-Name[ru]=Dolphin-Root
-Icon=folder-red
-Exec=pkexec env DISPLAY="$DISPLAY" XAUTHORITY="$XAUTHORITY" KDE_SESSION_VERSION=5 KDE_FULL_SESSION=true dbus-launch dolphin' | sudo tee -a /usr/share/kservices5/ServiceMenus/Dolphin-Root.desktop >/dev/null
+# Dolphin Root доступ (заменён на пакет kio-admin)
+#echo '[Desktop Entry]
+#X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+#X-KDE-Priority=TopLevel
+#Type=Service
+#MimeType=all/all
+#Actions=EditFromRoot
+#Icon=folder-red
+#
+#[Desktop Action EditFromRoot]
+#Name=Edit from root
+#Name[ru]=Dolphin-Root
+#Icon=folder-red
+#Exec=pkexec env DISPLAY="$DISPLAY" XAUTHORITY="$XAUTHORITY" KDE_SESSION_VERSION=5 KDE_FULL_SESSION=true dbus-launch dolphin' | sudo tee -a /usr/share/kservices5/ServiceMenus/Dolphin-Root.desktop >/dev/null
 
 # Автозапуск
 mkdir -pv ~/.config/autostart/
