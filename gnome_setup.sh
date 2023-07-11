@@ -28,6 +28,7 @@ PKGS=(
     'malcontent'
     'mutter'
     'ghex' # Hex редактор
+    'gpaste' # Clipboard Manager
     'nautilus'
     'sushi' # Быстрый предварительный просмотрщик для Nautilus
     'totem' # Видеоплеер
@@ -51,6 +52,13 @@ PKGS=(
 
 	'gcdemu' # CDEmu интеграция (эмуляция образов)
 	'adw-gtk3' # Тема adw-gtk3
+
+#        'gnome-shell-extension-dash-to-dock' # Dock панель
+#        'gnome-shell-extension-desktop-icons-ng' # Иконки на рабочем столе
+#        'gnome-shell-extension-freon-git' # Отображение CPU/GPU/HDD/SSD температуры
+#        'gnome-shell-extension-kimpanel-git' # Реализация KDE kimpanel для GNOME Shell, теперь поддерживает fcitx
+#        'gnome-shell-extension-appindicator' # Трей
+
 )
 yay -S "${PKGS[@]}" --noconfirm --needed
 
