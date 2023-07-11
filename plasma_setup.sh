@@ -36,6 +36,7 @@ PKGS=(
     'spectacle'
     'okular'
     'gwenview'
+    'kimageformats' # Добавляет поддержку форматов jxl, xcf, psd для gwenview
     'partitionmanager' # Менеджер дисков KDE
     'plasma-browser-integration'
     'kdeplasma-addons'
