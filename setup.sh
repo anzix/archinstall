@@ -388,6 +388,8 @@ UUID=CA8C4EB58C4E9BB7   /media/Other    ntfs-3g        rw,nofail,errors=remount-
 UUID=A81C9E2F1C9DF890   /media/Media    ntfs-3g        rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
 UUID=30C4C35EC4C32546   /media/Games    ntfs-3g        rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0" | sudo tee -a /etc/fstab >/dev/null
 
+# Обнаружение виртуалки
+if [ "$(systemd-detect-virt)" = "none" ]; then
 echo "==> Настройка libvirt/QEMU/KVM для виртуализции"
 sudo cp /etc/libvirt/libvirtd.conf /etc/libvirt/libvirtd.conf.bak
 sudo sed -i 's|^#unix_sock_group|unix_sock_group|' /etc/libvirt/libvirtd.conf
@@ -433,8 +435,10 @@ END
   sudo virsh net-autostart --network br10
   sudo virsh net-autostart --network default
 fi
+fi
 
 # Установка и настройка окружения
+# TODO: Необходимо доделать
 if [ ${DESKTOP_ENVIRONMENT} = "plasma" ]; then
     curl -o ~/plasma_setup.sh https://raw.githubusercontent.com/anzix/scriptinstall/main/plasma_setup.sh
     chmod +x ~/plasma_setup.sh
