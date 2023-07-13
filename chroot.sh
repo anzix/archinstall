@@ -129,12 +129,13 @@ When = PostTransaction
 Exec = /usr/bin/paccache -rk2
 EOF
 
-# Хук GRUB обновления
+# Хук GRUB обновления (для стабильности)
 tee /etc/pacman.d/hooks/92-grub-upgrade.hook > /dev/null << EOF
 [Trigger]
 Type = Package
 Operation = Upgrade
 Target = grub
+
 [Action]
 Description = Upgrading GRUB...
 When = PostTransaction
@@ -142,6 +143,20 @@ When = PostTransaction
 Exec = /usr/bin/sh -c "grub-install --efi-directory=/boot/efi; grub-mkconfig -o /boot/grub/grub.cfg"
 # BIOS/MBR
 # Exec = /usr/bin/sh -c "grub-install --target=i386-pc /dev/sda; grub-mkconfig -o /boot/grub/grub.cfg"
+EOF
+
+# Запрещаем Wine создавать ассоциацию файлов
+tee /etc/pacman.d/hooks/stop-wine-associations.hook > /dev/null << EOF
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Path
+Target = usr/share/wine/wine.inf
+
+[Action]
+Description = Остановливаю Wine от перехвата ассоциаций файлов...
+When = PostTransaction
+Exec = /bin/sh -c '/usr/bin/grep -q "HKCU,\"Software\\\Wine\\\FileOpenAssociations\",\"Enable\",2,\"N\"" /usr/share/wine/wine.inf || /usr/bin/sed -i "s/\[Services\]/\[Services\]\nHKCU,\"Software\\\Wine\\\FileOpenAssociations\",\"Enable\",2,\"N\"/g" /usr/share/wine/wine.inf'
 EOF
 
 # Zram
