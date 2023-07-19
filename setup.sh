@@ -310,7 +310,7 @@ PKGS=(
         'lib32-obs-vkcapture-git'
         'amd-vulkan-prefixes'       # Быстрое переключение icd драйверов AMD используя переменные (vk_radv, vk_amdvlk, vk_pro)
 #        'android-apktool'           # Декомпиляция apk файлов
-#        'gallery-dl'               # Скачивать с различных платформ (deviantart и т.д) без регистрации и смс
+#        'gallery-dl'                # Скачивать с различных платформ (deviantart, pixiv и т.д) без регистрации и смс
 	
     # --- THEMES
     # --- OTHER
