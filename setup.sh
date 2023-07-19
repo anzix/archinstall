@@ -168,7 +168,7 @@ PKGS=(
         'yarn'                       # Для neovim плагина https://github.com/iamcco/markdown-preview.nvim
         'yt-dlp'                     # Качать видосики с ютуба
         'ffmpeg'                     # Конвертер/Декодер/Рекордер видео
-        'python-mutagen'             # Для вывода обложки трека в уведомлении mpd (дополнение к mpDris2)
+#        'python-mutagen'             # Для вывода обложки трека в уведомлении mpd (дополнение к mpDris2)
         'smartmontools'              # Для информации и проверки состояния здоровья HDD и SSD
         'fd'                         # Поиск файлов
         'ripgrep'                    # Более быстрая альтернатива grep (необходимо для telescope плагин nvim)
@@ -316,7 +316,7 @@ PKGS=(
     # --- OTHER
 
         'chromium-widevine'          # Плагин для работы DRM контента в браузере ungoogled-chromium
-	'mpdris2'                    # MPRIS2 поддержка для MPD
+	'mpdris2-rs'                 # MPRIS2 поддержка для MPD
 #        'kyocera-print-driver'       # Драйвер для Kyocera FS-1060DN
 
 )
