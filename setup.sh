@@ -535,7 +535,7 @@ sudo systemctl enable bluetooth.service
 sudo systemctl enable --now radeon-profile-daemon
 #sudo systemctl enable --now joycond # Для активации Virtual Pro Controller нажать одновременно - +
 #sudo systemctl enable --now zerotier-one.service
-systemctl --user enable --now mpDris2.service
+systemctl --user enable --now mpdris2-rs.service
 systemctl --user enable --now mpd
 #systemctl --user enable --now cdemu-daemon.service
 systemctl --user enable opentabletdriver.service
