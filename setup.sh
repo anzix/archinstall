@@ -168,7 +168,6 @@ PKGS=(
         'yarn'                       # Для neovim плагина https://github.com/iamcco/markdown-preview.nvim
         'yt-dlp'                     # Качать видосики с ютуба
         'ffmpeg'                     # Конвертер/Декодер/Рекордер видео
-#        'python-mutagen'             # Для вывода обложки трека в уведомлении mpd (дополнение к mpDris2)
         'smartmontools'              # Для информации и проверки состояния здоровья HDD и SSD
         'fd'                         # Поиск файлов
         'ripgrep'                    # Более быстрая альтернатива grep (необходимо для telescope плагин nvim)
@@ -316,7 +315,7 @@ PKGS=(
     # --- OTHER
 
         'chromium-widevine'          # Плагин для работы DRM контента в браузере ungoogled-chromium
-	'mpdris2-rs'                 # MPRIS2 поддержка для MPD
+	'mpd-mpris'                  # MPRIS поддержка для MPD
 #        'kyocera-print-driver'       # Драйвер для Kyocera FS-1060DN
 
 )
@@ -535,7 +534,7 @@ sudo systemctl enable bluetooth.service
 sudo systemctl enable --now radeon-profile-daemon
 #sudo systemctl enable --now joycond # Для активации Virtual Pro Controller нажать одновременно - +
 #sudo systemctl enable --now zerotier-one.service
-systemctl --user enable --now mpdris2-rs.service
+systemctl --user enable --now mpd-mpris
 systemctl --user enable --now mpd
 #systemctl --user enable --now cdemu-daemon.service
 systemctl --user enable opentabletdriver.service
