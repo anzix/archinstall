@@ -328,7 +328,7 @@ git clone --recurse-submodules https://gitlab.com/anzix/dotfiles.git
 cd dotfiles/base
 # Вытягиваю только необходимые конфиги
 stow -vt ~ zsh gtk \
-	mpd mpDris2 ncmpcpp nvim pipewire wireplumber mpv `# Media & Sound` \
+	mpd ncmpcpp nvim pipewire wireplumber mpv `# Media & Sound` \
 	mangohud vkBasalt otd `# Gaming` \
 	npm browser-flags wget
 # Переменные при активной сессии Xorg или Wayland
