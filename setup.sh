@@ -35,9 +35,6 @@ cd ~ && rm -rf yay-bin
 # --batchinstall - Ставит каждый собранный пакеты в очередь для установки (легче мониторить что происходит)
 yay --save --nodiffmenu --nocleanmenu --removemake --batchinstall
 
-# Синхронизация базы пакетов
-yay -Syy
-
 echo "==> Установка основных пакетов Pacman"
 PKGS=(
 
