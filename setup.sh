@@ -41,222 +41,205 @@ yay -Syy
 echo "==> Установка основных пакетов Pacman"
 PKGS=(
 
-    # --- XORG / Graphics driver / Hardware encoding
+# --- XORG / Graphics driver / Hardware encoding
 	
-        'xterm'                   # Терминал для TTY
-        'xorg-server'             # XOrg сервер
-        'xorg-xinit'              # XOrg инициализация
-        'xorg-xrandr'             # Менять разрешение
-        'xorg-xinput'             # Для работы граф.планшета XP-PEN G640 + OpenTabletDriver
-	'xorg-xgamma'             # Позволяет менять и исправлять гамму для игр используя Lutris
-        'xf86-video-amdgpu'       # Открытые драйвера AMDGPU
+ 'xterm' # Терминал для TTY
+ 'xorg-server' # XOrg сервер
+ 'xorg-xinit' # XOrg инициализация
+ 'xorg-xrandr' # Менять разрешение
+ 'xorg-xinput' # Для работы граф.планшета XP-PEN G640 + OpenTabletDriver
+ 'xorg-xgamma' # Позволяет менять и исправлять гамму для игр используя Lutris
+ 'xf86-video-amdgpu' # Открытые драйвера AMDGPU
 
-        'mesa'                    # Open source version of OpenGL
-        'libva-mesa-driver'       # VA-API драйвер
-        'lib32-libva-mesa-driver' # VA-API драйвер (32bit)
-        'mesa-vdpau'              # VDPAU Драйвер
-        'lib32-mesa-vdpau'        # VDPAU Драйвер (32bit)
-        'glu'                     # Библеотеки утилит Mesa OpenGL (необходимо для запуска Goverlay)
-        'vulkan-tools'            # Инструменты vulkan (vulkaninfo)
-        'vulkan-radeon'           # Реализация vulkan драйвера от Mesa
-        'lib32-vulkan-radeon'     # Реализация vulkan драйвера от Mesa (32bit)
+ 'mesa' # Open source version of OpenGL
+ 'libva-mesa-driver' 'lib32-libva-mesa-driver' # VA-API драйвер
 
-        'vulkan-mesa-layers'
-        'lib32-vulkan-mesa-layers'
+ 'mesa-vdpau' 'lib32-mesa-vdpau' # VDPAU Драйвер
+ 'glu' # Библеотеки утилит Mesa OpenGL (необходимо для запуска Goverlay)
+ 'vulkan-tools' # Инструменты vulkan (vulkaninfo)
+ 'vulkan-radeon' 'lib32-vulkan-radeon' # Реализация vulkan драйвера от Mesa
+ 'vulkan-mesa-layers' 'lib32-vulkan-mesa-layers'
+ 'libva-vdpau-driver' 'lib32-libva-vdpau-driver' # A VDPAU-based backend for VA-API
+ 'libvdpau-va-gl' # VDPAU driver with OpenGL/VAAPI backend. H.264 only
+
+# --- AUDIO [3 Варианта]
         
-        'libva-vdpau-driver'        # A VDPAU-based backend for VA-API
-        'lib32-libva-vdpau-driver'  # A VDPAU-based backend for VA-API (32bit)
-        'libvdpau-va-gl'            # VDPAU driver with OpenGL/VAAPI backend. H.264 only
+# 1) Pipewire
 
-    # --- AUDIO [3 Варианта]
-        
-        # 1) Pipewire
+ 'pipewire' 'lib32-pipewire'
+ 'wireplumber' # Modular session / policy manager for PipeWire
+ 'pipewire-pulse'
+ 'pipewire-alsa'
+ 'pipewire-v4l2' # Для правильной работы вебки в OBS
+ 'jack2' 'lib32-jack2'
+ 'jack2-dbus' # Для dbus интеграции
+ 'gst-plugin-pipewire'
+ 'qpwgraph' # Графический интерфейс PipeWire Graph Qt
 
-        'pipewire'
-	'lib32-pipewire'
-        'wireplumber'       # Modular session / policy manager for PipeWire
-        'pipewire-pulse'
-        'pipewire-alsa'
-        'pipewire-v4l2'     # Для правильной работы вебки в OBS
-        'jack2'
-	'lib32-jack2'
-        'jack2-dbus'        # Для dbus интеграции
-        'gst-plugin-pipewire'
-	'qpwgraph'	    # Графический интерфейс PipeWire Graph Qt
+# 2) PulseAudio
 
-        # 2) PulseAudio
+# 'pulseaudio' # PulseAudio sound components
+# 'pulseaudio-alsa' # ALSA configuration for pulse audio
 
-#        'pulseaudio'        # PulseAudio sound components
-#        'pulseaudio-alsa'   # ALSA configuration for pulse audio
+# 3) Только Alsa
 
-        # 3) Только Alsa
+# 'alsa'
+# 'alsa-firmware'
+# 'alsa-card-profiles'
 
-#        'alsa'
-#        'alsa-firmware'
-#        'alsa-card-profiles'
+# --- AUDIO Разное / Кодеки
 
-    # --- AUDIO Разное / Кодеки
+ 'mpd' # Музыкальный сервер к которому можно конектится
+ 'mpc' # Контроллер управления музыкой через терминал
+ 'ncmpcpp' # TUI музыкальный плеер
+ 'playerctl' # Для работы fn+f6/7/8 и других приколюх
+ 'mediainfo' # Информация о медиа
+ 'alsa-utils' # Advanced Linux Sound Architecture (Чтобы убрать через alsamixer прослушивание себя через микро)
+ 'alsa-plugins' # ALSA plugins
+ 'pavucontrol' # GTK PulseAudio volume control
 
-        'mpd'               # Музыкальный сервер к которому можно конектится
-        'mpc'               # Контроллер управления музыкой через терминал
-        'ncmpcpp'           # TUI музыкальный плеер
-        'playerctl'         # Для работы fn+f6/7/8 и других приколюх
-        'mediainfo'         # Информация о медиа
-        'alsa-utils'        # Advanced Linux Sound Architecture (Чтобы убрать через alsamixer прослушивание себя через микро)
-	'alsa-plugins'      # ALSA plugins
-        'pavucontrol'       # GTK PulseAudio volume control
+ 'gstreamer'
+ 'gst-libav'
+ 'gst-plugins-base' 'lib32-gst-plugins-base'
+ 'gst-plugins-good' 'lib32-gst-plugins-good'
+ 'gst-plugins-bad' # Библеотеки для воспроизведения мультимедия (для запуска старья)
+ 'gst-plugins-ugly' # Библеотеки для воспроизведения мультимедия (для запуска старья)
+ 'gstreamer-vaapi' # Эффективный плагин кодировщик для RDNA1 AMDGPU (для использования нужен AUR пакет obs-gstreamer)
 
-        'gstreamer'
-        'gst-libav'
-        'gst-plugins-base'
-        'lib32-gst-plugins-base'
-	'gst-plugins-good'
-	'lib32-gst-plugins-good'
-        'gst-plugins-bad'   # Библеотеки для воспроизведения мультимедия (для запуска старья)
-        'gst-plugins-ugly'  # Библеотеки для воспроизведения мультимедия (для запуска старья)
-        'gstreamer-vaapi'   # Эффективный плагин кодировщик для RDNA1 AMDGPU (для использования нужен AUR пакет obs-gstreamer)
+# --- BLUETOOTH
 
-    # --- BLUETOOTH
+'bluez' # Daemons for the bluetooth protocol stack
+'bluez-utils' # Bluetooth development and debugging utilities. Содержит bluetoothctl
 
-        'bluez'                 # Daemons for the bluetooth protocol stack
-        'bluez-utils'           # Bluetooth development and debugging utilities. Содержит bluetoothctl
+# --- GAMING and EMULATION
 
-    # --- GAMING and EMULATION
-
-        'steam'
-	'mangohud'              # Мониторинг для игр
-	'lib32-mangohud'	# Мониторинг для 32bin'ных игр
-        'lutris'                # GUI обвёртка Wine
-        'wine-staging'          # Тестовый Wine с последними исправлениями и функциями
-        'wine-gecko'
-        'wine-mono'
-        'winetricks'            # Протаскивать библиотеки/dll'ки в префикс Wine
-	'gamemode'              # Игровой режим для игр
-        'lib32-gamemode'        # Игровой режим для 32 bit'ных игр
-	'zerotier-one'          # Создание и подключение к виртуальным сетям (для игр с друзьями)
-#        'gameconqueror'         # (Не)Альтернатива Cheat Engine
-#        'pcsx2'                 # PS2 Эмулятор
-#        'dolphin-emu'           # Gamecube Эмулятор
+ 'steam'
+ 'mangohud' 'lib32-mangohud' # Мониторинг для игр
+ 'lutris' # GUI обвёртка Wine
+ 'wine-staging' 'wine-gecko' 'wine-mono' 
+ 'winetricks' # Протаскивать библиотеки/dll'ки в префикс Wine
+ 'gamemode' 'lib32-gamemode' # Игровой режим для игр
+ 'zerotier-one' # Создание и подключение к виртуальным сетям (для игр с друзьями)
+# 'gameconqueror' # (Не)Альтернатива Cheat Engine
+# 'pcsx2' # PS2 Эмулятор
+# 'dolphin-emu' # Gamecube Эмулятор
 
 
-    # --- UTILITIES AND STUFF
+# --- UTILITIES AND STUFF
 
-        'stow'                       # Менеджер sim-link'ов (для менеджмента dotfiles)
-        'pacman-contrib'             # Скрипты и инструменты для Pacman
-        'rebuild-detector'           # Показывает лист AUR пакетов которые были собраны на старых версиях зависимостей, для их дальнейшей пересборки
-        'archlinux-wallpaper'        # Arch Linux обои
-	'reflector'                  # Инструмент для оптимизации зеркал Pacman
-        'rsync'                      # Быстрый и универсальный инструмент для копирования удаленных и локальных файлов
-        'radeontop'                  # Мониторинг AMD GPU        
-        'xdg-utils'                  # Command line tools that assist applications with a variety of desktop integration tasks
-        'htop'                       # Простой консольный диспетчер задач
-        'btop'                       # TUI Диспетчер задач
-        'neofetch'                   # Чтобы выпендриватся
-	'inxi'                       # Системная информация PC
-        'exfat-utils'                # Поддержка файловой системы exFAT (Для sd-карт)
-        'ntfs-3g'                    # Поддержка файловой системы NTFS (Для Windows)
-        'e2fsprogs'                  # Поддержка файловой системы ext4
-        'dosfstools'                 # Поддержка файловой системы vFAT
-        'f2fs-tools'                 # Поддержка файловой системы f2fs
-        'gvfs-mtp'                   # MTP backend; Android, media player
-        'gvfs'                       # Подсистема среды рабочего стола GNOME (является trashcan для фм pcmanfm)
-        'gtk2'
-	'wget'                       # Для скачивания файлов
-        'unzip'                      # Архивирование и распаковка файлов zip
-        'unrar'                      # Архивирование и распаковка файлов rar
-        'p7zip'                      # Архивирование и распаковка файлов 7z
-        'yarn'                       # Для neovim плагина https://github.com/iamcco/markdown-preview.nvim
-        'yt-dlp'                     # Качать видосики с ютуба
-        'ffmpeg'                     # Конвертер/Декодер/Рекордер видео
-        'smartmontools'              # Для информации и проверки состояния здоровья HDD и SSD
-        'fd'                         # Поиск файлов
-        'ripgrep'                    # Более быстрая альтернатива grep (необходимо для telescope плагин nvim)
-        'exa'                        # Замена ls
-        'pkgfile'                    # Для плагина zsh "command-not-found"
-        'libva-utils'                # Проверка VA-API дравера командой (vainfo)
-        'vdpauinfo'                  # Проверка VDPAU драйвера командой (vdpauinfo)
-        'net-tools'                  # Для прослушивания портов командой
-        'hwinfo'                     # Системная информация
-        'nmap'                       # Утилита для исследования сети и сканер портов
-        'ncdu'                       # TUI анализатор свободного места
-        'zbar'                       # Сканер QR кодов (для maim)
-        'tesseract'                  # OCR сканер
-        'tesseract-data-rus'         # Данные языка
-        'tesseract-data-eng'         # Данные языка
-        'tesseract-data-jpn'         # Данные языка
-        'jq'                         # (Необходимо для mpv-webtorrent-hook)
-        'testdisk'                   # Востановления данных
-        'aspell-ru'                  # Русский словарь для проверки орфографии (работает только с UTF8 кодировкой)
-        'atool'                      # Для предпросмотра архивов через lf
-        'noise-suppression-for-voice' # (Для pipewire) Плагин подавления шума микрофона в реальном времени в OBS
-        'libfaketime'                 # Подделывать время для программ или пиратских игр (man faketime)
-	'flashrom'                    # Для прошивания чипов программатором ch341a
-        'dfu-util'                    # Для обновления прошивки паяльника Pinecil первой версии
-        'hexedit'                     # TUI HEX-редактор
-        'scrcpy'                      # Демонстрация экрана Android для Linux используя USB ADB
-        'translate-shell'             # Переводчик в терминале (необходим для скриптов)
-        'bat'                         # Замена cat
-        'tor'
-        'torsocks'
-        'i2pd'
-#        'system-config-printer'       # Менеджер принтеров
-#        'cups'                        # Модульная система печати для принтеров
-#        'cups-pdf'                    # Поддержка печати PDF файлов
-        'cdemu-client'                # Эмуляция образов
-        'transmission-cli'            # Для замены passkey в торрент файлах и многое другое
-        'mame-tools'                  # Конвертирование .iso / .cue образов PS2 игр в сжатый .chd образ (chdman)
-        'jre-openjdk'                 # Для работы Minecraft
-        'jre-openjdk-headless' 
-        'java-runtime-common'
-        'lib32-sdl2'                  # Для работы steamcmd
-        'lib32-dbus'                  # Для работы steamcmd
-        'v4l2loopback-dkms'           # Для поддержки виртуальной камеры для OBS
-	'virt-manager'                # Менеджер виртуальных машин
-        'qemu-base'                   # Виртуализация
-        'qemu-emulators-full'         # Поддержка всех архитектур для виртуализации
-        'dnsmasq' 
-        'nftables' 
-        'iptables-nft'
-        'dmidecode' 
-        'edk2-ovmf'		      # Поддержка UEFI для QEMU
-        'swtpm'			      # Поддержка TPM для QEMU
+ 'stow' # Менеджер sim-link'ов (для менеджмента dotfiles)
+ 'pacman-contrib' # Скрипты и инструменты для Pacman
+ 'expac'# Утилита извлечения данных alpm (базы данных pacman)
+ 'rebuild-detector' # Показывает лист AUR пакетов которые были собраны на старых версиях зависимостей, для их дальнейшей пересборки
+ 'archlinux-wallpaper' # Arch Linux обои
+ 'reflector' # Инструмент для оптимизации зеркал Pacman
+ 'rsync' # Быстрый и универсальный инструмент для копирования удаленных и локальных файлов
+ 'radeontop' # Мониторинг AMD GPU        
+ 'xdg-utils' # Command line tools that assist applications with a variety of desktop integration tasks
+ 'htop' # Простой консольный диспетчер задач
+ 'btop' # TUI Диспетчер задач
+ 'neofetch' # Чтобы выпендриватся
+ 'inxi' # Системная информация PC
+ 'exfat-utils' # Поддержка файловой системы exFAT (Для sd-карт)
+ 'ntfs-3g' # Поддержка файловой системы NTFS
+ 'e2fsprogs' # Поддержка файловой системы ext4
+ 'dosfstools' # Поддержка файловой системы vFAT
+ 'f2fs-tools' # Поддержка файловой системы f2fs
+ 'gvfs-mtp' # MTP backend; Android, media player
+ 'gvfs' # Подсистема среды рабочего стола GNOME (является trashcan для фм pcmanfm)
+ 'gtk2'
+ 'wget' # Для скачивания файлов
+ 'unzip' # Архивирование и распаковка файлов zip
+ 'unrar' # Архивирование и распаковка файлов rar
+ 'p7zip' # Архивирование и распаковка файлов 7z
+ 'yarn' # Для neovim плагина https://github.com/iamcco/markdown-preview.nvim
+ 'yt-dlp' # Скачивать видео
+ 'ffmpeg' # Конвертер/Декодер/Рекордер видео
+ 'smartmontools' # Для информации и проверки состояния здоровья HDD и SSD
+ 'fd' # Поиск файлов
+ 'ripgrep' # Более быстрая альтернатива grep (необходимо для telescope плагин nvim)
+ 'exa' # Замена ls
+ 'pkgfile' # Для плагина zsh "command-not-found"
+ 'libva-utils' # Проверка VA-API дравера командой (vainfo)
+ 'vdpauinfo' # Проверка VDPAU драйвера командой (vdpauinfo)
+ 'net-tools' # Для прослушивания портов командой
+ 'hwinfo' # Системная информация
+ 'nmap' # Утилита для исследования сети и сканер портов
+ 'ncdu' # TUI анализатор свободного места
+ 'zbar' # Сканер QR кодов (для maim)
+ 'tesseract' # OCR сканер
+ 'tesseract-data-rus' 'tesseract-data-eng' 'tesseract-data-jpn' # Данные языка
+ 'jq' # (Необходимо для mpv-webtorrent-hook)
+ 'testdisk' # Востановления данных
+ 'aspell-ru' # Русский словарь для проверки орфографии (работает только с UTF8 кодировкой)
+ 'atool' # Для предпросмотра архивов через lf
+ 'noise-suppression-for-voice' # (Для pipewire) Плагин подавления шума микрофона в реальном времени в OBS
+ 'libfaketime' # Подделывать время для программ или пиратских игр (man faketime)
+ 'flashrom' # Для прошивания чипов программатором ch341a
+ 'dfu-util' # Для обновления прошивки паяльника Pinecil первой версии
+ 'hexedit' # TUI HEX-редактор
+ 'scrcpy' # Демонстрация экрана Android для Linux используя USB ADB
+ 'translate-shell' # Переводчик в терминале (необходим для скриптов)
+ 'bat' # Замена cat
+# 'tor'
+# 'torsocks'
+ 'i2pd'
+# 'system-config-printer' # Менеджер принтеров
+# 'cups' # Модульная система печати для принтеров
+# 'cups-pdf' # Поддержка печати PDF файлов
+ 'cdemu-client' # Эмуляция образов
+ 'transmission-cli' # Для замены passkey в торрент файлах и многое другое
+ 'mame-tools' # Конвертирование .iso / .cue образов PS2 игр в сжатый .chd образ (chdman)
+ 'jre-openjdk' # Для работы Minecraft
+ 'jre-openjdk-headless' 
+ 'java-runtime-common'
+ 'lib32-sdl2' # Для работы steamcmd
+ 'lib32-dbus' # Для работы steamcmd
+ 'v4l2loopback-dkms' # Для поддержки виртуальной камеры для OBS
+ 'virt-manager' # Менеджер виртуальных машин
+ 'qemu-base' # Виртуализация
+ 'qemu-emulators-full' # Поддержка всех архитектур для виртуализации
+ 'dnsmasq' 
+ 'nftables' 
+ 'iptables-nft'
+ 'dmidecode' 
+ 'edk2-ovmf' # Поддержка UEFI для QEMU
+ 'swtpm' # Поддержка TPM для QEMU
 
-    # --- FONTS
+# --- FONTS
 
-        'terminus-font'                 # Позволяет выбрать более крупный шрифт для небольших экранов HiDPI
-        'ttf-hack-nerd'                 # Шрифты для иконок в терминале
-	'ttf-jetbrains-mono-nerd'       # Шрифты для иконок в терминале
-	'ttf-sourcecodepro-nerd'        # Шрифты для иконок в терминале
-#        'ttf-roboto'                    # Шрифт Google
-        'ttf-font-awesome'              # Для появления значков (Из https://fontawesome.com/v5/cheatsheet) из тем и i3 статус баром появляться
-        'ttf-opensans'                  # Шрифт для Телеграмма
-        'ttf-droid'                     # Android'ский шрифт не имеющий нуля с прорезью, поэтому 0 и O не различимы
-        'ttf-liberation'                # Начальный набор шрифтов 
-        'ttf-dejavu'                    # Начальный набор шрифтов 
-        'noto-fonts-cjk'                # Набор Азиатских шрифтов, много весят
-        'noto-fonts-emoji'              # Смайлы в терминал     
-        'noto-fonts'                    # Необходимые шрифты, разные иероглифы и т.д
+ 'terminus-font' # Позволяет выбрать более крупный шрифт для небольших экранов HiDPI
+ 'ttf-hack-nerd' # Шрифты для иконок в терминале
+ 'ttf-jetbrains-mono-nerd' # Шрифты для иконок в терминале
+ 'ttf-sourcecodepro-nerd' # Шрифты для иконок в терминале
+# 'ttf-roboto' # Шрифт Google
+ 'ttf-font-awesome' # Для появления значков (Из https://fontawesome.com/v5/cheatsheet) из тем и i3 статус баром появляться
+ 'ttf-opensans' # Шрифт для Телеграмма
+ 'ttf-droid' # Android'ский шрифт не имеющий нуля с прорезью, поэтому 0 и O не различимы
+ 'ttf-liberation' # Начальный набор шрифтов 
+ 'ttf-dejavu' # Начальный набор шрифтов 
+ 'noto-fonts-cjk' # Набор Азиатских шрифтов, много весят
+ 'noto-fonts-emoji' # Смайлы в терминал     
+ 'noto-fonts' # Необходимые шрифты, разные иероглифы и т.д
 
-    # --- APPS
+# --- APPS
 
-        'firefox'                        # Браузер
-        'firefox-i18n-ru'                # Руссификация Firefox
-#        'libreoffice-fresh'              # Офис
-#        'libreoffice-fresh-ru'           # Руссификация LibreOffice
-        'obs-studio'                     # Запись видео и трансляции
-        'mpv'                            # Лучший видеопроигрыватель
-        'songrec'                        # Shazam но для Linux
-#        'qmmp'                           # Современный аудиоплеер строй школы (т.е Winamp) с поддержкой скинов
-        'audacious'                      # Аудиоплеер с поддержкой скинов Winamp
-	'keepassxc'                      # Локальный менеджер паролей
-        'qbittorrent'                    # Торрент клиент
-        'bleachbit'                      # Чистильщик для Linux
-#        'gimp'                           # Фоторедактор
-#        'audacity'                       # Продвинутый аудиорекордер
-#        'kdenlive'                       # Видеоредактор
-#        'piper'                          # Настройка мышки Logitech
-#        'discord'                        # Чат для геймеров
-        'telegram-desktop'		 # Мессенджер
+ 'firefox' 'firefox-i18n-ru' # Браузер Firefox + Руссификация 
+# 'libreoffice-fresh' 'libreoffice-fresh-ru' # Офисный пакет LibreOffice + Руссификация
+ 'obs-studio' # Запись видео и трансляции
+ 'mpv' # Лучший видеопроигрыватель
+ 'songrec' # Распознование аудио композиций
+# 'qmmp' # Современный аудиоплеер старой школы (т.е Winamp) с поддержкой скинов
+ 'audacious' # Аудиоплеер с поддержкой скинов Winamp
+ 'keepassxc' # Локальный менеджер паролей
+ 'qbittorrent' # Торрент клиент
+ 'bleachbit' # Чистильщик для Linux
+# 'gimp' # Фоторедактор
+# 'audacity' # Продвинутый аудиорекордер
+# 'kdenlive' # Видеоредактор
+# 'piper' # Настройка мышки Logitech
+# 'discord' # Чат для геймеров
+ 'telegram-desktop' # Мессенджер
 )
 sudo pacman -S "${PKGS[@]}" --noconfirm --needed
 
@@ -264,59 +247,57 @@ sudo pacman -S "${PKGS[@]}" --noconfirm --needed
 echo "==> Установка AUR пакетов"
 PKGS=(
 
-    # --- APPS
+# --- APPS
 
-        'ungoogled-chromium-bin'  # Полностью вычещенный от Гуглятины браузер Chromium 
-#        'czkawka-gui-bin'         # Удобный инструмент для удаления дубликатов
-        'opentabletdriver'        # Драйвер для граф. планшета XP-PEN G640
-        'ventoy-bin'              # Создание загрузочной флешки для Win/Linux образов
-#        'cpu-x'                   # CPU-Z для Linux
+ 'ungoogled-chromium-bin' # Полностью вычещенный от Гуглятины браузер Chromium 
+# 'czkawka-gui-bin' # Удобный инструмент для удаления дубликатов
+ 'opentabletdriver' # Драйвер для граф. планшета XP-PEN G640
+ 'ventoy-bin' # Создание загрузочной флешки для Win/Linux образов
+# 'cpu-x' # CPU-Z для Linux
 
-    # --- GAMING
+# --- GAMING
 
-#        'lgogdownloader-qt5'        # CLI обвёртка GOG (с рабочим логином)
-        'heroic-games-launcher-bin' # Удобный EGS / GOG лаунчер для Linux
-        'tlauncher'                # Legacy TL Minecraft лаунчер 
-        'dxvk-bin'                  # Свежий dxvk для ручных префиксов Wine
-        'vkd3d-proton'              # Свежий vkd3d-proton (форк vkd3d) для ручных префиксов Wine
-        'protontricks'              # Протаскивать библиотеки/dll'ки в префикс Steam Proton
-	'protonup-qt'               # Удобная утилитка для скачки runner'ов Wine
-#        'goverlay-bin'              # GUI настройка оверлея MangoHud
-        'vkbasalt'                  # Постпроцессинг для игр
-        'lib32-vkbasalt' 	    # Постпроцессинг для 32bin'ных игр
-	'reshade-shaders-git'	    # Набор шейдеров необходимых для VkBasalt
-#        'rpcs3-bin'                 # PS3 Эмулятор
-#        'cemu'                      # Wii U Эмулятор
-	'game-devices-udev'         # Udev правила для работы контроллеров 8BitDo в эмуляторов Cemu и других
-	'joycond-git'               # Альтернатива BetterJoy
-        'joycond-cemuhook-git'      # Для работы по UDP Switch контроллера (8BitDo Pro 2) в режиме гироскопа
-#        'flashplayer-standalone'    # (Устаревшее) Запуск локальных .swf (Flash) файлов
-#        'ruffle-nightly-bin'	     # Современный эмулятор Flash плеера для запуска .swf файлов
+# 'lgogdownloader-qt5' # CLI обвёртка GOG (с рабочим логином)
+ 'heroic-games-launcher-bin' # Удобный EGS / GOG лаунчер для Linux
+ 'legacylauncher' # Minecraft лаунчер 
+ 'dxvk-bin' # Свежий dxvk для ручных префиксов Wine
+ 'vkd3d-proton' # Свежий vkd3d-proton (форк vkd3d) для ручных префиксов Wine
+ 'protontricks' # Протаскивать библиотеки/dll'ки в префикс Steam Proton
+ 'protonup-qt' # Удобная утилитка для скачки runner'ов Wine
+# 'goverlay-bin' # GUI настройка оверлея MangoHud
+ 'vkbasalt' 'lib32-vkbasalt' # Постпроцессинг для игр
+ 'reshade-shaders-git' # Набор шейдеров необходимых для VkBasalt
+# 'rpcs3-bin' # PS3 Эмулятор
+# 'cemu' # Wii U Эмулятор
+ 'game-devices-udev' # Udev правила для работы контроллеров 8BitDo в эмуляторов Cemu и других
+ 'joycond-git' # Альтернатива BetterJoy
+ 'joycond-cemuhook-git' # Для работы по UDP Switch контроллера (8BitDo Pro 2) в режиме гироскопа
+# 'flashplayer-standalone' # (Устаревшее) Запуск локальных .swf (Flash) файлов
+# 'ruffle-nightly-bin' # Современный эмулятор Flash плеера для запуска .swf файлов
 
-    # --- FONTS
+# --- FONTS
     
-    	'otf-monocraft'             # Пиксельный шрифт для Mangohud
+ 'otf-monocraft' # Пиксельный шрифт для Mangohud
 	
-    # --- UTILITIES
+# --- UTILITIES
 
-	'radeon-profile-git'	    # Графическое ПО управление питанием и вентиляторами AMDGPU
-	'radeon-profile-daemon-git' # Демон для управление питанием и вентиляторами AMDGPU
-        'obfs4proxy'                # Обфускация трафика тор
-        'webtorrent-cli'            # Просмотр онлайн торренты (Необходимо для mpv-webtorrent-hook) 
-        'xidel'                     # (Необходимо для mpv-webtorrent-hook)
-        'obs-gstreamer'             # Более эффективный плагин кодировщик для OBS (Для RDNA 1)
-        'obs-vkcapture-git'         # OBS плагин для захвата напрямую через API OpenGL/Vulkan (минимизирует затраты)
-        'lib32-obs-vkcapture-git'
-        'amd-vulkan-prefixes'       # Быстрое переключение icd драйверов AMD используя переменные (vk_radv, vk_amdvlk, vk_pro)
-#        'android-apktool'           # Декомпиляция apk файлов
-#        'gallery-dl'                # Скачивать с различных платформ (deviantart, pixiv и т.д) без регистрации и смс
+ 'radeon-profile-git' # Графическое ПО управление питанием и вентиляторами AMDGPU
+ 'radeon-profile-daemon-git' # Демон для управление питанием и вентиляторами AMDGPU
+ 'obfs4proxy' # Обфускация трафика тор
+ 'webtorrent-cli' # Просмотр онлайн торренты (Необходимо для mpv-webtorrent-hook) 
+ 'xidel' # (Необходимо для mpv-webtorrent-hook)
+ 'obs-gstreamer' # Более эффективный плагин кодировщик для OBS (Для RDNA 1)
+ 'obs-vkcapture-git' 'lib32-obs-vkcapture-git' # OBS плагин для захвата напрямую через API OpenGL/Vulkan (минимизирует затраты)
+ 'amd-vulkan-prefixes' # Быстрое переключение icd драйверов AMD используя переменные (vk_radv, vk_amdvlk, vk_pro)
+# 'android-apktool' # Декомпиляция apk файлов
+# 'gallery-dl' # Скачивать с различных платформ (deviantart, pixiv и т.д) без регистрации и смс
 	
-    # --- THEMES
-    # --- OTHER
+# --- THEMES
+# --- OTHER
 
-        'chromium-widevine'          # Плагин для работы DRM контента в браузере ungoogled-chromium
-	'mpd-mpris'                  # MPRIS поддержка для MPD
-#        'kyocera-print-driver'       # Драйвер для Kyocera FS-1060DN
+ 'chromium-widevine' # Плагин для работы DRM контента в браузере ungoogled-chromium
+ 'mpd-mpris' # MPRIS поддержка для MPD
+# 'kyocera-print-driver' # Драйвер для Kyocera FS-1060DN
 
 )
 yay -S "${PKGS[@]}" --noconfirm --needed
