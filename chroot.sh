@@ -287,6 +287,6 @@ systemctl enable NetworkManager.service
 # systemctl enable dhcpcd
 systemctl enable sshd
 systemctl enable fstrim.timer
+systemctl enable plocate-updatedb.timer
 systemctl enable systemd-oomd.service
 systemctl enable dbus-broker.service
-systemctl enable plocate-updatedb.timer
