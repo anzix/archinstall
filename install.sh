@@ -38,6 +38,7 @@ PKGS=(
   ccache
   zram-generator
   dbus-broker # Оптимизированная система шины сообщений
+  plocate # Более быстрая альтернатива locate
 )
 
 read -p "Имя хоста (hostname): " HOST_NAME
