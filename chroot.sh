@@ -80,12 +80,58 @@ case $hypervisor in
   * ) ;;
 esac
 
-# Правка mkinitcpio.conf
+# Настройка snapper и btrfs в случае обнаружения
 if [ ${FS} = '2' ]; then
+  # Unmount .snapshots
+  umount -v /.snapshots
+  rm -rfv /.snapshots
+
+  # Create Snapper config
+  snapper --no-dbus -c root create-config /
+  
+  # Информация о размере снапшота btrfs
+  #btrfs quota enable /
+  
+  # Delete Snapper's .snapshots subvolume
+  btrfs subvolume delete /.snapshots
+
+  # Re-create and re-mount /.snapshots mount
+  mkdir -v /.snapshots
+  mount -v -a
+
+  # Меняем права доступа для легкой замены снимка @ в любое время без потери снимков snapper.
+  chmod -v 750 /.snapshots
+
+  # Access for non-root users
+  chown -R :wheel /.snapshots
+
+  # Configure Snapper
+  # Позволять группе wheel использовать snapper ls non-root пользователю
+  sed -i "s|^ALLOW_GROUPS=.*|ALLOW_GROUPS=\"wheel\"|g" /etc/snapper/configs/root
+  sed -i "s|^TIMELINE_LIMIT_HOURLY=.*|TIMELINE_LIMIT_HOURLY=\"3\"|g" /etc/snapper/configs/root
+  sed -i "s|^TIMELINE_LIMIT_DAILY=.*|TIMELINE_LIMIT_DAILY=\"6\"|g" /etc/snapper/configs/root
+  sed -i "s|^TIMELINE_LIMIT_WEEKLY=.*|TIMELINE_LIMIT_WEEKLY=\"0\"|g" /etc/snapper/configs/root
+  sed -i "s|^TIMELINE_LIMIT_MONTHLY=.*|TIMELINE_LIMIT_MONTHLY=\"0\"|g" /etc/snapper/configs/root
+  sed -i "s|^TIMELINE_LIMIT_YEARLY=.*|TIMELINE_LIMIT_YEARLY=\"0\"|g" /etc/snapper/configs/root
+
+  # Enable Snapper services
+  systemctl enable snapper-timeline.timer
+  systemctl enable snapper-cleanup.timer
+
+  # Btrfs твики
+  systemctl enable btrfs-scrub@home.timer 
+  systemctl enable btrfs-scrub@-.timer 
+
+  # Пропускать снапшоты с updatedb (Предотвращает замедление моментальных снимков)
+  sed -i 's/PRUNEPATHS = "/PRUNEPATHS = "\/.snapshots /' /etc/updatedb.conf
+
+  # Правка mkinitcpio.conf
   sed -i 's/^MODULES.*/MODULES=(btrfs amdgpu)/' /etc/mkinitcpio.conf
+  
   # Add the btrfs binary in order to do maintenence on system without mounting it
   sed -i 's/^BINARIES=.*$/BINARIES=(btrfs)/' /etc/mkinitcpio.conf
   sed -i "s/^HOOKS.*/HOOKS=(base consolefont udev autodetect modconf block filesystems keyboard keymap)/g" /etc/mkinitcpio.conf
+  
 else
   sed -i 's/^MODULES.*/MODULES=(amdgpu)/' /etc/mkinitcpio.conf
   sed -i "s/^HOOKS.*/HOOKS=(base consolefont udev autodetect modconf block filesystems keyboard keymap fsck)/g" /etc/mkinitcpio.conf
@@ -243,3 +289,4 @@ systemctl enable sshd
 systemctl enable fstrim.timer
 systemctl enable systemd-oomd.service
 systemctl enable dbus-broker.service
+systemctl enable plocate-updatedb.timer
