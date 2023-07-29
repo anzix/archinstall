@@ -432,63 +432,21 @@ elif [ ${DESKTOP_ENVIRONMENT} = "i3wm" ]; then
 fi
 
 
-# Пропускать снапшоты с updatedb (Предотвращает замедление моментальных снимков)
-#sudo sed -i 's/PRUNEPATHS = "/PRUNEPATHS = "\/.snapshots /' /etc/updatedb.conf
-#sudo updatedb
-#sudo systemctl enable updatedb.timer
-
 # Обнаружение файловой системы
-if grep -q ext4 "/etc/fstab"; then
-  yay -S timeshift-bin --noconfirm --needed
-elif
-  grep -q btrfs "/etc/fstab"; then
-  yay -S snapper snap-pac grub-btrfs snp snapper-gui-git --noconfirm --needed
-  
-  echo "==> Настройка Snapper"
-  # Unmount .snapshots
-  sudo umount -v /.snapshots
-  sudo rm -rfv /.snapshots
-
-  # Create Snapper config
-  sudo snapper -c root create-config /
-  # Информация о размере снапшота btrfs
-  #btrfs quota enable /
-  
-  # Delete Snapper's .snapshots subvolume
-  sudo btrfs subvolume delete /.snapshots
-
-  # Re-create and re-mount /.snapshots mount
-  sudo mkdir -v /.snapshots
-  sudo mount -v -a
-
-  # Change default subvolume
-  sudo btrfs subvol lis /
-  sudo btrfs subvol get-def /
-  sudo btrfs subvol set-def 256 / # Make sure it is @
-  sudo btrfs subvol get-def /
-
-  # Access for non-root users
-  sudo chown -R :wheel /.snapshots
-
-  # Configure Snapper
-  # Позволять группе wheel использовать snapper ls non-root пользователю
-  sudo sed -i "s|^ALLOW_GROUPS=.*|ALLOW_GROUPS=\"wheel\"|g" /etc/snapper/configs/root
-  sudo sed -i "s|^TIMELINE_LIMIT_HOURLY=.*|TIMELINE_LIMIT_HOURLY=\"3\"|g" /etc/snapper/configs/root
-  sudo sed -i "s|^TIMELINE_LIMIT_DAILY=.*|TIMELINE_LIMIT_DAILY=\"6\"|g" /etc/snapper/configs/root
-  sudo sed -i "s|^TIMELINE_LIMIT_WEEKLY=.*|TIMELINE_LIMIT_WEEKLY=\"0\"|g" /etc/snapper/configs/root
-  sudo sed -i "s|^TIMELINE_LIMIT_MONTHLY=.*|TIMELINE_LIMIT_MONTHLY=\"0\"|g" /etc/snapper/configs/root
-  sudo sed -i "s|^TIMELINE_LIMIT_YEARLY=.*|TIMELINE_LIMIT_YEARLY=\"0\"|g" /etc/snapper/configs/root
-
-  # Enable Snapper services
-  sudo systemctl enable snapper-timeline.timer
-  sudo systemctl enable snapper-cleanup.timer
+if hash snapper 2>/dev/null; then
+PKGS=(
+ 'snap-pac' # делает снапшоты после каждой установки/обновления/удаления пакетов Pacman
+ 'grub-btrfs' # добавляет grub меню снимков созданных snapper чтобы в них загружаться
+ 'inotify-tools' # необходимая зависимость для grub-btrfs
+ 'snap-pac-grub' # дополнительно обновляет записи GRUB для grub-btrfs после того, как snap-pac сделал снимки
+ 'snp' # заворачивает любую shell команду и создаёт снимок до выполнения этой команды (snp sudo pacman -Syu)
+ 'btrfs-assistant' # Gui программа обслуживания файловой системы Btrfs и для создания снимков
+)
+  gpg --recv-keys 56C3E775E72B0C8B1C0C1BD0B5DB77409B11B601
+  yay -S "${PKGS[@]}" --noconfirm --needed
 
   # Enable GRUB-BTRFS service
-  sudo systemctl enable grub-btrfsd.service
-  
-  # Btrfs твики
-  sudo systemctl enable btrfs-scrub@home.timer 
-  sudo systemctl enable btrfs-scrub@-.timer 
+  #sudo systemctl enable grub-btrfsd.service
 
   # Configure initramfs to boot into snapshots using overlayfs (read-only mode)
   # Source: https://github.com/Antynea/grub-btrfs/blob/master/initramfs/readme.md
@@ -499,6 +457,9 @@ elif
   
   # Пересоздаём grub.cfg для включения под-меню grub
   sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+else
+yay -S timeshift-bin --noconfirm --needed
 fi
 
 # Усиление защиты
