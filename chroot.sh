@@ -122,8 +122,8 @@ if [ ${FS} = '2' ]; then
   systemctl enable btrfs-scrub@home.timer 
   systemctl enable btrfs-scrub@-.timer 
 
-  # Пропускать снапшоты с updatedb (Предотвращает замедление моментальных снимков)
-  sed -i 's/PRUNEPATHS = "/PRUNEPATHS = "\/.snapshots /' /etc/updatedb.conf
+  # Пропускать снапшоты для locate (Предотвращает замедление моментальных снимков)
+  sed -i '/^PRUNENAMES/s/"\(.*\)"/"\1 .snapshots"/' /etc/updatedb.conf
 
   # Правка mkinitcpio.conf
   sed -i 's/^MODULES.*/MODULES=(btrfs amdgpu)/' /etc/mkinitcpio.conf
