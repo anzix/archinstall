@@ -107,7 +107,7 @@ elif [ ${FS} = '2' ]; then
   mount -v -o noatime,nodatacow,compress=zstd:2,space_cache=v2,subvol=@libvirt $DISK_MNT /mnt/var/lib/libvirt
 
   # При обнаружении приплюсовывается в список для pacstrap
-  PKGS+=(btrfs-progs)
+  PKGS+=(btrfs-progs snapper)
 else
   echo "FS type"; exit 1
 fi
