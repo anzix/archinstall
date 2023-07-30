@@ -120,7 +120,7 @@ mount -v --mkdir $DISK_EFI /mnt/boot/efi
 
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Делаем pacman красивее
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Добавляем цвета в pacman
-sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Увеличение паралельных загрузок с 5 на 10
+sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 8/g" /etc/pacman.conf  # Увеличение паралельных загрузок с 5 на 8
 sed -i "s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf # Более удобный просмотр лист пакетов
 
 # Оптимизация зеркал с помощью Reflector
