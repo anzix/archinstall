@@ -439,22 +439,12 @@ PKGS=(
  'snap-pac' # делает снапшоты после каждой установки/обновления/удаления пакетов Pacman
  'grub-btrfs' # добавляет grub меню снимков созданных snapper чтобы в них загружаться
  'inotify-tools' # необходимая зависимость для grub-btrfs
- 'snap-pac-grub' # дополнительно обновляет записи GRUB для grub-btrfs после того, как snap-pac сделал снимки
+ 'snap-pac-grub' # дополнительно обновляет записи grub меню для grub-btrfs после того, как snap-pac сделал снимки
  'snp' # заворачивает любую shell команду и создаёт снимок до выполнения этой команды (snp sudo pacman -Syu)
- 'btrfs-assistant' # Gui программа обслуживания файловой системы Btrfs и для создания снимков
+ 'snapper-rollback' # скрипт для отката системы который соответствует схеме разметки Arch Linux
 )
-  gpg --recv-keys 56C3E775E72B0C8B1C0C1BD0B5DB77409B11B601
+  gpg --recv-keys 56C3E775E72B0C8B1C0C1BD0B5DB77409B11B601 # для snap-pac-grub
   yay -S "${PKGS[@]}" --noconfirm --needed
-
-  # Enable GRUB-BTRFS service
-  #sudo systemctl enable grub-btrfsd.service
-
-  # Configure initramfs to boot into snapshots using overlayfs (read-only mode)
-  # Source: https://github.com/Antynea/grub-btrfs/blob/master/initramfs/readme.md
-  sudo sed -i "s|keymap)|keymap grub-btrfs-overlayfs)|g" /etc/mkinitcpio.conf
-
-  # Пересоздаём initramfs
-  sudo mkinitcpio -P
   
   # Пересоздаём grub.cfg для включения под-меню grub
   sudo grub-mkconfig -o /boot/grub/grub.cfg
@@ -466,7 +456,7 @@ fi
 # Усиление защиты
 sudo sed -ri -e "s/^#PermitRootLogin.*/PermitRootLogin\ no/g" /etc/ssh/sshd_config
 
-# Отключить мониторный режим микрофона Samson C01U Pro при старте окружения
+# Отключить мониторный режим микрофона Samson C01U Pro при старте системы
 amixer sset -c 3 Mic mute
 
 # Врубаю сервисы
