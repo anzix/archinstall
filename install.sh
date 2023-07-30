@@ -132,7 +132,7 @@ reflector --verbose -c ru -p http,https -l 12 --sort rate --save /etc/pacman.d/m
 pacman -Syy
 
 # Установка базовых пакетов в /mnt
-pacstrap /mnt "${PKGS[@]}"
+pacstrap -K /mnt "${PKGS[@]}"
 
 # Генерирую fstab
 genfstab -U /mnt >> /mnt/etc/fstab
