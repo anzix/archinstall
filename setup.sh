@@ -155,6 +155,7 @@ PKGS=(
  'smartmontools' # Для информации и проверки состояния здоровья HDD и SSD
  'fd' # Поиск файлов
  'ripgrep' # Более быстрая альтернатива grep (необходимо для telescope плагин nvim)
+ 'tidy' # Инструмент для приведения HTML-кода к чистому стилю
  'exa' # Замена ls
  'pkgfile' # Для плагина zsh "command-not-found"
  'libva-utils' # Проверка VA-API дравера командой (vainfo)
