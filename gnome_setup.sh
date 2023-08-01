@@ -5,65 +5,62 @@
 
 echo "==> Установка пакетов для окружения Gnome"
 PKGS=(
-    'eog' # Просмоторщик изображений
-    'evince' # Просмотрщик документов
-    'file-roller'
-    'gnome-backgrounds'
-    'gnome-calculator'
-    'gnome-calendar'
-    'gnome-color-manager'
-    'gnome-console'
-    'gnome-control-center'
-    'gnome-disk-utility'
-    'gnome-keyring'
-    'gnome-music'
-    'gnome-session'
-    'gnome-settings-daemon'
-    'gnome-shell'
-    'gnome-shell-extensions'
-    'gnome-system-monitor'
-    'gnome-text-editor'
-#    'gnome-themes-extra' # Экстра темы для Gnome
-    'grilo-plugins'
-    'malcontent'
-    'mutter'
-    'ghex' # Hex редактор
-    'gpaste' # Clipboard Manager
-    'nautilus'
-    'sushi' # Быстрый предварительный просмотрщик для Nautilus
-    'totem' # Видеоплеер
-    'xdg-user-dirs-gtk'
-    'xdg-desktop-portal-gnome'
-    'qgnomeplatform-qt5' # Улучшает интеграцию приложений QT
-    'qgnomeplatform-qt6' # Улучшает интеграцию приложений QT
-    'kvantum' # Движок тем на основе SVG для Qt5/6 (включая инструмент настройки и дополнительные темы)
-    'gnome-shell-extension-appindicator' # Расширение 'ApplIndicator and KStatusNotifierltem Support'
-    'libappindicator-gtk2' # Для правильного отображения иконок в трее
-    'libappindicator-gtk3' # Для правильного отображения иконок в трее
-    'gnome-tweaks' # Экстра настройки Gnome
-    'webp-pixbuf-loader' # Поддержка WEBP изображений для eog
-    'wl-clipboard' # Wayland clipboard copy+paste
-    'gdm' # Дисплей менеджер
+ 'eog' # Просмоторщик изображений
+ 'evince' # Просмотрщик документов
+ 'file-roller'
+ 'gnome-backgrounds'
+ 'gnome-calculator'
+ 'gnome-calendar'
+ 'gnome-color-manager'
+ 'gnome-console'
+ 'gnome-control-center'
+ 'gnome-disk-utility'
+ 'gnome-keyring'
+ 'gnome-music'
+ 'gnome-session'
+ 'gnome-settings-daemon'
+ 'gnome-shell'
+ 'gnome-shell-extensions'
+ 'gnome-system-monitor'
+ 'gnome-text-editor'
+# 'gnome-themes-extra' # Экстра темы для Gnome
+ 'grilo-plugins'
+ 'malcontent'
+ 'mutter'
+ 'ghex' # Hex редактор
+ 'gpaste' # Clipboard Manager
+ 'nautilus'
+ 'sushi' # Быстрый предварительный просмотрщик для Nautilus
+ 'totem' # Видеоплеер
+ 'xdg-user-dirs-gtk'
+ 'xdg-desktop-portal-gnome'
+ 'qgnomeplatform-qt5' # Улучшает интеграцию приложений QT
+ 'qgnomeplatform-qt6' # Улучшает интеграцию приложений QT
+ 'kvantum' # Движок тем на основе SVG для Qt5/6 (включая инструмент настройки и дополнительные темы)
+ 'libappindicator-gtk2' # Для правильного отображения иконок в трее
+ 'libappindicator-gtk3' # Для правильного отображения иконок в трее
+ 'gnome-tweaks' # Экстра настройки Gnome
+ 'webp-pixbuf-loader' # Поддержка WEBP изображений для eog
+ 'wl-clipboard' # Wayland clipboard copy+paste
+ 'gdm' # Дисплей менеджер
+
+ 'gnome-shell-extension-appindicator' # Расширение 'ApplIndicator and KStatusNotifierltem Support'
 )
 sudo pacman -S "${PKGS[@]}" --noconfirm --needed
 
-
 echo "==> Установка AUR пакетов для окружения Gnome"
 PKGS=(
+ 'gcdemu' # CDEmu интеграция (эмуляция образов)
+ 'adw-gtk3' # Тема adw-gtk3
 
-	'gcdemu' # CDEmu интеграция (эмуляция образов)
-	'adw-gtk3' # Тема adw-gtk3
-
-#        'gnome-shell-extension-dash-to-dock' # Dock панель
-#        'gnome-shell-extension-desktop-icons-ng' # Иконки на рабочем столе
-#        'gnome-shell-extension-freon-git' # Отображение CPU/GPU/HDD/SSD температуры
-#        'gnome-shell-extension-kimpanel-git' # Реализация KDE kimpanel для GNOME Shell, теперь поддерживает fcitx
-#        'gnome-shell-extension-appindicator' # Трей
+# 'gnome-shell-extension-dash-to-dock' # Dock панель
+# 'gnome-shell-extension-desktop-icons-ng' # Иконки на рабочем столе
+# 'gnome-shell-extension-freon-git' # Отображение CPU/GPU/HDD/SSD температуры
+# 'gnome-shell-extension-kimpanel-git' # Реализация KDE kimpanel для GNOME Shell, теперь поддерживает fcitx
+# 'gnome-shell-extension-appindicator' # Трей
 
 )
 yay -S "${PKGS[@]}" --noconfirm --needed
-
-
 
 # Улучшение интеграции приложений QT
 sed -i '/QT_QPA_PLATFORMTHEME.*/s/qt5ct/gnome/' ~/.zprofile
@@ -235,6 +232,9 @@ fi
 
 # Обновление системных баз данных Gnome
 sudo dconf update
+
+# Запуск расширений
+gnome-extensions enable GPaste@gnome-shell-extensions.gnome.org
 
 # Запуск
 sudo systemctl enable gdm.service
