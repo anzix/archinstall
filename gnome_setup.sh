@@ -43,6 +43,7 @@ PKGS=(
     'gnome-tweaks' # Экстра настройки Gnome
     'webp-pixbuf-loader' # Поддержка WEBP изображений для eog
     'wl-clipboard' # Wayland clipboard copy+paste
+    'gdm' # Дисплей менеджер
 )
 sudo pacman -S "${PKGS[@]}" --noconfirm --needed
 
@@ -120,7 +121,8 @@ fi
 
 
 # Создание пользовательского профиля
-sudo mkdir -p /etc/dconf/profile
+sudo mkdir -pv /etc/dconf/profile
+sudo mkdir -pv /etc/dconf/db/local.d/
 echo -e "user-db:user
 system-db:local" | sudo tee -a /etc/dconf/profile/user >/dev/null
 
