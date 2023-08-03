@@ -103,12 +103,13 @@ elif [ ${FS} = '2' ]; then
   #Set the default BTRFS Subvol to Snapshot 1 before pacstrapping
   btrfs subvolume set-default "$(btrfs subvolume list /mnt | grep "@snapshots/1/snapshot" | grep -oP '(?<=ID )[0-9]+')" /mnt
 
+  DATE=$(date +"%Y-%m-%d %H:%M:%S")
   cat << EOF >> /mnt/@snapshots/1/info.xml
 <?xml version="1.0"?>
 <snapshot>
   <type>single</type>
   <num>1</num>
-  <date>1999-03-31 0:00:00</date>
+  <date>${DATE}</date>
   <description>First Root Filesystem</description>
   <cleanup>number</cleanup>
 </snapshot>
@@ -161,7 +162,10 @@ genfstab -U /mnt >> /mnt/etc/fstab
 echo "
 tmpfs 	/tmp	tmpfs		rw,nodev,nosuid,noatime,size=8G,mode=1777	 0 0" >> /mnt/etc/fstab
 
-sed -i 's#,subvolid=258,subvol=/@snapshots/1/snapshot,subvol=@snapshots/1/snapshot##g' /mnt/etc/fstab
+sed -i 's/,subvolid=256,subvol=\/@\/.snapshots\/1\/snapshot//g' /mnt/etc/fstab
+
+echo -e "# Booting with BTRFS subvolume\nGRUB_BTRFS_OVERRIDE_BOOT_PARTITION_DETECTION=true" >> /mnt/etc/default/grub
+sed -i 's/rootflags=subvol=${rootsubvol} //g' /mnt/etc/grub.d/10_linux /mnt/etc/grub.d/20_linux_xen
 
 # Обнаружение виртуалки
 export hypervisor=$(systemd-detect-virt)
