@@ -97,7 +97,8 @@ elif [ ${FS} = '2' ]; then
   btrfs su cr /mnt/@snapshots/1/snapshot
   btrfs su cr /mnt/@home
   btrfs su cr /mnt/@var_log
-  btrfs su cr /mnt/@libvirt
+  btrfs su cr /mnt/@var_lib_machines
+  btrfs su cr /mnt/@var_lib_libvirt_images
 
   #Set the default BTRFS Subvol to Snapshot 1 before pacstrapping
   btrfs subvolume set-default "$(btrfs subvolume list /mnt | grep "@snapshots/1/snapshot" | grep -oP '(?<=ID )[0-9]+')" /mnt
@@ -157,9 +158,10 @@ pacstrap -K /mnt "${PKGS[@]}"
 # Генерирую fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 # Make /tmp a ramdisk
-sed -i 's#,subvolid=258,subvol=/@/.snapshots/1/snapshot,subvol=@/.snapshots/1/snapshot##g' /mnt/etc/fstab
 echo "
 tmpfs 	/tmp	tmpfs		rw,nodev,nosuid,noatime,size=8G,mode=1777	 0 0" >> /mnt/etc/fstab
+
+sed -i 's#,subvolid=258,subvol=/@snapshots/1/snapshot,subvol=@snapshots/1/snapshot##g' /mnt/etc/fstab
 
 # Обнаружение виртуалки
 export hypervisor=$(systemd-detect-virt)
