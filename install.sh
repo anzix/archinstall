@@ -102,7 +102,7 @@ elif [ ${FS} = '2' ]; then
   #Set the default BTRFS Subvol to Snapshot 1 before pacstrapping
   btrfs subvolume set-default "$(btrfs subvolume list /mnt | grep "@snapshots/1/snapshot" | grep -oP '(?<=ID )[0-9]+')" /mnt
 
-  cat << EOF >> /mnt/@/.snapshots/1/info.xml
+  cat << EOF >> /mnt/@snapshots/1/info.xml
 <?xml version="1.0"?>
 <snapshot>
   <type>single</type>
@@ -120,7 +120,7 @@ EOF
 
   # BTRFS сам обнаруживает SSD при монтировании
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@ $DISK_MNT /mnt
-  mkdir -pv /mnt/{home,.snapshots,var/log,var/lib/libvirt/images,/var/lib/machines}
+  mkdir -pv /mnt/{home,.snapshots,var/log,var/lib/libvirt/images,var/lib/machines}
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log $DISK_MNT /mnt/var/log
