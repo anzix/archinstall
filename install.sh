@@ -42,10 +42,10 @@ PKGS=(
 )
 
 read -p "Имя хоста (hostname): " HOST_NAME
-export HOST_NAME=${HOST_NAME:-arch} 
+export HOST_NAME=${HOST_NAME:-arch}
 
 read -p "Имя пользователя (Может быть только в нижнем регистре и без знаков): " USER_NAME
-export USER_NAME=${USER_NAME:-user} 
+export USER_NAME=${USER_NAME:-user}
 
 read -p "Пароль пользователя: " USER_PASSWORD
 export USER_PASSWORD
@@ -55,11 +55,11 @@ export SUDO_PRIV
 
 read -p "Тип смены раскладки клавиатуры
 1 - Alt+Shift (по дефолту), 2 - Caps Lock: " XKB_LAYOUT
-export XKB_LAYOUT=${XKB_LAYOUT:-1} 
+export XKB_LAYOUT=${XKB_LAYOUT:-1}
 
 read -p "Файловая система
 1 - ext4 (по дефолту), 2 - btrfs: " FS
-export FS=${FS:-1} 
+export FS=${FS:-1}
 
 # Обнаружение часового пояса
 export time_zone=$(curl -s https://ipinfo.io/timezone)
@@ -67,7 +67,6 @@ export time_zone=$(curl -s https://ipinfo.io/timezone)
 # --- Разметка файловая система
 
 # Удаляем старую схему разделов и перечитываем таблицу разделов
-sgdisk --zap-all --clear $DISK  # Удаляет (уничтожает) структуры данных GPT и MBR
 wipefs --all --force $DISK # Стирает все доступные сигнатуры
 partprobe $DISK # Информировать ОС об изменениях в таблице разделов
 
@@ -90,22 +89,43 @@ if [ ${FS} = '1' ]; then
 elif [ ${FS} = '2' ]; then
   mkfs.btrfs -L ArchLinux -f $DISK_MNT
   mount -v $DISK_MNT /mnt
-  
+
   # Создание подтомов BTRFS
   btrfs su cr /mnt/@
-  btrfs su cr /mnt/@home
   btrfs su cr /mnt/@snapshots
+  mkdir -pv /mnt/@snapshots/1
+  btrfs su cr /mnt/@snapshots/1/snapshot
+  btrfs su cr /mnt/@home
   btrfs su cr /mnt/@var_log
   btrfs su cr /mnt/@libvirt
+
+  #Set the default BTRFS Subvol to Snapshot 1 before pacstrapping
+  btrfs subvolume set-default "$(btrfs subvolume list /mnt | grep "@snapshots/1/snapshot" | grep -oP '(?<=ID )[0-9]+')" /mnt
+
+  cat << EOF >> /mnt/@/.snapshots/1/info.xml
+<?xml version="1.0"?>
+<snapshot>
+  <type>single</type>
+  <num>1</num>
+  <date>1999-03-31 0:00:00</date>
+  <description>First Root Filesystem</description>
+  <cleanup>number</cleanup>
+</snapshot>
+EOF
+
+  chmod 600 /mnt/@snapshots/1/info.xml
+
+
   umount -v /mnt
 
   # BTRFS сам обнаруживает SSD при монтировании
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@ $DISK_MNT /mnt
-  mkdir -pv /mnt/{home,.snapshots,var/log,var/lib/libvirt}
+  mkdir -pv /mnt/{home,.snapshots,var/log,var/lib/libvirt/images,/var/lib/machines}
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log $DISK_MNT /mnt/var/log
-  mount -v -o noatime,nodatacow,compress=zstd:2,space_cache=v2,subvol=@libvirt $DISK_MNT /mnt/var/lib/libvirt
+  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_machines $DISK_MNT /mnt/var/lib/machines
+  mount -v -o noatime,nodatacow,compress=zstd:2,space_cache=v2,subvol=@var_lib_libvirt_images $DISK_MNT /mnt/var/lib/libvirt/images
 
   # При обнаружении приплюсовывается в список для pacstrap
   PKGS+=(btrfs-progs snapper)
@@ -113,7 +133,7 @@ else
   echo "FS type"; exit 1
 fi
 
-# --- Форматирование и монтирование EFI/boot раздела
+# --- Форматирование и монтирование загрузочного раздела
 yes | mkfs.fat -F32 -n BOOT $DISK_EFI
 mount -v --mkdir $DISK_EFI /mnt/boot/efi
 
@@ -129,7 +149,7 @@ reflector --verbose -c ru -p http,https -l 12 --sort rate --save /etc/pacman.d/m
 #Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 
 # Синхронизация базы пакетов
-pacman -Syy
+pacman -Sy
 
 # Установка базовых пакетов в /mnt
 pacstrap -K /mnt "${PKGS[@]}"
@@ -137,6 +157,7 @@ pacstrap -K /mnt "${PKGS[@]}"
 # Генерирую fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 # Make /tmp a ramdisk
+sed -i 's#,subvolid=258,subvol=/@/.snapshots/1/snapshot,subvol=@/.snapshots/1/snapshot##g' /mnt/etc/fstab
 echo "
 tmpfs 	/tmp	tmpfs		rw,nodev,nosuid,noatime,size=8G,mode=1777	 0 0" >> /mnt/etc/fstab
 
