@@ -92,10 +92,10 @@ elif [ ${FS} = '2' ]; then
 
   # Создание подтомов BTRFS
   btrfs su cr /mnt/@
+  btrfs su cr /mnt/@home
   btrfs su cr /mnt/@snapshots
   mkdir -pv /mnt/@snapshots/1
   btrfs su cr /mnt/@snapshots/1/snapshot
-  btrfs su cr /mnt/@home
   btrfs su cr /mnt/@var_log
   btrfs su cr /mnt/@var_lib_machines
   btrfs su cr /mnt/@var_lib_libvirt_images
@@ -115,7 +115,7 @@ elif [ ${FS} = '2' ]; then
 </snapshot>
 EOF
 
-  chmod 600 /mnt/@snapshots/1/info.xml
+  chmod -v 600 /mnt/@snapshots/1/info.xml
 
 
   umount -v /mnt
@@ -162,7 +162,6 @@ genfstab -U /mnt >> /mnt/etc/fstab
 echo "
 tmpfs 	/tmp	tmpfs		rw,nodev,nosuid,noatime,size=8G,mode=1777	 0 0" >> /mnt/etc/fstab
 
-sed -i 's/,subvolid=256,subvol=\/@\/.snapshots\/1\/snapshot//g' /mnt/etc/fstab
 
 echo -e "# Booting with BTRFS subvolume\nGRUB_BTRFS_OVERRIDE_BOOT_PARTITION_DETECTION=true" >> /mnt/etc/default/grub
 sed -i 's/rootflags=subvol=${rootsubvol} //g' /mnt/etc/grub.d/10_linux /mnt/etc/grub.d/20_linux_xen
