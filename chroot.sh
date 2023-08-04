@@ -21,9 +21,9 @@ echo "FONT=ter-v22b" >> /etc/vconsole.conf
 ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
 hwclock --systohc # Эта команда предполагает, что аппаратные часы настроены в формате UTC.
 
-# Имя хоста 
+# Имя хоста
 echo $HOST_NAME > /etc/hostname
-tee /etc/hosts > /dev/null << EOF 
+tee /etc/hosts > /dev/null << EOF
 127.0.0.1 localhost
 ::1 localhost
 127.0.1.1 $HOST_NAME.localdomain $HOST_NAME
@@ -38,7 +38,7 @@ pacman-key --init
 pacman-key --populate archlinux
 
 # Добавления юзера и присваивание групп к юзеру
-useradd -m -g users -G wheel,audio,video,input,optical,uucp,games -s /bin/zsh $USER_NAME
+useradd -m -G wheel,audio,video,input,optical,users,uucp,games -s /bin/zsh $USER_NAME
 echo $USER_NAME:$USER_PASSWORD | chpasswd
 
 # Привелегии sudo
@@ -88,10 +88,10 @@ if [ ${FS} = '2' ]; then
 
   # Create Snapper config
   snapper --no-dbus -c root create-config /
-  
+
   # Информация о размере снапшота btrfs
   #btrfs quota enable /
-  
+
   # Delete Snapper's .snapshots subvolume
   btrfs subvolume delete /.snapshots
 
@@ -119,19 +119,19 @@ if [ ${FS} = '2' ]; then
   systemctl enable snapper-cleanup.timer
 
   # Btrfs твики
-  systemctl enable btrfs-scrub@home.timer 
-  systemctl enable btrfs-scrub@-.timer 
+  systemctl enable btrfs-scrub@home.timer
+  systemctl enable btrfs-scrub@-.timer
 
   # Пропускать снапшоты для locate (Предотвращает замедление моментальных снимков)
   sed -i '/^PRUNENAMES/s/"\(.*\)"/"\1 .snapshots"/' /etc/updatedb.conf
 
   # Правка mkinitcpio.conf
   sed -i 's/^MODULES.*/MODULES=(btrfs amdgpu)/' /etc/mkinitcpio.conf
-  
+
   # Add the btrfs binary in order to do maintenence on system without mounting it
   sed -i 's/^BINARIES=.*$/BINARIES=(btrfs)/' /etc/mkinitcpio.conf
   sed -i "s/^HOOKS.*/HOOKS=(base consolefont udev autodetect modconf block filesystems keyboard keymap)/g" /etc/mkinitcpio.conf
-  
+
 else
   sed -i 's/^MODULES.*/MODULES=(amdgpu)/' /etc/mkinitcpio.conf
   sed -i "s/^HOOKS.*/HOOKS=(base consolefont udev autodetect modconf block filesystems keyboard keymap fsck)/g" /etc/mkinitcpio.conf
