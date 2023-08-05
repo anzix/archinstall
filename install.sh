@@ -177,12 +177,12 @@ sed -i 's/rootflags=subvol=${rootsubvol} //g' /mnt/etc/grub.d/10_linux /mnt/etc/
 export hypervisor=$(systemd-detect-virt)
 
 # Настройка и chroot
-cp /root/scriptinstall /mnt/
+cp -r /root/scriptinstall /mnt/
 arch-chroot /mnt /bin/bash /scriptinstall/chroot.sh
 
 # Действия после chroot
 if read -re -p "arch-chroot /mnt? [y/N]: " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then
   arch-chroot /mnt
 else
-  umount -a # (-a) - безопасно размонтировать всё
+  umount -R /mnt # (-a) - безопасно размонтировать всё
 fi
