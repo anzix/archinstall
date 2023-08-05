@@ -141,7 +141,7 @@ EOF
 
   # BTRFS сам обнаруживает SSD при монтировании
   mount -v -o noatime,compress=zstd:2,space_cache=v2 $DISK_MNT /mnt
-  mkdir -pv /mnt/{home,.snapshots,srv,tmp,var/log,var/crash,var/cache,var/tmp,var/spool,var/lib/libvirt/images,var/lib/machines,var/lib/AccountsService,var/lib/gdm}
+  mkdir -pv /mnt/{home,root,.snapshots,srv,tmp,var/log,var/log/journal,var/crash,var/cache,var/tmp,var/spool,var/lib/libvirt/images,var/lib/machines,var/lib/AccountsService,var/lib/gdm}
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@root $DISK_MNT /mnt/root
@@ -149,7 +149,7 @@ EOF
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log_journal $DISK_MNT /mnt/var/log/journal
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_crash $DISK_MNT /mnt/var/crash
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_cache $DISK_MNT /mnt/var/cache
-  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_tmp $DISK_MNT /mnt/var/tmp
+  mount -v -o noatime,compress=zstd:2,space_cache=v2,nosuid,subvol=@var_tmp $DISK_MNT /mnt/var/tmp
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_spool $DISK_MNT /mnt/var/spool
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log $DISK_MNT /mnt/var/log
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_machines $DISK_MNT /mnt/var/lib/machines
