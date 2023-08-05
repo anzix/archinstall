@@ -113,7 +113,7 @@ elif [ ${FS} = 'btrfs' ]; then
   btrfs su cr /mnt/@var_crash
   btrfs su cr /mnt/@var_cache
   btrfs su cr /mnt/@var_tmp
-  btrfs su cr /mnt/@/var_spool
+  btrfs su cr /mnt/@var_spool
   btrfs su cr /mnt/@var_lib_machines
   btrfs su cr /mnt/@var_lib_libvirt_images
   btrfs su cr /mnt/@var_lib_AccountsService
@@ -147,8 +147,8 @@ EOF
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@root $DISK_MNT /mnt/root
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@srv $DISK_MNT /mnt/srv
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log_journal $DISK_MNT /mnt/var/log/journal
-  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_crash $DISK_MNT /mnt/var/var/crash
-  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_cache $DISK_MNT /mnt/var/var/cache
+  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_crash $DISK_MNT /mnt/var/crash
+  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_cache $DISK_MNT /mnt/var/cache
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_tmp $DISK_MNT /mnt/var/tmp
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_spool $DISK_MNT /mnt/var/spool
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log $DISK_MNT /mnt/var/log
