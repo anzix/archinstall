@@ -106,14 +106,7 @@ elif [ ${FS} = 'btrfs' ]; then
   btrfs su cr /mnt/@snapshots
   mkdir -pv /mnt/@snapshots/1
   btrfs su cr /mnt/@snapshots/1/snapshot
-  btrfs su cr /mnt/@root
-  btrfs su cr /mnt/@srv
   btrfs su cr /mnt/@var_log
-  btrfs su cr /mnt/@var_log_journal
-  btrfs su cr /mnt/@var_crash
-  btrfs su cr /mnt/@var_cache
-  btrfs su cr /mnt/@var_tmp
-  btrfs su cr /mnt/@var_spool
   btrfs su cr /mnt/@var_lib_machines
   btrfs su cr /mnt/@var_lib_libvirt_images
   btrfs su cr /mnt/@var_lib_AccountsService
@@ -141,16 +134,9 @@ EOF
 
   # BTRFS сам обнаруживает SSD при монтировании
   mount -v -o noatime,compress=zstd:2,space_cache=v2 $DISK_MNT /mnt
-  mkdir -pv /mnt/{home,.snapshots,srv,tmp,var/log,var/crash,var/cache,var/tmp,var/spool,var/lib/libvirt/images,var/lib/machines,var/lib/AccountsService,var/lib/gdm}
+  mkdir -pv /mnt/{home,.snapshots,var/log,var/lib/libvirt/images,var/lib/machines,var/lib/AccountsService,var/lib/gdm}
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots
-  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@root $DISK_MNT /mnt/root
-  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@srv $DISK_MNT /mnt/srv
-  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log_journal $DISK_MNT /mnt/var/log/journal
-  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_crash $DISK_MNT /mnt/var/crash
-  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_cache $DISK_MNT /mnt/var/cache
-  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_tmp $DISK_MNT /mnt/var/tmp
-  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_spool $DISK_MNT /mnt/var/spool
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log $DISK_MNT /mnt/var/log
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_machines $DISK_MNT /mnt/var/lib/machines
   mount -v -o noatime,nodatacow,compress=zstd:2,space_cache=v2,subvol=@var_lib_libvirt_images $DISK_MNT /mnt/var/lib/libvirt/images
