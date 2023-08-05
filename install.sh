@@ -141,7 +141,7 @@ EOF
 
   # BTRFS сам обнаруживает SSD при монтировании
   mount -v -o noatime,compress=zstd:2,space_cache=v2 $DISK_MNT /mnt
-  mkdir -pv /mnt/{home,.snapshots,srv,tmp,var/log,/var/log,/var/crash,/var/cache,/var/tmp,/var/spool,var/lib/libvirt/images,var/lib/machines,var/lib/AccountsService,var/lib/gdm}
+  mkdir -pv /mnt/{home,.snapshots,srv,tmp,var/log,var/crash,var/cache,var/tmp,var/spool,var/lib/libvirt/images,var/lib/machines,var/lib/AccountsService,var/lib/gdm}
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@root $DISK_MNT /mnt/root
