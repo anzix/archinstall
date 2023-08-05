@@ -49,13 +49,16 @@ export SUDO_PRIV
 
 PS3="Тип смены раскладки клавиатуры: "
 select ENTRY in "Alt+Shift" "Caps Lock"; do
-	XKB_LAYOUT=${ENTRY}
-	exit
+	export XKB_LAYOUT=${ENTRY}
+	echo "Выбран ${XKB_LAYOUT}"
+	brake
 done
 
 PS3="Выберите диск, на который будет установлен Arch Linux: "
 select ENTRY in $(lsblk -dpnoNAME|grep -P "/dev/sd|nvme|vd"); do
     export DISK=$ENTRY
+	export DISK_EFI=${DISK}1
+	export DISK_MNT=${DISK}2
     echo "Установка Arch Linux на ${DISK}."
     break
 done
@@ -83,7 +86,7 @@ partprobe $DISK # Информировать ОС об изменениях в �
 
 
 # Файловая система
-if [ ${FS} = '1' ]; then
+if [ ${FS} = 'ext4' ]; then
   yes | mkfs.ext4 -L ArchLinux $DISK_MNT
   # yes | mkfs.ext4 -L home $H_DISK
   mount -v $DISK_MNT /mnt
@@ -92,7 +95,7 @@ if [ ${FS} = '1' ]; then
 
   # При обнаружении приплюсовывается в список для pacstrap
   PKGS+=(e2fsprogs)
-elif [ ${FS} = '2' ]; then
+elif [ ${FS} = 'btrfs' ]; then
   mkfs.btrfs -L ArchLinux -f $DISK_MNT
   mount -v $DISK_MNT /mnt
 

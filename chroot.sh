@@ -10,9 +10,9 @@ EOF
 
 # Смена раскладки клавиатуры в tty
 # TODO: ru-mab — кодировка UTF-8 переключение на Ctrl+Shift
-if [ ${XKB_LAYOUT} = '1' ]; then
+if [ ${XKB_LAYOUT} = 'Alt+Shift' ]; then
   echo "KEYMAP=ruwin_alt_sh-UTF-8" > /etc/vconsole.conf
-elif [ ${XKB_LAYOUT} = '2' ]; then
+elif [ ${XKB_LAYOUT} = 'Caps Lock' ]; then
   echo "KEYMAP=ruwin_cplk-UTF-8" > /etc/vconsole.conf
 fi
 echo "FONT=ter-v22b" >> /etc/vconsole.conf
