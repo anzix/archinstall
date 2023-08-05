@@ -176,8 +176,9 @@ sed -i 's/rootflags=subvol=${rootsubvol} //g' /mnt/etc/grub.d/10_linux /mnt/etc/
 # Обнаружение виртуалки
 export hypervisor=$(systemd-detect-virt)
 
-# --- Chroot'имся
-arch-chroot /mnt /bin/bash /root/scriptinstall/chroot.sh
+# Настройка и chroot
+cp /root/scriptinstall /mnt/
+arch-chroot /mnt /bin/bash /scriptinstall/chroot.sh
 
 # Действия после chroot
 if read -re -p "arch-chroot /mnt? [y/N]: " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then
