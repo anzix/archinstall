@@ -102,13 +102,15 @@ elif [ ${FS} = 'btrfs' ]; then
 
   # Создание подтомов BTRFS
   btrfs su cr /mnt/@
-  btrfs su cr /mnt/@home
   btrfs su cr /mnt/@snapshots
   mkdir -pv /mnt/@snapshots/1
   btrfs su cr /mnt/@snapshots/1/snapshot
+  btrfs su cr /mnt/@home
   btrfs su cr /mnt/@var_log
   btrfs su cr /mnt/@var_lib_machines
   btrfs su cr /mnt/@var_lib_libvirt_images
+  btrfs su cr /mnt/@var_lib_AccountsService
+  btrfs su cr /mnt/@var_lib_gdm
 
   #Set the default BTRFS Subvol to Snapshot 1 before pacstrapping
   btrfs subvolume set-default "$(btrfs subvolume list /mnt | grep "@snapshots/1/snapshot" | grep -oP '(?<=ID )[0-9]+')" /mnt
@@ -131,13 +133,15 @@ EOF
   umount -v /mnt
 
   # BTRFS сам обнаруживает SSD при монтировании
-  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@ $DISK_MNT /mnt
-  mkdir -pv /mnt/{home,.snapshots,var/log,var/lib/libvirt/images,var/lib/machines}
+  mount -v -o noatime,compress=zstd:2,space_cache=v2 $DISK_MNT /mnt
+  mkdir -pv /mnt/{home,.snapshots,var/log,var/lib/libvirt/images,var/lib/machines,var/lib/AccountsService,var/lib/gdm}
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log $DISK_MNT /mnt/var/log
   mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_machines $DISK_MNT /mnt/var/lib/machines
   mount -v -o noatime,nodatacow,compress=zstd:2,space_cache=v2,subvol=@var_lib_libvirt_images $DISK_MNT /mnt/var/lib/libvirt/images
+  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_AccountsService $DISK_MNT /mnt/var/lib/AccountsService
+  mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_gdm $DISK_MNT /mnt/var/lib/gdm
 
   # При обнаружении приплюсовывается в список для pacstrap
   PKGS+=(btrfs-progs snapper)
@@ -169,8 +173,6 @@ genfstab -U /mnt >> /mnt/etc/fstab
 echo "
 tmpfs 	/tmp	tmpfs		rw,nodev,nosuid,noatime,size=8G,mode=1777	 0 0" >> /mnt/etc/fstab
 
-
-echo -e "# Booting with BTRFS subvolume\nGRUB_BTRFS_OVERRIDE_BOOT_PARTITION_DETECTION=true" >> /mnt/etc/default/grub
 sed -i 's/rootflags=subvol=${rootsubvol} //g' /mnt/etc/grub.d/10_linux /mnt/etc/grub.d/20_linux_xen
 
 # Обнаружение виртуалки
