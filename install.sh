@@ -10,12 +10,6 @@ clear
 # Синхронизация часов материнской платы
 timedatectl set-ntp true
 
-# --- Переменные
-
-DISK=/dev/sda
-DISK_EFI=/dev/sda1
-DISK_MNT=/dev/sda2
-
 # Базовые пакеты в /mnt
 PKGS=(
   base base-devel reflector pacman-contrib openssh
@@ -41,10 +35,10 @@ PKGS=(
   plocate # Более быстрая альтернатива locate
 )
 
-read -p "Имя хоста (hostname): " HOST_NAME
+read -p "Имя хоста (пустое поле - arch): " HOST_NAME
 export HOST_NAME=${HOST_NAME:-arch}
 
-read -p "Имя пользователя (Может быть только в нижнем регистре и без знаков): " USER_NAME
+read -p "Имя пользователя (Может быть только в нижнем регистре и без знаков, пустое поле - user): " USER_NAME
 export USER_NAME=${USER_NAME:-user}
 
 read -p "Пароль пользователя: " USER_PASSWORD
@@ -53,13 +47,25 @@ export USER_PASSWORD
 read -p "Sudo с запросом пароля? [y/n]: " SUDO_PRIV
 export SUDO_PRIV
 
-read -p "Тип смены раскладки клавиатуры
-1 - Alt+Shift (по дефолту), 2 - Caps Lock: " XKB_LAYOUT
-export XKB_LAYOUT=${XKB_LAYOUT:-1}
+PS3="Тип смены раскладки клавиатуры: "
+select ENTRY in "Alt+Shift" "Caps Lock"; do
+	XKB_LAYOUT=${ENTRY}
+	exit
+done
 
-read -p "Файловая система
-1 - ext4 (по дефолту), 2 - btrfs: " FS
-export FS=${FS:-1}
+PS3="Выберите диск, на который будет установлен Arch Linux: "
+select ENTRY in $(lsblk -dpnoNAME|grep -P "/dev/sd|nvme|vd"); do
+    export DISK=$ENTRY
+    echo "Установка Arch Linux на ${DISK}."
+    break
+done
+
+PS3="Выберите файловую систему: "
+select ENTRY in "ext4" "btrfs"; do
+    export FS=$ENTRY
+    echo "Выбран ${FS}."
+    break
+done
 
 # Обнаружение часового пояса
 export time_zone=$(curl -s https://ipinfo.io/timezone)
@@ -139,7 +145,6 @@ fi
 yes | mkfs.fat -F32 -n BOOT $DISK_EFI
 mount -v --mkdir $DISK_EFI /mnt/boot/efi
 
-
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Делаем pacman красивее
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Добавляем цвета в pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 8/g" /etc/pacman.conf  # Увеличение паралельных загрузок с 5 на 8
@@ -147,8 +152,6 @@ sed -i "s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf # Более уд
 
 # Оптимизация зеркал с помощью Reflector
 reflector --verbose -c ru -p http,https -l 12 --sort rate --save /etc/pacman.d/mirrorlist
-#echo "Server = https://mirror.yandex.ru/archlinux/\$repo/os/\$arch
-#Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 
 # Синхронизация базы пакетов
 pacman -Sy
@@ -170,9 +173,7 @@ sed -i 's/rootflags=subvol=${rootsubvol} //g' /mnt/etc/grub.d/10_linux /mnt/etc/
 export hypervisor=$(systemd-detect-virt)
 
 # --- Chroot'имся
-curl -o /mnt/chroot.sh https://raw.githubusercontent.com/anzix/scriptinstall/main/chroot.sh
-chmod +x /mnt/chroot.sh
-arch-chroot /mnt /bin/bash /chroot.sh
+arch-chroot /mnt /bin/bash scriptinstall/chroot.sh
 
 # Действия после chroot
 if read -re -p "arch-chroot /mnt? [y/N]: " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then
