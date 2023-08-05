@@ -51,23 +51,23 @@ PS3="Тип смены раскладки клавиатуры: "
 select ENTRY in "Alt+Shift" "Caps Lock"; do
 	export XKB_LAYOUT=${ENTRY}
 	echo "Выбран ${XKB_LAYOUT}"
-	brake
+	break
 done
 
 PS3="Выберите диск, на который будет установлен Arch Linux: "
 select ENTRY in $(lsblk -dpnoNAME|grep -P "/dev/sd|nvme|vd"); do
-    export DISK=$ENTRY
+	export DISK=$ENTRY
 	export DISK_EFI=${DISK}1
 	export DISK_MNT=${DISK}2
-    echo "Установка Arch Linux на ${DISK}."
-    break
+	echo "Установка Arch Linux на ${DISK}."
+	break
 done
 
 PS3="Выберите файловую систему: "
 select ENTRY in "ext4" "btrfs"; do
-    export FS=$ENTRY
-    echo "Выбран ${FS}."
-    break
+	export FS=$ENTRY
+	echo "Выбран ${FS}."
+	break
 done
 
 # Обнаружение часового пояса
@@ -76,6 +76,7 @@ export time_zone=$(curl -s https://ipinfo.io/timezone)
 # --- Разметка файловая система
 
 # Удаляем старую схему разделов и перечитываем таблицу разделов
+sgdisk --zap-all --clear $DISK  # Удаляет (уничтожает) структуры данных GPT и MBR
 wipefs --all --force $DISK # Стирает все доступные сигнатуры
 partprobe $DISK # Информировать ОС об изменениях в таблице разделов
 
@@ -176,7 +177,7 @@ sed -i 's/rootflags=subvol=${rootsubvol} //g' /mnt/etc/grub.d/10_linux /mnt/etc/
 export hypervisor=$(systemd-detect-virt)
 
 # --- Chroot'имся
-arch-chroot /mnt /bin/bash scriptinstall/chroot.sh
+arch-chroot /mnt /bin/bash /root/scriptinstall/chroot.sh
 
 # Действия после chroot
 if read -re -p "arch-chroot /mnt? [y/N]: " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then
