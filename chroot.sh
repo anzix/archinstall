@@ -81,7 +81,7 @@ case $hypervisor in
 esac
 
 # Настройка snapper и btrfs в случае обнаружения
-if [ ${FS} = 'btrfs' ]; then
+if [ ${FS} = '2' ]; then
   # Unmount .snapshots
   umount -v /.snapshots
   rm -rfv /.snapshots
