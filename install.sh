@@ -24,9 +24,10 @@ PKGS=(
 # linux-lts linux-lts-headers
  linux-firmware
  zsh
- wget
+ wget # Для скачивания файлов
  grub efibootmgr
  intel-ucode
+ iptables-nft # Средство управления сетью пакетами данных ядра Linux используя интерфейс nft
  xdg-user-dirs # Создание пользовательских XDG директории
  ccache # Ускоряет перекомпиляцию за счет кэширования предыдущих компиляций
 )
