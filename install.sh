@@ -66,15 +66,15 @@ select ENTRY in "ext4" "btrfs"; do
 	break
 done
 
-PS3="Выберите окружение: "
-select ENTRY in "plasma" "gnome" "i3wm"; do
-	export DESKTOP_ENVIRONMENT=$ENTRY
-	echo "Выбран ${DESKTOP_ENVIRONMENT}."
-	break
-done
+# PS3="Выберите окружение: "
+# select ENTRY in "plasma" "gnome" "i3wm"; do
+# 	export DESKTOP_ENVIRONMENT=$ENTRY
+# 	echo "Выбран ${DESKTOP_ENVIRONMENT}."
+# 	break
+# done
 
-read -p "Gaming (y/n): " GAMING
-export GAMING
+# read -p "Gaming (y/n): " GAMING
+# export GAMING
 
 # Обнаружение часового пояса
 export time_zone=$(curl -s https://ipinfo.io/timezone)

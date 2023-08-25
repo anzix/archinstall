@@ -174,7 +174,7 @@ PKGS=(
  'neovim' # Текстовый редактор
  'stow' # Менеджер sim-link'ов (для менеджмента dotfiles)
  'pacman-contrib' # Скрипты и инструменты для Pacman
- 'expac'# Утилита извлечения данных alpm (базы данных pacman)
+ 'expac' # Утилита извлечения данных alpm (базы данных pacman)
  'rebuild-detector' # Показывает лист AUR пакетов которые были собраны на старых версиях зависимостей, для их дальнейшей пересборки
  'archlinux-wallpaper' # Arch Linux обои
  'reflector' # Инструмент для оптимизации зеркал Pacman
