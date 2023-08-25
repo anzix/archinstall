@@ -5,58 +5,58 @@
 
 echo "==> Установка пакетов для окружения KDE Plasma"
 PKGS=(
-    'plasma-desktop'
-    'bluedevil'
-    'kinfocenter'
-    'kscreen'
-    'kwallet-pam'
-    'kwayland-integration'
-    'plasma-disks'
-    'plasma-nm'
-    'plasma-pa'
-    'plasma-systemmonitor'
-    'plasma-vault' # Plasma applet and services for creating encrypted vaults
-    'plasma-workspace-wallpapers'
-    'powerdevil'
-    'xdg-desktop-portal'
-    'xdg-desktop-portal-kde'
-    'okteta' # QT Hex редактор
-    'konsole'
-    'kate'
-#    'doublecmd-qt5' # Альтернатива Total Commander
-    'kdiskmark' # Бенчмарк для накопителей
-    'dolphin'
-    'kio-admin' # Поддержка управления файлами от имени администратора для dolphin
-    'ffmpegthumbs' # Предпросмотрщик видео для проводника dolphin
-#    'icoutils' # Отобраения иконок для wine (exe файлов) в dolphin
-    'kdialog' # GUI диалоги
-    'ark'
-    'kcalc'
-    'plasma-wayland-session'
-    'kwalletmanager'
-    'spectacle'
-    'okular'
-    'gwenview'
-    'kimageformats' # Добавляет поддержку форматов jxl, xcf, psd для gwenview
-    'partitionmanager' # Менеджер дисков KDE
-    'plasma-browser-integration'
-    'kdeplasma-addons'
-    'plasma-firewall'
-#    'kdeconnect' # Управление Linux с Android
-    'sshfs'
-    'libappindicator-gtk2' # Для правильного отображения иконок в трее
-    'libappindicator-gtk3' # Для правильного отображения иконок в трее
-    'wl-clipboard' # Wayland clipboard copy+paste
+ 'plasma-desktop'
+ 'bluedevil'
+ 'kinfocenter'
+ 'kscreen'
+ 'kwallet-pam'
+ 'kwayland-integration'
+ 'plasma-disks'
+ 'plasma-nm'
+ 'plasma-pa'
+ 'plasma-systemmonitor'
+ 'plasma-vault' # Plasma applet and services for creating encrypted vaults
+ 'plasma-workspace-wallpapers'
+ 'powerdevil'
+ 'xdg-desktop-portal'
+ 'xdg-desktop-portal-kde'
+ 'okteta' # QT Hex редактор
+ 'konsole'
+ 'kate'
+# 'doublecmd-qt5' # Альтернатива Total Commander
+ 'kdiskmark' # Бенчмарк для накопителей
+ 'dolphin'
+ 'kio-admin' # Поддержка управления файлами от имени администратора для dolphin
+ 'ffmpegthumbs' # Предпросмотрщик видео для проводника dolphin
+# 'icoutils' # Отобраения иконок для wine (exe файлов) в dolphin
+ 'kdialog' # GUI диалоги
+ 'ark'
+ 'kcalc'
+ 'plasma-wayland-session'
+ 'kwalletmanager'
+ 'spectacle'
+ 'okular'
+ 'gwenview'
+ 'kimageformats' # Добавляет поддержку форматов jxl, xcf, psd для gwenview
+ 'partitionmanager' # Менеджер дисков KDE
+ 'plasma-browser-integration'
+ 'kdeplasma-addons'
+ 'plasma-firewall'
+# 'kdeconnect' # Управление Linux с Android
+ 'sshfs'
+ 'libappindicator-gtk2' # Для правильного отображения иконок в трее
+ 'libappindicator-gtk3' # Для правильного отображения иконок в трее
+ 'wl-clipboard' # Wayland clipboard copy+paste
 
-    'sddm-kcm' # KDE Config Module for SDDM
+ 'sddm-kcm' # KDE Config Module for SDDM
 
-    'plasma5-applets-window-buttons' # Апплет смены раскладки клавиатуры
-    'breeze-gtk' # Improve integration of GTK applications
-    'kde-gtk-config' # GTK2 and GTK3 Configurator for KDE
-    
-#    'flatpak-kcm' # Интеграция разрешений Flatpak
+ 'plasma5-applets-window-buttons' # Апплет смены раскладки клавиатуры
+ 'breeze-gtk' # Improve integration of GTK applications
+ 'kde-gtk-config' # GTK2 and GTK3 Configurator for KDE
 
-    'sddm' # Дисплей менеджер
+# 'flatpak-kcm' # Интеграция разрешений Flatpak
+
+ 'sddm' # Дисплей менеджер
 )
 sudo pacman -S "${PKGS[@]}" --noconfirm --needed
 
@@ -81,21 +81,6 @@ user_pref("widget.use-xdg-desktop-portal.file-picker", 1);
 user_pref("media.hardwaremediakeys.enabled", false);
 EOF
 done
-
-# Dolphin Root доступ (заменён на пакет kio-admin)
-#echo '[Desktop Entry]
-#X-KDE-ServiceTypes=KonqPopupMenu/Plugin
-#X-KDE-Priority=TopLevel
-#Type=Service
-#MimeType=all/all
-#Actions=EditFromRoot
-#Icon=folder-red
-#
-#[Desktop Action EditFromRoot]
-#Name=Edit from root
-#Name[ru]=Dolphin-Root
-#Icon=folder-red
-#Exec=pkexec env DISPLAY="$DISPLAY" XAUTHORITY="$XAUTHORITY" KDE_SESSION_VERSION=5 KDE_FULL_SESSION=true dbus-launch dolphin' | sudo tee -a /usr/share/kservices5/ServiceMenus/Dolphin-Root.desktop >/dev/null
 
 # Автозапуск
 mkdir -pv ~/.config/autostart/
@@ -144,9 +129,11 @@ sudo kwriteconfig5 --file /etc/sddm.conf.d/kde_settings.conf --group Theme --key
 
 # Тёмная тема для SDDM
 sudo cp /usr/share/wallpapers/Next/contents/images_dark/1920x1080.png /usr/share/sddm/themes/breeze/
-echo "[General]
+sudo tee /usr/share/sddm/themes/breeze/theme.conf.user >/dev/null <<'EOF'
+[General]
 background=1920x1080.png
-type=image " | sudo tee -a /usr/share/sddm/themes/breeze/theme.conf.user >/dev/null
+type=image
+EOF
 
 # Тёмная тема Plasma
 kwriteconfig5 --file kdeglobals --group KDE --key LookAndFeelPackage "org.kde.breezedark.desktop"

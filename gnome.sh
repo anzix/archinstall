@@ -7,7 +7,7 @@ echo "==> Установка пакетов для окружения Gnome"
 PKGS=(
  'eog' # Просмоторщик изображений
  'evince' # Просмотрщик документов
- 'file-roller'
+ 'file-roller' # Архивато # Архиваторр
  'gnome-backgrounds'
  'gnome-calculator'
  'gnome-calendar'
@@ -15,6 +15,7 @@ PKGS=(
  'gnome-console'
  'gnome-control-center'
  'gnome-disk-utility'
+ 'gnome-font-viewer'
  'gnome-keyring'
  'gnome-music'
  'gnome-session'
@@ -25,11 +26,12 @@ PKGS=(
  'gnome-text-editor'
 # 'gnome-themes-extra' # Экстра темы для Gnome
  'grilo-plugins'
- 'malcontent'
  'mutter'
  'ghex' # Hex редактор
  'gpaste' # Clipboard Manager
- 'nautilus'
+ 'gvfs-mtp'
+ 'gvfs-nfs'
+ 'nautilus' # Файловый менеджер
  'sushi' # Быстрый предварительный просмотрщик для Nautilus
  'totem' # Видеоплеер
  'xdg-user-dirs-gtk'
@@ -37,48 +39,51 @@ PKGS=(
  'qgnomeplatform-qt5' # Улучшает интеграцию приложений QT
  'qgnomeplatform-qt6' # Улучшает интеграцию приложений QT
  'kvantum' # Движок тем на основе SVG для Qt5/6 (включая инструмент настройки и дополнительные темы)
- 'libappindicator-gtk2' # Для правильного отображения иконок в трее
- 'libappindicator-gtk3' # Для правильного отображения иконок в трее
  'gnome-tweaks' # Экстра настройки Gnome
  'webp-pixbuf-loader' # Поддержка WEBP изображений для eog
  'wl-clipboard' # Wayland clipboard copy+paste
  'gdm' # Дисплей менеджер
 
- 'gnome-shell-extension-appindicator' # Расширение 'ApplIndicator and KStatusNotifierltem Support'
+ 'gnome-shell-extension-appindicator' 'libappindicator-gtk2' 'libappindicator-gtk3' # Устаревшее отображение иконок в трее (gtk2/3)
 )
 sudo pacman -S "${PKGS[@]}" --noconfirm --needed
 
 echo "==> Установка AUR пакетов для окружения Gnome"
 PKGS=(
  'gcdemu' # CDEmu интеграция (эмуляция образов)
- 'adw-gtk3' # Тема adw-gtk3
+ 'adw-gtk3' # Adwaita тема для устаревших GTK3 приложений
+ 'kvantum-theme-libadwaita-git' # LibAdwaita тема для QT 5/6 приложений
 
 # 'gnome-shell-extension-dash-to-dock' # Dock панель
 # 'gnome-shell-extension-desktop-icons-ng' # Иконки на рабочем столе
 # 'gnome-shell-extension-freon-git' # Отображение CPU/GPU/HDD/SSD температуры
 # 'gnome-shell-extension-kimpanel-git' # Реализация KDE kimpanel для GNOME Shell, теперь поддерживает fcitx
-# 'gnome-shell-extension-appindicator' # Трей
 
 )
 yay -S "${PKGS[@]}" --noconfirm --needed
 
+
+# Переменные для последовательного стиля GNOME
+tee -a /etc/environment << EOF
+
+# Qt
+QT_QPA_PLATFORMTHEME=gnome
+QT_STYLE_OVERRIDE=kvantum
+XCURSOR_THEME=Adwaita
+XCURSOR_SIZE=24
+EOF
+
 # Улучшение интеграции приложений QT
 sed -i '/QT_QPA_PLATFORMTHEME.*/s/qt5ct/gnome/' ~/.zprofile
-
 # Установка Kvantum для всех Qt программ
 sed -i '/QT_STYLE.*/s/^# //g' ~/.zprofile
 
-
-# Скачивание и установка KvLibadwaita
-git clone https://github.com/GabePoel/KvLibadwaita.git
-mv KvLibadwaita/src/ ~/.config/Kvantum/
-rm -rf KvLibadwaita
-
-# Установка KvLibadwaita в качестве темы kvantum
-echo 'theme=KvLibadwaita' > ~/.config/Kvantum/kvantum.kvconfig
+# Установка KvLibadwaitaDark в качестве темы для QT 5/6 приложений
+mkdir -v ~/.config/Kvantum
+echo 'theme=KvLibadwaitaDark' > ~/.config/Kvantum/kvantum.kvconfig
 
 
-# Создаю шаблоны для использования из под контекстное меню проводника Gnome Файлы (nautilus)
+# Создаю шаблоны для использования из под контекстное меню проводника Gnome Файлы
 touch $(xdg-user-dir TEMPLATES)/Новый\ файл
 tee $(xdg-user-dir TEMPLATES)/Пустой\ Bash\ файл > /dev/null << EOF
 #!/bin/bash
@@ -104,26 +109,30 @@ EOF
 
 # Смена раскладки языка
 if grep -q ruwin_alt_sh-UTF-8 "/etc/vconsole.conf"; then
-      # Переключение раскладки Alt+Shift
+    # Переключение раскладки Alt+Shift
  	gsettings set org.gnome.desktop.input-sources xkb-options "['grp:alt_shift_toggle']"
  	gsettings set org.gnome.desktop.wm.keybindings switch-input-source "['<Shift>Alt_L', 'XF86Keyboard']"
  	gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Alt>Shift_L', 'XF86Keyboard']"
 elif
-     grep -q ruwin_cplk-UTF-8 "/etc/vconsole.conf"; then
-      # Переключение раскладки CapsLock (Чтобы набирать капсом Shift+CapsLock)
+    grep -q ruwin_cplk-UTF-8 "/etc/vconsole.conf"; then
+    # Переключение раскладки CapsLock (Чтобы набирать капсом Shift+CapsLock)
+	# Нет надобности в OSD уведомлении при переключении раскладки
 	gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
 	gsettings set org.gnome.desktop.wm.keybindings switch-input-source "[]"
 	gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "[]"
 fi
 
-
 # Создание пользовательского профиля
 sudo mkdir -pv /etc/dconf/profile
 sudo mkdir -pv /etc/dconf/db/local.d/
-echo -e "user-db:user
-system-db:local" | sudo tee -a /etc/dconf/profile/user >/dev/null
+sudo tee /etc/dconf/profile/user >/dev/null <<'EOF'
+user-db:user
+system-db:local
+EOF
 
-echo -e "[org/gnome/desktop/interface]
+# Импорт конфигурации Gnome
+sudo tee /etc/dconf/db/local.d/01-custom >/dev/null <<'EOF'
+[org/gnome/desktop/interface]
 gtk-theme='adw-gtk3-dark'
 color-scheme='prefer-dark'
 
@@ -183,12 +192,18 @@ sort-directories-first=true
 show-create-link=true
 always-use-location-entry=true
 
+[org/gnome/mutter]
+center-new-windows=true
+
 [org/gnome/nautilus/icon-view]
 default-zoom-level='small'
 
 [org/gnome/TextEditor]
 show-line-numbers=true
 show-map=true
+
+[org/gnome/desktop/input-sources]
+sources=[('xkb', 'us'), ('xkb', 'ru')]
 
 [org/gnome/desktop/calendar]
 show-weekdate=true
@@ -217,17 +232,24 @@ button-layout='appmenu:minimize,maximize,close'
 lock-enabled=false
 
 [org/gnome/desktop/session]
-idle-delay=uint32 600" | sudo tee -a /etc/dconf/db/local.d/01-custom >/dev/null
+idle-delay=uint32 600
+
+[org/gnome/desktop/interface]
+font-antialiasing='rgba'
+EOF
 
 
 # Конфигурации Gnome для конкретных ноутбуков
 # https://wiki.archlinux.org/title/Libinput#Touchpad_not_working_in_GNOME
 if cat /sys/class/dmi/id/chassis_type | grep 10 > /dev/null; then
-echo -e "[org/gnome/desktop/peripherals/touchpad]
+sudo tee /etc/dconf/db/local.d/01-laptop >/dev/null <<'EOF'
+[org/gnome/desktop/peripherals/touchpad]
 tap-to-click=true
 disable-while-typing=false
+
 [org/gnome/desktop/interface]
-show-battery-percentage=true" | sudo tee -a /etc/dconf/db/local.d/01-laptop >/dev/null
+show-battery-percentage=true
+EOF
 fi
 
 # Обновление системных баз данных Gnome
