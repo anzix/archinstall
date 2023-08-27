@@ -13,9 +13,6 @@ export LANG=ru_RU.UTF-8
 
 clear
 
-# Синхронизация часов материнской платы
-timedatectl set-ntp true
-
 # Базовые пакеты в /mnt
 PKGS=(
  base base-devel
@@ -23,12 +20,16 @@ PKGS=(
  linux-zen linux-zen-headers
 # linux-lts linux-lts-headers
  linux-firmware
- zsh
+ zsh git
  wget # Для скачивания файлов
  grub efibootmgr
  intel-ucode
+ networkmanager # Менеджер сети
  iptables-nft # Средство управления сетью пакетами данных ядра Linux используя интерфейс nft
  xdg-user-dirs # Создание пользовательских XDG директории
+ openssh # SSH соединение
+ zram-generator # Подкачка
+ plocate # Более быстрая альтернатива индексированию locate
  ccache # Ускоряет перекомпиляцию за счет кэширования предыдущих компиляций
 )
 
@@ -67,21 +68,8 @@ select ENTRY in "ext4" "btrfs"; do
 	break
 done
 
-# PS3="Выберите окружение: "
-# select ENTRY in "plasma" "gnome" "i3wm"; do
-# 	export DESKTOP_ENVIRONMENT=$ENTRY
-# 	echo "Выбран ${DESKTOP_ENVIRONMENT}."
-# 	break
-# done
-
-# read -p "Gaming (y/n): " GAMING
-# export GAMING
-
 # Обнаружение часового пояса
 export time_zone=$(curl -s https://ipinfo.io/timezone)
-
-# Обнаружение виртуалки
-export hypervisor=$(systemd-detect-virt)
 
 # Удаляем старую схему разделов и перечитываем таблицу разделов
 sgdisk --zap-all --clear $DISK # Удаляет (уничтожает) структуры данных GPT и MBR
@@ -154,7 +142,7 @@ sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 8/g" /etc/pacman.conf # У�
 sed -i "s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf # Более удобный просмотр лист пакетов
 
 # Оптимизация зеркал с помощью Reflector
-reflector --verbose -c ru -p http,https -l 12 --sort rate --save /etc/pacman.d/mirrorlist
+reflector --verbose -c ru,by -p http,https -l 12 --sort rate --save /etc/pacman.d/mirrorlist
 
 # Синхронизация базы пакетов
 pacman -Sy
@@ -164,9 +152,23 @@ pacstrap -K /mnt "${PKGS[@]}"
 
 # Генерирую fstab
 genfstab -U /mnt >>/mnt/etc/fstab
-# Make /tmp a ramdisk
-echo "
-tmpfs 	/tmp	tmpfs		rw,nodev,nosuid,noatime,size=8G,mode=1777	 0 0" >>/mnt/etc/fstab
+
+# https://wiki.archlinux.org/title/tmpfs
+tee -a /etc/fstab >/dev/null  << EOF
+
+# Ramdisk
+tmpfs 	/tmp	tmpfs		rw,nodev,nosuid,noatime,size=8G,mode=1777	 0 0
+EOF
+
+if [ "$(systemd-detect-virt)" = "none" ]; then
+tee -a /etc/fstab >/dev/null  << EOF
+# Мои доп. разделы
+UUID=F46C28716C2830B2   /media/Distrib  ntfs-3g        rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
+UUID=CA8C4EB58C4E9BB7   /media/Other    ntfs-3g        rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
+UUID=A81C9E2F1C9DF890   /media/Media    ntfs-3g        rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
+UUID=30C4C35EC4C32546   /media/Games    ntfs-3g        rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
+EOF
+fi
 
 # Настройка и chroot
 cp -r /root/scriptinstall /mnt/
@@ -176,5 +178,5 @@ arch-chroot /mnt /bin/bash /scriptinstall/chroot.sh
 if read -re -p "arch-chroot /mnt? [y/N]: " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then
 	arch-chroot /mnt
 else
-	umount -a # (-a) - безопасно размонтировать всё
+	umount -R /mnt
 fi

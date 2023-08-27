@@ -55,6 +55,12 @@ cd ~
 cd dotfiles/base
 stow -vt ~ mangohud vkBasalt
 
+mkdir -pv ~/.config/autostart/
+cd /usr/share/applications/
+sudo ln -svi steam.desktop ~/.config/autostart/
+# Тихий запуск Steam
+sudo sed -i 's|^Exec=/usr/bin/steam-runtime %U|Exec=/usr/bin/steam-runtime -silent %U|g' ~/.config/autostart/steam.desktop
+
 # Дать возможность gamemode выставлять приоритет процесса игры (renice)
 # https://wiki.archlinux.org/title/Gamemode#Renicing
 sudo usermod -aG gamemode $(whoami)

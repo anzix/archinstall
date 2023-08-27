@@ -21,6 +21,9 @@ echo "FONT=ter-v22b" >> /etc/vconsole.conf
 ln -sf /usr/share/zoneinfo/"${time_zone}" /etc/localtime
 hwclock --systohc # Эта команда предполагает, что аппаратные часы настроены в формате UTC.
 
+# Синхронизация часов материнской платы
+timedatectl set-ntp true
+
 # Имя хоста
 echo "${HOST_NAME}" > /etc/hostname
 tee /etc/hosts > /dev/null << EOF
@@ -29,15 +32,18 @@ tee /etc/hosts > /dev/null << EOF
 127.0.1.1 $HOST_NAME.localdomain $HOST_NAME
 EOF
 
-# Настройка граф. планшета Xp-Pen G640 для работы OpenTabletDriver
-tee -a /etc/modprobe.d/blacklist.conf > /dev/null << EOF
-blacklist hid_uclogic
+# Добавление глобальных переменных системы
+tee -a /etc/environment > /dev/null << EOF
+
+# Принудительно включаю icd RADV драйвер (если установлен)
+AMD_VULKAN_ICD=RADV
 EOF
 
+# Для работы граф. планшета Xp-Pen G640 с OpenTabletDriver
+echo "blacklist hid_uclogic" > /etc/modprobe.d/blacklist.conf
+
 # Отключение системного звукового сигнала
-tee -a /etc/modprobe.d/nobeep.conf > /dev/null << EOF
-blacklist pcspkr
-EOF
+echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
 
 # Установка универсального host файла от StevenBlack (убирает рекламу и вредоносы из WEB'а)
 # Обновление host файла выполняется командой: $ uphosts
@@ -46,6 +52,10 @@ wget -qO- https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts \
  | grep -v '^0\.0\.0\.0 [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$' \
  | sed '1s/^/\n/' \
  | tee --append /etc/hosts >/dev/null
+
+# Не позволять системе становится раздудой
+# Выставляю максимальный размер журнала systemd
+sed -i 's/#SystemMaxUse=/SystemMaxUse=50M/g' /etc/systemd/journald.conf
 
 # Пароль root пользователя
 echo "root:${USER_PASSWORD}" | chpasswd
@@ -81,267 +91,20 @@ sed -i "s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf # Более уд
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf # Включение multilib репо для запуска 32bit приложений
 
 # Оптимизация makepkg
+cp /etc/makepkg.conf{,.backup}
 sed -i -e 's|CFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fno-plt -fexceptions|CFLAGS="-march=native -mtune=native -O2 -pipe -fno-plt -fexceptions|g' \
- -i -e 's|#MAKEFLAGS=.*|MAKEFLAGS="-j$(expr $(nproc) - 1)"|' \
- -i -e 's|#RUSTFLAGS=.*|RUSTFLAGS="-C opt-level=2 -C target-cpu=native"|' \
- -i -e 's|^BUILDENV.*|BUILDENV=(!distcc color ccache check !sign)|g' \
- -i -e 's|#BUILDDIR.*|BUILDDIR=/tmp/makepkg|g' \
- -i -e 's|xz.*|xz -c -z -q - --threads=$(nproc))|;s|^#COMPRESSXZ|COMPRESSXZ|' \
- -i -e 's|zstd.*|zstd -c -z -q - --threads=$(nproc))|;s|^#COMPRESSZST|COMPRESSZST|' \
- -i -e 's|lz4.*|lz4 -q --best)|;s|^#COMPRESSLZ4|COMPRESSLZ4|' \
- -i -e "s|PKGEXT.*|PKGEXT='.pkg.tar.lz4'|g" /etc/makepkg.conf
-
-
+	-e 's|#MAKEFLAGS=.*|MAKEFLAGS="-j$(expr $(nproc) - 1)"|' \
+	-e 's|#RUSTFLAGS=.*|RUSTFLAGS="-C opt-level=2 -C target-cpu=native"|' \
+	-e 's|^BUILDENV.*|BUILDENV=(!distcc color ccache check !sign)|g' \
+	-e 's|#BUILDDIR.*|BUILDDIR=/tmp/makepkg|g' \
+	-e 's|xz.*|xz -c -z -q - --threads=$(nproc))|;s|^#COMPRESSXZ|COMPRESSXZ|' \
+	-e 's|zstd.*|zstd -c -z -q - --threads=$(nproc))|;s|^#COMPRESSZST|COMPRESSZST|' \
+	-e 's|lz4.*|lz4 -q --best)|;s|^#COMPRESSLZ4|COMPRESSLZ4|' \
+	-e "s|PKGEXT.*|PKGEXT='.pkg.tar.lz4'|g" \
+ /etc/makepkg.conf
 
 # Синхронизация базы пакетов
 pacman -Syy
-
-echo "==> Установка моих основных пакетов Pacman"
-PKGS=(
-
-# --- XORG
-
- 'xterm' # Терминал для TTY
- 'xorg-server' # XOrg сервер
- 'xorg-xinit' # XOrg инициализация
- 'xorg-xrandr' # Менять разрешение
- 'xorg-xinput' # Для работы граф.планшета XP-PEN G640 + OpenTabletDriver
- 'xorg-xgamma' # Позволяет менять и исправлять гамму для игр используя Lutris
- 'xf86-video-amdgpu' # Открытые драйвера AMDGPU
-
-# --- ДРАЙВЕРА
-
- 'mesa' 'lib32-mesa' # Версия OpenGL с открытым исходным кодом
- 'mesa-vdpau' 'lib32-mesa-vdpau' # VDPAU Драйвер
- 'libva-mesa-driver' 'lib32-libva-mesa-driver' # VA-API драйвер
-
- 'vulkan-radeon' 'lib32-vulkan-radeon' # Реализация Vulkan драйвера от Mesa
- 'vulkan-mesa-layers' 'lib32-vulkan-mesa-layers' # Слои Vulkan в Mesa
-
-# --- АУДИО
-
- 'pipewire'
- 'pipewire-pulse'
- 'pipewire-alsa'
- 'pipewire-jack' 'lib32-pipewire-jack'
- 'pipewire-v4l2' # Для правильной работы вебки в OBS
- 'wireplumber' # Modular session / policy manager for PipeWire
- 'gst-plugin-pipewire' # Плагины gst для поддержки форматов MP3, AAC, FLAC, MPEG
- 'qpwgraph' # Графический интерфейс управления узлами PipeWire
-
-
-# --- АУДИО Разное / Кодеки
-
- 'mpd' # Музыкальный сервер
- 'mpc' # Контроллер управления музыкой через терминал
- 'ncmpcpp' # TUI музыкальный плеер
- 'playerctl' # Для работы fn+f6/7/8 и других приколюх
- 'mediainfo' # Информация о медиа
- 'alsa-utils' # Утилиты ALSA, в числе которых alsamixer
- 'noise-suppression-for-voice' # (Pipewire only) Плагин подавления шума микрофона в реальном времени
-
- 'gstreamer'
- 'gst-libav'
- 'gst-plugins-base' 'lib32-gst-plugins-base'
- 'gst-plugins-good' 'lib32-gst-plugins-good'
- 'gst-plugins-bad' # Библеотеки для воспроизведения мультимедия (для запуска старья)
- 'gst-plugins-ugly' # Библеотеки для воспроизведения мультимедия (для запуска старья)
- 'gstreamer-vaapi' # Эффективный плагин кодировщик для RDNA1 AMDGPU (для использования нужен AUR пакет obs-gstreamer)
-
-# --- СЕТЬ
-
- 'networkmanager'  # Менеджер сети
- 'networkmanager-openvpn'
- 'openvpn'
- 'modemmanager' # Управление модемом
-# 'wpa_supplicant' 'wireless_tools' # Пакеты для ноутбуков
-
-# --- BLUETOOTH
-
- 'bluez' # Демон для стека протокола Bluetooth
- 'bluez-utils' # CLI менеджер подключений bluetoothctl
-
-# --- Принтеры и печать
-
-# 'system-config-printer' # Менеджер принтеров
-# 'cups' # Модульная система печати для принтеров
-# 'cups-pdf' # Поддержка печати PDF файлов
-
-# --- TUI/CLI Утилиты и прочее необходимое
-
- 'git' # Система управление версиями
- 'openssh' # SSH соединение
- 'neovim' # Текстовый редактор
- 'stow' # Менеджер sim-link'ов (для менеджмента dotfiles)
- 'pacman-contrib' # Скрипты и инструменты для Pacman
- 'expac' # Утилита извлечения данных alpm (базы данных pacman)
- 'rebuild-detector' # Показывает лист AUR пакетов которые были собраны на старых версиях зависимостей, для их дальнейшей пересборки
- 'archlinux-wallpaper' # Arch Linux обои
- 'reflector' # Инструмент для оптимизации зеркал Pacman
- 'zram-generator' # Подкачка
- 'rsync' # Быстрый и универсальный инструмент для копирования удаленных и локальных файлов
- 'plocate' # Более быстрая альтернатива locate
- 'dbus-broker' # Оптимизированная система шины сообщений
- 'htop' # Простой консольный диспетчер задач
- 'btop' # TUI Диспетчер задач
- 'hexedit' # TUI HEX-редактор
- 'testdisk' # TUI Востановления данных
- 'ncdu' # TUI анализатор свободного места
- 'radeontop' # TUI мониторинг AMD GPU
- 'xdg-utils' # CLI инструменты для решения различных задач с интеграцией рабочего стола
- 'neofetch' # Чтобы выпендриватся
- 'ripgrep' # Более быстрая альтернатива grep
- 'inxi' # Системная информация PC
- 'hwinfo' # Системная информация
- 'unzip' # Архивирование и распаковка файлов zip/rar/7z
- 'unrar' # Архивирование и распаковка файлов rar
- 'p7zip' # Архивирование и распаковка файлов 7z
- 'exfat-utils' # Поддержка файловой системы exFAT (Для sd-карт)
- 'ntfs-3g' # Поддержка файловой системы NTFS
- 'dosfstools' # Поддержка файловой системы vFAT
- 'f2fs-tools' # Поддержка файловой системы f2fs
- 'mtools' # Утилиты для доступа к MS-DOS дискам
- 'gvfs-mtp' # MTP передача для Android
- 'gvfs' # Поддержка мусорки для файлого менеджера
- 'gtk2' # Для устаревших программ
- 'yt-dlp' # Скачивать видео
- 'ffmpeg' # Конвертер/Декодер/Рекордер видео
- 'smartmontools' # Для информации и проверки состояния здоровья HDD и SSD
- 'ripgrep' # Более быстрая альтернатива grep
- 'fd' # Поиск файлов
- 'exa' # Замена ls
- 'bat' # Замена cat
- 'pkgfile' # Для плагина zsh "command-not-found"
- 'netctl' # Управление сетью systemd на основе профилей
- 'net-tools' # Для прослушивания портов
- 'nmap' # Утилита для исследования сети и сканер портов
- 'zbar' # Сканер QR кодов
- 'tesseract' # OCR сканер
- 'tesseract-data-rus' 'tesseract-data-eng' 'tesseract-data-jpn' # База данных языков
- 'man-pages' 'man-db' # Мануалы
- 'aspell-ru' # Русский словарь для проверки орфографии (работает только с UTF8 кодировкой)
- 'atool' # Для предпросмотра архивов
- 'libfaketime' # Подделывать время для программ или пиратских игр (man faketime)
- 'flashrom' # Для прошивания чипов программатором ch341a
- 'dfu-util' # Для обновления прошивки паяльника Pinecil первой версии
- 'scrcpy' # Демонстрация экрана Android для Linux используя USB ADB
- 'translate-shell' # Переводчик в терминале (необходим для скриптов)
- 'i2pd' # Невидимый интернет протокол
- 'cdemu-client' # Эмуляция iso/mds/nrg образов
- 'transmission-cli' # Для замены passkey в торрент файлах и многое другое
- 'jre-openjdk' # Java библиотеки (для Minecraft)
- 'v4l2loopback-dkms' # Для поддержки виртуальной камеры для OBS
-
- 'libva-utils' # Проверка VA-API дравера командой (vainfo)
- 'vdpauinfo' # Проверка VDPAU драйвера командой (vdpauinfo)
- 'vulkan-tools' # Инструменты vulkan (vulkaninfo)
-
- 'jq' # CLI обработчик JSON (Необходимо для mpv-webtorrent-hook)
- 'yarn' # Для neovim плагина https://github.com/iamcco/markdown-preview.nvim
- 'tidy' # Инструмент для приведения HTML-кода к чистому стилю
-
-# --- ШРИФТЫ
-
- 'terminus-font' # Шрифты разных размеров с кириллицей для tty
- 'ttf-jetbrains-mono-nerd' # Шрифты для иконок в терминале
- 'ttf-font-awesome' # Для появления монотонных значков и иконок
- 'ttf-opensans' # Шрифт для Телеграмма
- 'ttf-droid' # Android'ский шрифт не имеющий нуля с прорезью, поэтому 0 и O не различимы
- 'ttf-liberation' # Начальный набор шрифтов
- 'ttf-dejavu' # Начальный набор шрифтов
- 'noto-fonts-cjk' # Набор Азиатских шрифтов, много весят
- 'noto-fonts-emoji' # Смайлы в терминал
- 'noto-fonts' # Необходимые шрифты, разные иероглифы и т.д
-
-# --- ПРОГРАММЫ
-
- 'firefox' 'firefox-i18n-ru' # Браузер Firefox + Руссификация
-# 'libreoffice-fresh' 'libreoffice-fresh-ru' # Офисный пакет LibreOffice + Руссификация
- 'obs-studio' # Запись видео и трансляции
- 'mpv' # Лучший видеопроигрыватель
- 'songrec' # Распознование аудио композиций
-# 'qmmp' # Современный аудиоплеер старой школы (т.е Winamp) с поддержкой скинов
- 'audacious' # Аудиоплеер с поддержкой скинов Winamp
- 'keepassxc' # Локальный менеджер паролей
- 'qbittorrent' # Торрент клиент
- 'bleachbit' # Чистильщик для Linux
-# 'gimp' # Фоторедактор
-# 'audacity' # Продвинутый аудиорекордер
-# 'kdenlive' # Видеоредактор
-# 'piper' # Настройка мышки Logitech
-# 'discord'
- 'telegram-desktop' # Мессенджер
-)
-
-# Обнаружение виртуалки
-if [[ "$(systemd-detect-virt)" == "kvm" ]]; then
- PKGS+=(qemu-guest-agent spice-vdagent)
- # В оконных менеджерах (WM) для активации Shared Clipboard в терминале надо ввести spice-vdagent
-elif [[ "$(systemd-detect-virt)" == "oracle" ]]; then
- PKGS+=(virtualbox-guest-utils xf86-video-vmware)
- usermod -a -G vboxsf "${USER_NAME}"
- # sudo -u ${USER_NAME} systemctl enable vboxservice.service
-fi
-
-pacman -S "${PKGS[@]}" --noconfirm --needed
-
-# Установка Yay (AUR помощник)
-git clone https://aur.archlinux.org/yay-bin.git
-chown -v -R ${USER_NAME}:${USER_NAME} yay-bin
-cd yay-bin
-sudo -u ${USER_NAME} makepkg -si --noconfirm
-cd ..
-rm -rf yay-bin
-
-# Настройка yay
-# --nodiffmenu - Не спрашивать об показе изменений (diff)
-# --nocleanmenu - Не спрашивать о пакетах для которых требуется очистить кэш сборки
-# --removemake - Всегда удалять зависимости для сборки (make) после установки
-# --batchinstall - Ставит каждый собранный пакеты в очередь для установки (легче мониторить что происходит)
-yay --save --nodiffmenu --nocleanmenu --removemake --batchinstall
-
-echo "==> Установка AUR пакетов"
-PKGS=(
-
-# --- ПРОГРАММЫ
-
- 'ungoogled-chromium-bin' # Полностью вычещенный от Гуглятины браузер Chromium
-# 'fancontrol-gui' # GUI обвертка fancontrol для управление вентиляторами
-# 'czkawka-gui-bin' # Удобный инструмент для удаления дубликатов
- 'opentabletdriver' # Драйвер для граф. планшета XP-PEN G640
- 'ventoy-bin' # Создание загрузочной флешки для Win/Linux образов
-# 'cpu-x' # CPU-Z для Linux
-
-# --- ШРИФТЫ
-
-# 'otf-monocraft' # Пиксельный шрифт для Mangohud
-
-# --- Утилиты и разное
-
- 'chromium-widevine' # Плагин для работы DRM контента в браузере ungoogled-chromium
- 'mpd-mpris' # MPRIS поддержка для MPD
- 'webtorrent-cli' 'xidel' # Просмотр онлайн торренты (Необходимо для mpv-webtorrent-hook)
- 'obs-gstreamer' # Более эффективный плагин кодировщик для OBS (Для RDNA 1)
- 'obs-vkcapture-git' 'lib32-obs-vkcapture-git' # OBS плагин для захвата напрямую через API OpenGL/Vulkan (минимизирует затраты)
- 'amd-vulkan-prefixes' # Быстрое переключение icd драйверов AMD используя переменные (vk_radv, vk_amdvlk, vk_pro)
-# 'android-apktool' # Декомпиляция apk файлов
-# 'gallery-dl' # Скачивать с различных платформ (deviantart, pixiv и т.д) без регистрации и смс
-# 'kyocera-print-driver' # Драйвер для Kyocera FS-1060DN
-)
-
-if hash snapper 2>/dev/null; then
-PKGS+=(
- 'snap-pac' # Создаёт снапшоты после каждой установки/обновления/удаления пакетов Pacman
- 'grub-btrfs' # Добавляет grub меню снимков созданных snapper чтобы в них загружаться + демон grub-btrfsd
- 'inotify-tools' # Необходимая зависимость для демона grub-btrfsd авто-обновляющий записи grub
- 'snp' # Заворачивает любую shell команду и создаёт снимок до выполнения этой команды (snp sudo pacman -Syu)
- 'snapper-rollback' # Скрипт для отката системы который соответствует схеме разметки Arch Linux
-)
-else
-	PKGS+=(timeshift)
-fi
-
-yay -S "${PKGS[@]}" --noconfirm --needed
 
 # Настройка snapper и btrfs в случае обнаружения
 if [ "${FS}" = 'btrfs' ]; then
@@ -352,9 +115,6 @@ if [ "${FS}" = 'btrfs' ]; then
 
   # Create Snapper config
   snapper --no-dbus -c root create-config /
-
-  # Информация о размере снапшота btrfs
-  #btrfs quota enable /
 
   # Удаляем подтом .snapshots Snapper'а
   btrfs subvolume delete /.snapshots
@@ -389,7 +149,7 @@ if [ "${FS}" = 'btrfs' ]; then
 	  btrfs-scrub@home.timer \
       btrfs-scrub@-.timer
 
-  # Пропускать снапшоты для locate (Предотвращает замедление моментальных снимков)
+  # Предотвращение индексирования снимков программой "updatedb", что замедляло бы работу системы
   sed -i '/^PRUNENAMES/s/"\(.*\)"/"\1 .snapshots"/' /etc/updatedb.conf
 
   # Правка mkinitcpio.conf
@@ -550,13 +310,6 @@ MINSTOP=hwmon0/pwm1=75
 EOF
 fi
 
-# Добавление глобальных переменных системы
-tee -a /etc/environment << EOF
-
-# Принудительно включаю icd RADV драйвер (если установлен)
-AMD_VULKAN_ICD=RADV
-EOF
-
 # Добавления моих опций ядра grub
 sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 mitigations=off pcie_aspm=off intel_iommu=on iommu=pt audit=0 nowatchdog amdgpu.ppfeaturemask=0xffffffff cpufreq.default_governor=performance intel_pstate=passive zswap.enabled=0"/g' /etc/default/grub
 
@@ -565,9 +318,7 @@ sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 
 grub-install --efi-directory=/boot/efi
 grub-mkconfig -o /boot/grub/grub.cfg
 
-
 # Врубаю сервисы
-# joycond: Для активации Virtual Pro Controller нажать одновременно - +
 sudo -u ${USER_NAME} systemctl enable \
  NetworkManager.service \
  sshd.service \
@@ -575,13 +326,4 @@ sudo -u ${USER_NAME} systemctl enable \
  plocate-updatedb.timer \
  systemd-oomd.service \
  dbus-broker.service \
- fancontrol.service \
- grub-btrfsd \
- bluetooth.service \
- joycond
-
-sudo -u ${USER_NAME} systemctl --user enable \
- mpd-mpris \
- mpd \
- opentabletdriver.service
-# cdemu-daemon.service
+ fancontrol.service

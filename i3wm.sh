@@ -66,6 +66,7 @@ yay -S "${PKGS[@]}" --noconfirm --needed
 cd dotfiles/i3wm
 stow -vt ~ x alacritty dunst rofi feh greenclip i3 polybar picom sxhkd lf libfm nitrogen nsxiv zathura qt5ct redshift
 
+if [ "$(systemd-detect-virt)" = "none" ]; then
 echo "==> Настройка Xorg для AMDGPU"
 sudo bash -c 'cat <<EOF > /etc/X11/xorg.conf.d/20-amdgpu.conf
 Section "Device"
@@ -76,6 +77,7 @@ Section "Device"
      Option "VariableRefresh" "true"
 EndSection
 EOF'
+fi
 
 sudo mkinitcpio -P
 
@@ -83,8 +85,7 @@ sudo mkinitcpio -P
 if grep -q ruwin_alt_sh-UTF-8 "/etc/vconsole.conf"; then
     # Переключение раскладки по Alt+Shift
     sudo localectl set-x11-keymap --no-convert us,ru pc105 "" grp:alt_shift_toggle
-elif
-    grep -q ruwin_cplk-UTF-8 "/etc/vconsole.conf"; then
+elif grep -q ruwin_cplk-UTF-8 "/etc/vconsole.conf"; then
 	# Переключение раскладки CapsLock (Чтобы набирать капсом Shift+CapsLock)
     sudo localectl set-x11-keymap --no-convert us,ru pc105 "" grp:caps_toggle,grp_led:caps,grp:switch
 fi

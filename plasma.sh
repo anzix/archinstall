@@ -60,19 +60,20 @@ PKGS=(
 )
 sudo pacman -S "${PKGS[@]}" --noconfirm --needed
 
+# Вытягиваю конфиги для KDE Plasma
+cd dotfiles/plasma
+stow -vt ~ konsole
+
 # Отключает baloo (файловый индекстор)
 sudo balooctl suspend # Усыпляем работу индексатора
 sudo balooctl disable # Отключаем Baloo
 sudo balooctl purge # Чистим кэш
 
+# Set Firefox profile path
+FIREFOX_PROFILE_PATH=$(realpath ${HOME}/.mozilla/firefox/*.default-release)
 
-for FIREFOX_PROFILE_PATH in $HOME/.mozilla/firefox/*.default*
-do
-# Install Firefox's Plasma Integration extension
-curl https://addons.mozilla.org/firefox/downloads/file/3859385/plasma_integration-latest.xpi -o ${FIREFOX_PROFILE_PATH}/extensions/plasma-browser-integration@kde.org.xpi
-
-# Import Firefox' user configurations
-tee -a ${FIREFOX_PROFILE_PATH}/user.js << EOF
+# KDE specific configurations
+tee -a ${FIREFOX_PROFILE_PATH}/user.js << 'EOF'
 // Использовать KDE Plasma file picker
 user_pref("widget.use-xdg-desktop-portal.mime-handler", 1);
 user_pref("widget.use-xdg-desktop-portal.file-picker", 1);
@@ -80,17 +81,6 @@ user_pref("widget.use-xdg-desktop-portal.file-picker", 1);
 // Предотвращает дублирование записей в виджете медиаплеера KDE Plasma
 user_pref("media.hardwaremediakeys.enabled", false);
 EOF
-done
-
-# Автозапуск
-mkdir -pv ~/.config/autostart/
-cd /usr/share/applications/
-sudo ln -svi steam.desktop \
-             radeon-profile.desktop ~/.config/autostart/
-# Тихий запуск Steam
-sudo sed -i 's|^Exec=/usr/bin/steam-runtime %U|Exec=/usr/bin/steam-runtime -silent %U|g' /usr/share/applications/steam.desktop
-
-cd ~
 
 # Скорость печатания
 kwriteconfig5 --file kcminputrc --group Keyboard --key RepeatDelay "210"
@@ -103,7 +93,6 @@ kwriteconfig5 --file kcminputrc --group Keyboard --key RepeatRate "35"
 # Отключает одиночный клик для открытия файлов/папок
 kwriteconfig5 --file kdeglobals --group KDE --key SingleClick --type bool false
 
-
 # Настройка раскладки
 if grep -q ruwin_alt_sh-UTF-8 "/etc/vconsole.conf"; then
     # Переключение раскладки по Alt+Shift
@@ -113,8 +102,7 @@ if grep -q ruwin_alt_sh-UTF-8 "/etc/vconsole.conf"; then
     kwriteconfig5 --file kxkbrc --group Layout --key VariantList ','
     kwriteconfig5 --file kxkbrc --group Layout --key LayoutList 'us,ru'
     kwriteconfig5 --file kxkbrc --group Layout --key Options 'grp:alt_shift_toggle'
-elif
-    grep -q ruwin_cplk-UTF-8 "/etc/vconsole.conf"; then
+elif grep -q ruwin_cplk-UTF-8 "/etc/vconsole.conf"; then
     # Переключение раскладки CapsLock (Чтобы набирать капсом Shift+CapsLock)
     kwriteconfig5 --file kxkbrc --group Layout --key Use --type bool 1
     kwriteconfig5 --file kxkbrc --group Layout --key ResetOldOptions --type bool 1
@@ -124,7 +112,10 @@ elif
     kwriteconfig5 --file kxkbrc --group Layout --key Options 'grp:caps_toggle'
 fi
 
-# Ставит тему Breeze для SDDM
+# Тёмная тема Plasma
+kwriteconfig5 --file kdeglobals --group KDE --key LookAndFeelPackage "org.kde.breezedark.desktop"
+
+# Ставлю тему Breeze для SDDM
 sudo kwriteconfig5 --file /etc/sddm.conf.d/kde_settings.conf --group Theme --key "Current" "breeze"
 
 # Тёмная тема для SDDM
@@ -134,9 +125,6 @@ sudo tee /usr/share/sddm/themes/breeze/theme.conf.user >/dev/null <<'EOF'
 background=1920x1080.png
 type=image
 EOF
-
-# Тёмная тема Plasma
-kwriteconfig5 --file kdeglobals --group KDE --key LookAndFeelPackage "org.kde.breezedark.desktop"
 
 # Увеличение скорости анимации
 kwriteconfig5 --file kdeglobals --group KDE --key AnimationDurationFactor "0.5"
@@ -154,10 +142,10 @@ kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "DPMSControl
 
 # Change window decorations
 kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnLeft ""
-kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnRight "IAX"
+# kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnRight "IAX"
 kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ShowToolTips --type bool false
 
-# Change Task Switcher behaviour
+# Change Task Switcher behaviour on ALT+TAB
 kwriteconfig5 --file kwinrc --group TabBox --key LayoutName "thumbnail_grid"
 
 # Отключает splash screen при включении сессии
@@ -168,8 +156,7 @@ kwriteconfig5 --file ksplashrc --group KSplash --key Theme "none"
 kwriteconfig5 --file klaunchrc --group BusyCursorSettings --key "Bouncing" --type bool false
 kwriteconfig5 --file klaunchrc --group FeedbackStyle --key "BusyCursor" --type bool false
 
-# Configure screen edges
-kwriteconfig5 --file kwinrc --group Effect-overview --key BorderActivate "7"
+# Disable screen edges
 kwriteconfig5 --file kwinrc --group Effect-windowview --key BorderActivateAll "9"
 
 # Konsole shortcut
@@ -183,6 +170,10 @@ kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Overview" "Meta+Tab,
 
 # Close windows shortcut
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window Close" "Meta+Shift+Q,none,Close Window"
+
+# Перезагрузка plasmashell (не работает)
+# kwriteconfig5 --file kglobalshortcutsrc --group "plasmashell.desktop" --key "_k_friendly_name" "plasmashell --replace"
+# kwriteconfig5 --file kglobalshortcutsrc --group "plasmashell.desktop" --key "_launch" "Ctrl+Alt+Del,none,plasmashell --replace"
 
 # Включает 2 рабочих стола
 kwriteconfig5 --file kwinrc --group Desktops --key Name_2 "Рабочий стол 2"
