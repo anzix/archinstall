@@ -179,7 +179,7 @@ fi
 
 # Настройка и chroot
 cp -r /root/scriptinstall /mnt/
-arch-chroot /mnt /bin/bash /scriptinstall/chroot.sh
+arch-chroot /mnt /bin/bash /scriptinstall/2-chroot.sh
 
 # Действия после chroot
 if read -re -p "arch-chroot /mnt? [y/N]: " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then
