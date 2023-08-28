@@ -21,9 +21,6 @@ echo "FONT=ter-v22b" >> /etc/vconsole.conf
 ln -sf /usr/share/zoneinfo/"${time_zone}" /etc/localtime
 hwclock --systohc # Эта команда предполагает, что аппаратные часы настроены в формате UTC.
 
-# Синхронизация часов материнской платы
-timedatectl set-ntp true
-
 # Имя хоста
 echo "${HOST_NAME}" > /etc/hostname
 tee /etc/hosts > /dev/null << EOF
@@ -140,12 +137,12 @@ if [ "${FS}" = 'btrfs' ]; then
   sed -i "s|^TIMELINE_LIMIT_YEARLY=.*|TIMELINE_LIMIT_YEARLY=\"0\"|g" /etc/snapper/configs/root
 
   # Включение Snapper сервисов
-  sudo -u ${USER_NAME} systemctl enable \
+  systemctl enable \
 	  snapper-timeline.timer \
       snapper-cleanup.timer
 
   # Btrfs твики
-  sudo -u ${USER_NAME} systemctl enable \
+  systemctl enable \
 	  btrfs-scrub@home.timer \
       btrfs-scrub@-.timer
 
@@ -319,7 +316,7 @@ grub-install --efi-directory=/boot/efi
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # Врубаю сервисы
-sudo -u ${USER_NAME} systemctl enable \
+systemctl enable \
  NetworkManager.service \
  sshd.service \
  fstrim.timer \

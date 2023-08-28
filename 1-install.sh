@@ -13,6 +13,9 @@ export LANG=ru_RU.UTF-8
 
 clear
 
+# Синхронизация часов материнской платы
+timedatectl set-ntp true
+
 # Базовые пакеты в /mnt
 PKGS=(
  base base-devel
@@ -22,14 +25,18 @@ PKGS=(
  linux-firmware
  zsh git
  wget # Для скачивания файлов
+ neovim # Текстовый редактор
  grub efibootmgr
  intel-ucode
+ terminus-font # Шрифты разных размеров с кириллицей для tty
  networkmanager # Менеджер сети
- iptables-nft # Средство управления сетью пакетами данных ядра Linux используя интерфейс nft
  xdg-user-dirs # Создание пользовательских XDG директории
+ reflector # Инструмент для оптимизации зеркал Pacman
+ pacman-contrib # Скрипты и инструменты для Pacman
  openssh # SSH соединение
  zram-generator # Подкачка
  plocate # Более быстрая альтернатива индексированию locate
+ dbus-broker # Оптимизированная система шины сообщений
  ccache # Ускоряет перекомпиляцию за счет кэширования предыдущих компиляций
 )
 
@@ -154,14 +161,14 @@ pacstrap -K /mnt "${PKGS[@]}"
 genfstab -U /mnt >>/mnt/etc/fstab
 
 # https://wiki.archlinux.org/title/tmpfs
-tee -a /etc/fstab >/dev/null  << EOF
+tee -a /mnt/etc/fstab >/dev/null << EOF
 
 # Ramdisk
 tmpfs 	/tmp	tmpfs		rw,nodev,nosuid,noatime,size=8G,mode=1777	 0 0
 EOF
 
 if [ "$(systemd-detect-virt)" = "none" ]; then
-tee -a /etc/fstab >/dev/null  << EOF
+tee -a /mnt/etc/fstab >/dev/null << EOF
 # Мои доп. разделы
 UUID=F46C28716C2830B2   /media/Distrib  ntfs-3g        rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
 UUID=CA8C4EB58C4E9BB7   /media/Other    ntfs-3g        rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
