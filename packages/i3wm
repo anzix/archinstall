@@ -1,0 +1,58 @@
+# --- Основное для оконного менеджера i3
+
+ 'blueman' # Bluetooth менеджер
+ 'dmenu' # Меню приложений
+ 'dunst' # Демон уведомлений
+ 'feh' # Минималистичный просмотрорщик изображений
+ 'ffmpegthumbnailer' # Для отображения миниатюр в pcmanfm
+ 'file-roller' # Gnome менеджер архивов
+ 'galculator' # GNOME калькулятор
+ 'i3-wm' # i3wm с отступами (gaps)
+ 'lxappearance' # GTK оформления (GTK+ 2 версия)
+ 'lxqt-policykit' # Супер минималистичный polkit аутентификатор
+ 'maim' # Очень минималистичный скриншотер (хорошо сочетается с xclip)
+ 'nitrogen' # Менеджер обоев рабочего стола X Window System
+ 'nsxiv' # Простой и удобный просмоторщик картинок
+ 'pasystray' # System tray volume control
+ 'pcmanfm-gtk3' # Графический файловый менеджер (версия GTK3)
+ 'playerctl' # Для работы fn+f6/7/8 и других приколюх
+ 'polybar' # Статус бар
+ 'qpwgraph' # Графический интерфейс управления узлами PipeWire (QT)
+ 'qt5ct' # QT оформления
+ 'redshift' # Беречь глаза при работе за ПК
+ 'rofi' # Меню приложений
+ 'rofi-emoji' # Плагин Rofi для выбора смайликов
+ 'screenkey' # Показывать набранные клавиши
+ 'scrot' # Необходим для maim
+ 'udiskie' # Автоматическое монторование USB флешек с треем
+ 'xclip' # System Clipboard (необходимо для neovim)
+ 'xsel' # Для копирования текста из neovim
+
+# --- ТЕМЫ
+
+ 'breeze' # Для доступа к тёмной теме kdenlive
+ 'capitaine-cursors' # Cursor Icons
+ 'gtk-engine-murrine' # Для работоспособности темы Materia Theme
+ 'materia-gtk-theme' # Desktop Theme
+ 'papirus-icon-theme' # Desktop Icons
+
+# --- РАЗНОЕ
+
+ 'alacritty' # Терминал
+ 'lf' # Удобный TUI файлоый менеджер
+ 'network-manager-applet' # Аплет NetworkManager
+ 'pavucontrol' # GTK PulseAudio volume control
+ 'pulsemixer' # TUI PulseAudio volume control
+ 'ueberzug' # Необходим для предпросмотра картинок в LF
+ 'zathura-cb' # Для поддержки формата .cbz (аниме манга)
+ 'zathura-djvu' # Для поддержки формата .djvu
+ 'zathura-pdf-mupdf' # Удобный PDF Reader
+
+# --- AUR
+
+ 'autotiling' # Script for sway and i3 to automatically switch the horizontal / vertical window split orientation
+ 'giph' # Gif рекордер (для maim)
+ 'picom-git' # Прозрачность окон + blur dual_kawase
+ 'rofi-greenclip' # Rofi/Dmenu Менеджер буфера обмена с поддержкой картинок
+ 'rofi-power-menu' # Меню выключения
+# 'betterlockscreen' # A simple, minimal lockscreen

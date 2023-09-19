@@ -1,0 +1,78 @@
+# --- ОСНОВНОЕ
+
+ 'base' 'base-devel'
+# 'linux' 'linux-headers'
+ 'linux-zen' 'linux-zen-headers'
+# linux-lts linux-lts-headers
+ 'linux-firmware'
+ 'zsh' 'git'
+ 'wget' # Для скачивания файлов
+ 'neovim' # Консольный текстовый редактор
+ 'grub' 'efibootmgr'
+ 'intel-ucode'
+ 'terminus-font' # Шрифты разных размеров с кириллицей для tty
+ 'networkmanager' # Менеджер сети
+ 'htop' # Простой консольный диспетчер задач
+ 'xdg-user-dirs' # Создание пользовательских XDG директории
+ 'reflector' # Инструмент для оптимизации зеркал Pacman
+ 'pacman-contrib' # Скрипты и инструменты для Pacman
+ 'openssh' # SSH соединение
+ 'neofetch' # Чтобы выпендриватся
+ 'exfat-utils' # Поддержка файловой системы exFAT (Для sd-карт)
+ 'ntfs-3g' # Поддержка файловой системы NTFS
+ 'dosfstools' # Поддержка файловой системы vFAT
+ 'f2fs-tools' # Поддержка файловой системы f2fs
+ 'mtools' # Утилиты для доступа к MS-DOS дискам
+ 'smartmontools' # Для информации и проверки состояния здоровья HDD и SSD
+ 'rsync' # Быстрый и универсальный инструмент для копирования удаленных и локальных файлов
+ 'stow' # Менеджер sim-link'ов (для менеджмента dotfiles)
+ 'zram-generator' # Подкачка
+ 'plocate' # Более быстрая альтернатива индексированию locate
+ 'dbus-broker' # Оптимизированная система шины сообщений
+ 'ccache' # Ускоряет перекомпиляцию за счет кэширования предыдущих компиляций
+ 'man-pages' 'man-db' # Мануалы
+ 'unzip' 'unrar' 'p7zip' # Архивирование и распаковка файлов zip/rar/7z
+
+# --- XORG
+
+ 'xterm' # Терминал для TTY
+ 'xorg-server' # XOrg сервер
+ 'xorg-xinit' # XOrg инициализация
+ 'xorg-xrandr' # Менять разрешение
+ 'xorg-xinput' # Для работы граф.планшета XP-PEN G640 + OpenTabletDriver
+ 'xorg-xgamma' # Позволяет менять и исправлять гамму для игр используя Lutris
+ 'xf86-video-amdgpu' # Открытые драйвера AMDGPU
+
+# --- ВИДЕО [OPENGL+VULKAN]
+
+ 'mesa' 'lib32-mesa' # Версия OpenGL с открытым исходным кодом
+ 'mesa-vdpau' 'lib32-mesa-vdpau' # VDPAU Драйвер
+ 'libva-mesa-driver' 'lib32-libva-mesa-driver' # VA-API драйвер
+
+ 'vulkan-radeon' 'lib32-vulkan-radeon' # Реализация Vulkan драйвера от Mesa
+ 'vulkan-mesa-layers' 'lib32-vulkan-mesa-layers' # Слои Vulkan в Mesa
+
+# --- АУДИО
+
+ 'pipewire'
+ 'pipewire-pulse'
+ 'pipewire-alsa'
+ 'pipewire-jack' 'lib32-pipewire-jack'
+ 'pipewire-v4l2' # Для правильной работы вебки в OBS
+ 'wireplumber' # Modular session / policy manager for PipeWire
+ 'gst-plugin-pipewire' # Плагины gst для поддержки форматов MP3, AAC, FLAC, MPEG
+
+ 'noise-suppression-for-voice' # Плагин подавления шума микрофона в реальном времени (Pipewire only)
+
+ 'gstreamer'
+ 'gst-libav'
+ 'gst-plugins-base' 'lib32-gst-plugins-base'
+ 'gst-plugins-good' 'lib32-gst-plugins-good'
+ 'gst-plugins-bad' 'gst-plugins-ugly' # Библеотеки для воспроизведения мультимедия (для запуска старья)
+ 'gstreamer-vaapi' # Эффективный плагин кодировщик для RDNA1 AMDGPU (для использования нужен AUR пакет obs-gstreamer)
+
+# --- BLUETOOTH
+
+ 'bluez' # Демон для стека протокола Bluetooth
+ 'bluez-utils' # CLI менеджер подключений bluetoothctl
+

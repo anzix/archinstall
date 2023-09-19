@@ -1,0 +1,58 @@
+# --- TUI/CLI Утилиты и прочее необходимое
+
+ 'mpd' # Музыкальный сервер
+ 'mpc' # CLI Контроллер управления музыкой
+ 'ncmpcpp' # TUI музыкальный плеер
+ 'mediainfo' # CLI Информация о медиа
+ 'alsa-utils' # CLI Утилиты ALSA, в числе которых alsamixer и amixer
+ 'pulsemixer' # TUI Регулятор громкости PulseAudio.
+ 'btop' # TUI Диспетчер задач
+ 'hexedit' # TUI HEX-редактор
+ 'testdisk' # TUI Востановления данных
+ 'ncdu' # TUI анализатор свободного места
+ 'radeontop' # TUI мониторинг AMD GPU
+ 'zbar' # CLI Сканер QR кодов
+ 'translate-shell' # CLI Переводчик в терминале
+ 'xdg-utils' # CLI инструменты для решения различных задач с интеграцией рабочего стола
+ 'jq' # CLI обработчик JSON (Необходимо для mpv-webtorrent-hook)
+ 'eza' # Замена ls
+ 'bat' # Замена cat
+ 'expac' # Утилита извлечения данных alpm (базы данных pacman)
+ 'rebuild-detector' # Показывает лист AUR пакетов которые были собраны на старых версиях зависимостей, для их дальнейшей пересборки
+ 'archlinux-wallpaper' # Arch Linux обои
+ 'inxi' # Системная информация PC
+ 'hwinfo' # Системная информация
+ 'gvfs-mtp' # MTP передача для Android
+ 'gvfs' # Поддержка мусорки для файлого менеджера
+ 'gtk2' # Для устаревших программ
+ 'yt-dlp' # Скачивать видео
+ 'ffmpeg' # Конвертер/Декодер/Рекордер видео
+ 'ripgrep' # Более быстрая альтернатива grep
+ 'fd' # Поиск файлов
+ 'pkgfile' # Для плагина zsh "command-not-found"
+ 'netctl' # Управление сетью systemd на основе профилей
+ 'net-tools' # Для прослушивания портов
+ 'nmap' # Утилита для исследования сети и сканер портов
+ 'tesseract' # OCR сканер
+ 'tesseract-data-rus' 'tesseract-data-eng' 'tesseract-data-jpn' # База данных языков
+ 'hunspell-en_us' # Английский словарь для проверки орфоргафии
+ 'hunspell-ru' # Русский словарь для проверки орфографии (работает только с UTF8 кодировкой)
+ 'atool' # Для предпросмотра архивов
+ 'libfaketime' # Подделывать время для программ или пиратских игр (man faketime)
+ 'flashrom' # Для прошивания чипов программатором ch341a
+ 'dfu-util' # Для обновления прошивки паяльника Pinecil первой версии
+ 'scrcpy' # Демонстрация экрана Android для Linux используя USB ADB
+ 'i2pd' # Невидимый интернет протокол
+ 'cdemu-client' 'vhba-module-dkms' # Эмуляция iso/mds/nrg образов
+ 'transmission-cli' # Для замены passkey в торрент файлах и многое другое
+ 'jre-openjdk' # Java библиотеки (для Minecraft)
+
+ 'libva-utils' # Проверка VA-API дравера командой (vainfo)
+ 'vdpauinfo' # Проверка VDPAU драйвера командой (vdpauinfo)
+ 'vulkan-tools' # Инструменты vulkan (vulkaninfo)
+
+# --- DEV
+
+ 'npm' # Для neovim
+ 'yarn' # Для neovim плагина https://github.com/iamcco/markdown-preview.nvim
+ 'tidy' # Инструмент для приведения HTML-кода к чистому стилю

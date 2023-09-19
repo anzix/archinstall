@@ -5,6 +5,9 @@
 # https://github.com/gjpin/arch-linux
 # https://github.com/YurinDoctrine/arch-linux-base-setup/
 
+# раскомментируйте, чтобы просмотреть информацию об отладке
+#set -xeuo pipefail
+
 # Русские шрифты
 setfont cyr-sun16
 sed -i "s/#\(en_US\.UTF-8\)/\1/; s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
@@ -15,30 +18,6 @@ clear
 
 # Синхронизация часов материнской платы
 timedatectl set-ntp true
-
-# Базовые пакеты в /mnt
-PKGS=(
- base base-devel
-# linux linux-headers
- linux-zen linux-zen-headers
-# linux-lts linux-lts-headers
- linux-firmware
- zsh git
- wget # Для скачивания файлов
- neovim # Текстовый редактор
- grub efibootmgr
- intel-ucode
- terminus-font # Шрифты разных размеров с кириллицей для tty
- networkmanager # Менеджер сети
- xdg-user-dirs # Создание пользовательских XDG директории
- reflector # Инструмент для оптимизации зеркал Pacman
- pacman-contrib # Скрипты и инструменты для Pacman
- openssh # SSH соединение
- zram-generator # Подкачка
- plocate # Более быстрая альтернатива индексированию locate
- dbus-broker # Оптимизированная система шины сообщений
- ccache # Ускоряет перекомпиляцию за счет кэширования предыдущих компиляций
-)
 
 read -p "Имя хоста (пустое поле - arch): " HOST_NAME
 export HOST_NAME=${HOST_NAME:-arch}
@@ -64,6 +43,7 @@ select ENTRY in $(lsblk -dpnoNAME | grep -P "/dev/sd|nvme|vd"); do
 	export DISK=$ENTRY
 	export DISK_EFI=${DISK}1
 	export DISK_MNT=${DISK}2
+	# export DISK_HOME=${DISK}3
 	echo "Установка Arch Linux на ${DISK}."
 	break
 done
@@ -81,23 +61,23 @@ export time_zone=$(curl -s https://ipinfo.io/timezone)
 # Удаляем старую схему разделов и перечитываем таблицу разделов
 sgdisk --zap-all --clear $DISK # Удаляет (уничтожает) структуры данных GPT и MBR
 wipefs --all --force $DISK # Стирает все доступные сигнатуры
-partprobe $DISK
+partprobe $DISK # Информировать ОС об изменениях в таблице разделов
 
 # Разметка диска и перечитываем таблицу разделов
 sgdisk -n 0:0:+512MiB -t 0:ef00 -c 0:boot $DISK
 sgdisk -n 0:0:0 -t 0:8300 -c 0:root $DISK
-partprobe $DISK # Информировать ОС об изменениях в таблице разделов
+partprobe $DISK
 
 # Файловая система
 if [ ${FS} = 'ext4' ]; then
 	yes | mkfs.ext4 -L ArchLinux $DISK_MNT
-	# yes | mkfs.ext4 -L home $H_DISK
+	# yes | mkfs.ext4 -L home $DISK_HOME
 	mount -v $DISK_MNT /mnt
 	# mkdir /mnt/home
-	# mount $H_DISK /mnt/home
+	# mount $DISK_HOME /mnt/home
 
 	# При обнаружении добавляется в список для pacstrap
-	PKGS+=(e2fsprogs)
+	echo "e2fsprogs" >> packages/base
 elif [ ${FS} = 'btrfs' ]; then
 	mkfs.btrfs -L ArchLinux -f $DISK_MNT
 	mount -v $DISK_MNT /mnt
@@ -107,33 +87,32 @@ elif [ ${FS} = 'btrfs' ]; then
 	btrfs su cr /mnt/@home
 	btrfs su cr /mnt/@snapshots
 	btrfs su cr /mnt/@var_log
-	btrfs su cr /mnt/@var_lib_machines
 	btrfs su cr /mnt/@var_lib_libvirt_images
+	btrfs su cr /mnt/@var_lib_AccountsService
 
 	if [[ ${DESKTOP_ENVIRONMENT} = 'gnome' ]]; then
-		btrfs su cr /mnt/@var_lib_AccountsService
 		btrfs su cr /mnt/@var_lib_gdm
 	fi
 
 	umount -v /mnt
 
-	# BTRFS сам обнаруживает SSD при монтировании
+	# BTRFS сам обнаруживает SSD и добавляет опцию при монтировании
 	mount -v -o noatime,compress=zstd:2,space_cache=v2 $DISK_MNT /mnt
-	mkdir -pv /mnt/{home,.snapshots,var/log,var/lib/libvirt/images,var/lib/machines}
+	mkdir -pv /mnt/{home,btrfsroot,.snapshots,var/log,var/lib/AccountsService,var/lib/libvirt/images}
 	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
 	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots
 	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log $DISK_MNT /mnt/var/log
-	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_machines $DISK_MNT /mnt/var/lib/machines
 	mount -v -o noatime,nodatacow,compress=zstd:2,space_cache=v2,subvol=@var_lib_libvirt_images $DISK_MNT /mnt/var/lib/libvirt/images
+	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvolid=5 $DISK_MNT /mnt/btrfsroot
+	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_AccountsService $DISK_MNT /mnt/var/lib/AccountsService
 
 	if [[ ${DESKTOP_ENVIRONMENT} = 'gnome' ]]; then
-		mkdir -pv /mnt/{var/lib/AccountsService,var/lib/gdm}
-		mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_AccountsService $DISK_MNT /mnt/var/lib/AccountsService
+		mkdir -pv /mnt/var/lib/gdm
 		mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_gdm $DISK_MNT /mnt/var/lib/gdm
 	fi
 
 	# При обнаружении добавляется в список для pacstrap
-	PKGS+=(btrfs-progs snapper)
+	echo "snapper btrfs-progs" >> packages/base
 else
 	echo "FS type"
 	exit 1
@@ -154,31 +133,32 @@ reflector --verbose -c ru,by -p http,https -l 12 --sort rate --save /etc/pacman.
 # Синхронизация базы пакетов
 pacman -Sy
 
-# Установка базовых пакетов в /mnt
-pacstrap -K /mnt "${PKGS[@]}"
+# Установка базовых пакетов в /mnt из обработанного файла
+# 1. Удалить строки начинающиеся с #
+# 2. Убрать все коментарии
+# 3. Убрать все одиночные кавычки с названий пакетов
+# 4. Убрать все пустые пробелы
+pacstrap -K /mnt $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' packages/base)
 
 # Генерирую fstab
-genfstab -U /mnt >>/mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
 
-# https://wiki.archlinux.org/title/tmpfs
+# Добавление дополнительных разделов
 tee -a /mnt/etc/fstab >/dev/null << EOF
-
 # Ramdisk
 tmpfs 	/tmp	tmpfs		rw,nodev,nosuid,noatime,size=8G,mode=1777	 0 0
-EOF
 
-if [ "$(systemd-detect-virt)" = "none" ]; then
-tee -a /mnt/etc/fstab >/dev/null << EOF
 # Мои доп. разделы
 UUID=F46C28716C2830B2   /media/Distrib  ntfs-3g        rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
 UUID=CA8C4EB58C4E9BB7   /media/Other    ntfs-3g        rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
 UUID=A81C9E2F1C9DF890   /media/Media    ntfs-3g        rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
 UUID=30C4C35EC4C32546   /media/Games    ntfs-3g        rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
 EOF
-fi
 
-# Настройка и chroot
-cp -r /root/scriptinstall /mnt/
+# Копирование папки установочных скриптов
+cp -r /root/scriptinstall /mnt/home/${USER_NAME}
+
+# Chroot'инг
 arch-chroot /mnt /bin/bash /scriptinstall/2-chroot.sh
 
 # Действия после chroot

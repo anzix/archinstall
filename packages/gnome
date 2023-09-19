@@ -1,0 +1,60 @@
+# --- Основные пакеты для окружения GNOME
+
+ 'eog' # Просмоторщик изображений
+ 'evince' # Просмотрщик документов
+ 'file-roller' # Архиватор
+ 'gdm' # Дисплей менеджер
+ 'gnome-backgrounds'
+ 'gnome-calculator'
+ 'gnome-calendar'
+ 'gnome-color-manager'
+ 'gnome-console'
+ 'gnome-control-center'
+ 'gnome-disk-utility'
+ 'gnome-font-viewer'
+ 'gnome-keyring'
+ 'gnome-music'
+ 'gnome-session'
+ 'gnome-settings-daemon'
+ 'gnome-shell'
+ 'gnome-shell-extension-appindicator' 'libappindicator-gtk2' 'libappindicator-gtk3' # Устаревшее отображение иконок в трее (gtk2/3)
+ 'gnome-shell-extensions'
+ 'gnome-system-monitor'
+ 'gnome-text-editor'
+ 'gnome-tweaks' # Экстра настройки Gnome
+ 'gpaste' # Clipboard Manager
+ 'grilo-plugins' # Media discovery for Music
+ 'gvfs-mtp'
+ 'gvfs-nfs'
+ 'kvantum' # Движок тем на основе SVG для Qt5/6
+ 'mutter'
+ 'nautilus' # Файловый менеджер
+ 'sushi' # Быстрый предварительный просмотрщик для Nautilus
+ 'totem' # Видеоплеер
+ 'webp-pixbuf-loader' # Поддержка WEBP изображений для eog
+ 'wl-clipboard' # Wayland clipboard
+ 'xdg-desktop-portal-gnome'
+ 'xdg-user-dirs-gtk'
+
+# --- Дополнения для GNOME/GTK
+
+ 'xdg-desktop-portal-gtk' # Улучшение интеграции между порталами с GTK приложениями
+# 'gnome-themes-extra' # Экстра темы для Gnome
+
+# --- GNOME/GTK программы
+
+ 'gitg' # GUI для Git
+ 'ghex' # GUI Hex редактор
+ 'helvum' # GUI управления узлами PipeWire
+ 'transmission-gtk' # Торрент клиент
+
+# --- AUR
+
+ 'adw-gtk3' # Adwaita тема для устаревших GTK3 приложений
+ 'gcdemu' # CDEmu интеграция (эмуляция образов)
+ 'kvantum-theme-libadwaita-git' # LibAdwaita тема для QT 5/6 приложений
+# 'qadwaitadecorations-qt6-git' # Адаптация QT под GNOME (сырой)
+# 'gnome-shell-extension-dash-to-dock' # Dock панель
+# 'gnome-shell-extension-freon-git' # Отображение CPU/GPU/HDD/SSD температуры
+# 'gnome-shell-extension-kimpanel-git' # Реализация KDE kimpanel для GNOME Shell, теперь поддерживает fcitx
+

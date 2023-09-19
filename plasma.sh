@@ -5,58 +5,6 @@
 
 echo "==> Установка пакетов для окружения KDE Plasma"
 PKGS=(
- 'plasma-desktop'
- 'bluedevil'
- 'kinfocenter'
- 'kscreen'
- 'kwallet-pam'
- 'kwayland-integration'
- 'plasma-disks'
- 'plasma-nm'
- 'plasma-pa'
- 'plasma-systemmonitor'
- 'plasma-vault' # Plasma applet and services for creating encrypted vaults
- 'plasma-workspace-wallpapers'
- 'powerdevil'
- 'xdg-desktop-portal'
- 'xdg-desktop-portal-kde'
- 'okteta' # QT Hex редактор
- 'konsole'
- 'kate'
-# 'doublecmd-qt5' # Альтернатива Total Commander
- 'kdiskmark' # Бенчмарк для накопителей
- 'dolphin'
- 'kio-admin' # Поддержка управления файлами от имени администратора для dolphin
- 'ffmpegthumbs' # Предпросмотрщик видео для проводника dolphin
-# 'icoutils' # Отобраения иконок для wine (exe файлов) в dolphin
- 'kdialog' # GUI диалоги
- 'ark'
- 'kcalc'
- 'plasma-wayland-session'
- 'kwalletmanager'
- 'spectacle'
- 'okular'
- 'gwenview'
- 'kimageformats' # Добавляет поддержку форматов jxl, xcf, psd для gwenview
- 'partitionmanager' # Менеджер дисков KDE
- 'plasma-browser-integration'
- 'kdeplasma-addons'
- 'plasma-firewall'
-# 'kdeconnect' # Управление Linux с Android
- 'sshfs'
- 'libappindicator-gtk2' # Для правильного отображения иконок в трее
- 'libappindicator-gtk3' # Для правильного отображения иконок в трее
- 'wl-clipboard' # Wayland clipboard copy+paste
-
- 'sddm-kcm' # KDE Config Module for SDDM
-
- 'plasma5-applets-window-buttons' # Апплет смены раскладки клавиатуры
- 'breeze-gtk' # Improve integration of GTK applications
- 'kde-gtk-config' # GTK2 and GTK3 Configurator for KDE
-
-# 'flatpak-kcm' # Интеграция разрешений Flatpak
-
- 'sddm' # Дисплей менеджер
 )
 sudo pacman -S "${PKGS[@]}" --noconfirm --needed
 
@@ -82,13 +30,28 @@ user_pref("widget.use-xdg-desktop-portal.file-picker", 1);
 user_pref("media.hardwaremediakeys.enabled", false);
 EOF
 
+# Тёмная тема Plasma
+plasma-apply-colorscheme BreezeDark
+plasma-apply-lookandfeel -a org.kde.breezedark.desktop
+
+# Ставлю тему Breeze для SDDM
+sudo kwriteconfig5 --file /etc/sddm.conf.d/kde_settings.conf --group Theme --key "Current" "breeze"
+
+# Тёмная тема для SDDM
+sudo cp /usr/share/wallpapers/Next/contents/images_dark/1920x1080.png /usr/share/sddm/themes/breeze/
+sudo tee /usr/share/sddm/themes/breeze/theme.conf.user >/dev/null <<'EOF'
+[General]
+background=1920x1080.png
+type=image
+EOF
+
 # Скорость печатания
 kwriteconfig5 --file kcminputrc --group Keyboard --key RepeatDelay "210"
 kwriteconfig5 --file kcminputrc --group Keyboard --key RepeatRate "35"
 
-# Шрифты (Не применяются, лучше вводить вручную)
+# Шрифты
 # Моноширинный (терминал) для поддержки powerlevel10k
-# kwriteconfig5 --file kdeglobals --group General --key fixed "Насk Nerd Font,14,-1,5,50,0,0,0,0,0"
+kwriteconfig5 --file kdeglobals --group General --key fixed 'Насk Nerd Font,14,-1,5,50,0,0,0,0,0'
 
 # Отключает одиночный клик для открытия файлов/папок
 kwriteconfig5 --file kdeglobals --group KDE --key SingleClick --type bool false
@@ -112,19 +75,6 @@ elif grep -q ruwin_cplk-UTF-8 "/etc/vconsole.conf"; then
     kwriteconfig5 --file kxkbrc --group Layout --key Options 'grp:caps_toggle'
 fi
 
-# Тёмная тема Plasma
-kwriteconfig5 --file kdeglobals --group KDE --key LookAndFeelPackage "org.kde.breezedark.desktop"
-
-# Ставлю тему Breeze для SDDM
-sudo kwriteconfig5 --file /etc/sddm.conf.d/kde_settings.conf --group Theme --key "Current" "breeze"
-
-# Тёмная тема для SDDM
-sudo cp /usr/share/wallpapers/Next/contents/images_dark/1920x1080.png /usr/share/sddm/themes/breeze/
-sudo tee /usr/share/sddm/themes/breeze/theme.conf.user >/dev/null <<'EOF'
-[General]
-background=1920x1080.png
-type=image
-EOF
 
 # Увеличение скорости анимации
 kwriteconfig5 --file kdeglobals --group KDE --key AnimationDurationFactor "0.5"

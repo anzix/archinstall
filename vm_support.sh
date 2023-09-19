@@ -1,17 +1,7 @@
 #!/bin/bash
 
-# Необходимые пакеты для виртуализации
-PKGS=(
- 'virt-manager' # Менеджер виртуальных машин
- 'qemu-base' # Виртуализация
- 'qemu-emulators-full' # Поддержка всех архитектур для виртуализации
- 'dnsmasq'
- 'nftables' 'iptables-nft' # Средство управления сетью пакетами данных ядра Linux используя интерфейс nft
- 'dmidecode' # Утилиты о системной информации SMBIOS/DMI и т.д
- 'edk2-ovmf' # Поддержка UEFI для QEMU
- 'swtpm' # Поддержка TPM для QEMU
-)
-sudo pacman -S "${PKGS[@]}" --noconfirm --needed --ask 4
+echo "==> Установка пакетов для виртуализации"
+sudo pacman -S --noconfirm --needed --ask 4 $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' packages/vm_support)
 
 # Использовать как обычный пользователь
 sudo usermod -aG libvirt $(whoami)

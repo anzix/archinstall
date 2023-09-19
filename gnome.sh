@@ -4,84 +4,22 @@
 # https://github.com/gjpin/arch-linux/blob/main/setup_gnome.sh
 
 echo "==> Установка пакетов для окружения Gnome"
-PKGS=(
- 'eog' # Просмоторщик изображений
- 'evince' # Просмотрщик документов
- 'file-roller' # Архивато # Архиваторр
- 'gnome-backgrounds'
- 'gnome-calculator'
- 'gnome-calendar'
- 'gnome-color-manager'
- 'gnome-console'
- 'gnome-control-center'
- 'gnome-disk-utility'
- 'gnome-font-viewer'
- 'gnome-keyring'
- 'gnome-music'
- 'gnome-session'
- 'gnome-settings-daemon'
- 'gnome-shell'
- 'gnome-shell-extensions'
- 'gnome-system-monitor'
- 'gnome-text-editor'
-# 'gnome-themes-extra' # Экстра темы для Gnome
- 'grilo-plugins'
- 'mutter'
- 'ghex' # Hex редактор
- 'gpaste' # Clipboard Manager
- 'gvfs-mtp'
- 'gvfs-nfs'
- 'nautilus' # Файловый менеджер
- 'sushi' # Быстрый предварительный просмотрщик для Nautilus
- 'totem' # Видеоплеер
- 'xdg-user-dirs-gtk'
- 'xdg-desktop-portal-gnome'
- 'qgnomeplatform-qt5' # Улучшает интеграцию приложений QT
- 'qgnomeplatform-qt6' # Улучшает интеграцию приложений QT
- 'kvantum' # Движок тем на основе SVG для Qt5/6 (включая инструмент настройки и дополнительные темы)
- 'gnome-tweaks' # Экстра настройки Gnome
- 'webp-pixbuf-loader' # Поддержка WEBP изображений для eog
- 'wl-clipboard' # Wayland clipboard copy+paste
- 'gdm' # Дисплей менеджер
+yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' packages/gnome)
 
- 'gnome-shell-extension-appindicator' 'libappindicator-gtk2' 'libappindicator-gtk3' # Устаревшее отображение иконок в трее (gtk2/3)
-)
-sudo pacman -S "${PKGS[@]}" --noconfirm --needed
-
-echo "==> Установка AUR пакетов для окружения Gnome"
-PKGS=(
- 'gcdemu' # CDEmu интеграция (эмуляция образов)
- 'adw-gtk3' # Adwaita тема для устаревших GTK3 приложений
- 'kvantum-theme-libadwaita-git' # LibAdwaita тема для QT 5/6 приложений
-
-# 'gnome-shell-extension-dash-to-dock' # Dock панель
-# 'gnome-shell-extension-desktop-icons-ng' # Иконки на рабочем столе
-# 'gnome-shell-extension-freon-git' # Отображение CPU/GPU/HDD/SSD температуры
-# 'gnome-shell-extension-kimpanel-git' # Реализация KDE kimpanel для GNOME Shell, теперь поддерживает fcitx
-
-)
-yay -S "${PKGS[@]}" --noconfirm --needed
-
-
-# Переменные для последовательного стиля GNOME
-tee -a /etc/environment << EOF
+# Переменные для последовательного стиля QT приложений
+sudo tee -a /etc/environment << EOF
 
 # Qt
+# QT_WAYLAND_DECORATION=adwaita
 QT_QPA_PLATFORMTHEME=gnome
 QT_STYLE_OVERRIDE=kvantum
 XCURSOR_THEME=Adwaita
 XCURSOR_SIZE=24
 EOF
 
-# Улучшение интеграции приложений QT
-sed -i '/QT_QPA_PLATFORMTHEME.*/s/qt5ct/gnome/' ~/.zprofile
-# Установка Kvantum для всех Qt программ
-sed -i '/QT_STYLE.*/s/^# //g' ~/.zprofile
-
 # Установка KvLibadwaitaDark в качестве темы для QT 5/6 приложений
 mkdir -v ~/.config/Kvantum
 echo 'theme=KvLibadwaitaDark' > ~/.config/Kvantum/kvantum.kvconfig
-
 
 # Создаю шаблоны для использования из под контекстное меню проводника Gnome Файлы
 touch $(xdg-user-dir TEMPLATES)/Новый\ файл
@@ -109,32 +47,40 @@ EOF
 
 # Смена раскладки языка
 if grep -q ruwin_alt_sh-UTF-8 "/etc/vconsole.conf"; then
-    # Переключение раскладки Alt+Shift
- 	gsettings set org.gnome.desktop.input-sources xkb-options "['grp:alt_shift_toggle']"
- 	gsettings set org.gnome.desktop.wm.keybindings switch-input-source "['<Shift>Alt_L', 'XF86Keyboard']"
- 	gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Alt>Shift_L', 'XF86Keyboard']"
-elif
-    grep -q ruwin_cplk-UTF-8 "/etc/vconsole.conf"; then
-    # Переключение раскладки CapsLock (Чтобы набирать капсом Shift+CapsLock)
-	# Нет надобности в OSD уведомлении при переключении раскладки
-	gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
-	gsettings set org.gnome.desktop.wm.keybindings switch-input-source "[]"
-	gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "[]"
+# Переключение раскладки Alt+Shift
+dconf load / << EOF
+[org/gnome/desktop/input-sources]
+xkb-options=['grp:alt_shift_toggle']
+[org/gnome/desktop/wm/keybindings]
+switch-input-source=['<Shift>Alt_L', 'XF86Keyboard']
+switch-input-source-backward=['<Alt>Shift_L', 'XF86Keyboard']
+EOF
+elif grep -q ruwin_cplk-UTF-8 "/etc/vconsole.conf"; then
+# Переключение раскладки CapsLock (Чтобы набирать капсом Shift+CapsLock)
+# Нет надобности в OSD уведомлении при переключении раскладки
+dconf load / << EOF
+[org/gnome/desktop/input-sources]
+xkb-options=['grp:caps_toggle']
+[org/gnome/desktop/wm/keybindings]
+switch-input-source=@as []
+switch-input-source-backward=@as []
+EOF
 fi
 
-# Создание пользовательского профиля
-sudo mkdir -pv /etc/dconf/profile
-sudo mkdir -pv /etc/dconf/db/local.d/
-sudo tee /etc/dconf/profile/user >/dev/null <<'EOF'
-user-db:user
-system-db:local
-EOF
+# # Создание пользовательского профиля
+# sudo mkdir -pv /etc/dconf/profile
+# sudo mkdir -pv /etc/dconf/db/local.d/
+# sudo tee /etc/dconf/profile/user >/dev/null <<'EOF'
+# user-db:user
+# system-db:local
+# EOF
 
 # Импорт конфигурации Gnome
-sudo tee /etc/dconf/db/local.d/01-custom >/dev/null <<'EOF'
+dconf load / << EOF
 [org/gnome/desktop/interface]
 gtk-theme='adw-gtk3-dark'
 color-scheme='prefer-dark'
+enable-hot-corners=false
 
 [org/gnome/desktop/wm/keybindings]
 close=['<Shift><Super>q']
@@ -196,11 +142,12 @@ always-use-location-entry=true
 center-new-windows=true
 
 [org/gnome/nautilus/icon-view]
-default-zoom-level='small'
+default-zoom-level='small-plus'
 
 [org/gnome/TextEditor]
 show-line-numbers=true
 show-map=true
+spellcheck=false
 
 [org/gnome/desktop/input-sources]
 sources=[('xkb', 'us'), ('xkb', 'ru')]
@@ -242,7 +189,7 @@ EOF
 # Конфигурации Gnome для конкретных ноутбуков
 # https://wiki.archlinux.org/title/Libinput#Touchpad_not_working_in_GNOME
 if cat /sys/class/dmi/id/chassis_type | grep 10 > /dev/null; then
-sudo tee /etc/dconf/db/local.d/01-laptop >/dev/null <<'EOF'
+dconf load / << EOF
 [org/gnome/desktop/peripherals/touchpad]
 tap-to-click=true
 disable-while-typing=false
@@ -257,6 +204,7 @@ sudo dconf update
 
 # Запуск расширений
 gnome-extensions enable GPaste@gnome-shell-extensions.gnome.org
+gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
 
 # Запуск
 sudo systemctl enable gdm.service
