@@ -22,7 +22,7 @@ read -p "Хотите виртуализацию? (y/n): " VM_SETUP
 export VM_SETUP
 
 echo "==> Установка дополнительных пакетов, моих программ и шрифтов [Pacman]"
-sudo pacman -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' packages/{additional,fonts,programs} | tr -s '\n' ' '; echo)
+sudo pacman -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/{additional,fonts,programs} | column -t)
 
 # Обнаружение виртуалки
 if [[ "$(systemd-detect-virt)" == "kvm" ]]; then
@@ -47,7 +47,7 @@ cd .. && rm -rf yay-bin
 yay --save --nodiffmenu --nocleanmenu --batchinstall
 
 echo "==> Установка AUR пакетов"
-yay -S $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' packages/aur | tr -s '\n' ' '; echo)
+yay -S $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/aur | column -t)
 
 if hash snapper 2>/dev/null; then
 PKGS+=(

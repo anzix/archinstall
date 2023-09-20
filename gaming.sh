@@ -4,7 +4,7 @@
 expac -S '%o' wine-staging >> packages/gaming
 
 echo "==> Установка основных пакетов Pacman"
-yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' packages/gaming | tr -s '\n' ' '; echo)
+yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/gaming | column -t)
 
 # Экспорт игровых конфигов
 cd ~/dotfiles/base

@@ -4,7 +4,7 @@
 # https://github.com/gjpin/arch-linux/blob/main/setup_gnome.sh
 
 echo "==> Установка пакетов для окружения Gnome"
-yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' packages/gnome | tr -s '\n' ' '; echo)
+yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/gnome | column -t)
 
 # Переменные для последовательного стиля QT приложений
 sudo tee -a /etc/environment << EOF

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "==> Установка пакетов для оконного менеджера i3"
-yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' packages/i3wm | tr -s '\n' ' '; echo)
+yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/i3wm | column -t)
 
 # Вытягиваю мои конфиги для i3-wm
 cd dotfiles/i3wm

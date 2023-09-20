@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "==> Установка пакетов для виртуализации"
-sudo pacman -S --noconfirm --needed --ask 4 $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' packages/vm_support | tr -s '\n' ' '; echo)
+sudo pacman -S --noconfirm --needed --ask 4 $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/vm_support | column -t)
 
 # Использовать как обычный пользователь
 sudo usermod -aG libvirt $(whoami)
