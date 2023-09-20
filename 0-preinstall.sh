@@ -132,15 +132,15 @@ sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf # Включение 
 reflector --verbose -c ru,by -p http,https -l 12 --sort rate --save /etc/pacman.d/mirrorlist
 
 # Синхронизация базы пакетов
-pacman -Sy
+pacman -Syy
 
-# Установка базовых пакетов в /mnt из обработанного файла
+# Установка из обработанного выхлопа списка базовых пакетов в /mnt
 # 1. Удалить строки начинающиеся с #
 # 2. Убрать все коментарии
 # 3. Убрать все одиночные кавычки с названий пакетов
 # 4. Убрать все пустые пробелы
 # 5. Разделить строки по отдельности
-# 6. Выровнять список в виде таблицы
+# 6. Выровнять список в виде списка
 pacstrap -K /mnt $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/base | column -t)
 
 # Генерирую fstab
@@ -159,14 +159,15 @@ UUID=30C4C35EC4C32546   /media/Games    ntfs-3g        rw,nofail,errors=remount-
 EOF
 
 # Копирование папки установочных скриптов
-cp -r /root/scriptinstall /mnt/home/${USER_NAME}
+mkdir /mnt/home/${USER_NAME}/scriptinstall
+cp -r /root/scriptinstall/* /mnt/home/${USER_NAME}/scriptinstall/
 
 # Chroot'инг
-arch-chroot /mnt /bin/bash /scriptinstall/2-chroot.sh
+arch-chroot /mnt /bin/bash /home/${USER_NAME}/scriptinstall/1-chroot.sh
 
 # Действия после chroot
 if read -re -p "arch-chroot /mnt? [y/N]: " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then
-	arch-chroot /mnt
+	arch-chroot /mnt ; umount -R /mnt
 else
 	umount -R /mnt
 fi
