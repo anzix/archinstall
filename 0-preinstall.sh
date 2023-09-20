@@ -159,15 +159,14 @@ UUID=30C4C35EC4C32546   /media/Games    ntfs-3g        rw,nofail,errors=remount-
 EOF
 
 # Копирование папки установочных скриптов
-mkdir -p /mnt/home/${USER_NAME}/scriptinstall
-cp -r /root/scriptinstall/* /mnt/home/${USER_NAME}/scriptinstall/
+cp -r /root/scriptinstall /mnt
 
 # Chroot'инг
-arch-chroot /mnt /bin/bash /home/${USER_NAME}/scriptinstall/1-chroot.sh
+arch-chroot /mnt /bin/bash 1-chroot.sh
 
 # Действия после chroot
 if read -re -p "arch-chroot /mnt? [y/N]: " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then
-	arch-chroot /mnt ; echo "Не забудьте самостоятельно размонтировать /mnt перед reboot"
+	arch-chroot /mnt ; echo "Не забудьте самостоятельно размонтировать /mnt перед reboot!"
 else
 	umount -R /mnt
 fi

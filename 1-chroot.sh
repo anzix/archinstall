@@ -318,9 +318,10 @@ fi
 # Добавления моих опций ядра grub
 sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 mitigations=off pcie_aspm=off intel_iommu=on iommu=pt nowatchdog amdgpu.ppfeaturemask=0xffffffff cpufreq.default_governor=performance intel_pstate=passive zswap.enabled=0"/g' /etc/default/grub
 
-# Правка разрешений папке скриптов
-chmod -v 700 /home/${USER_NAME}/scriptinstall
-chown -v 1000:wheel /home/${USER_NAME}/scriptinstall
+# Правка разрешений папке скриптов и перемещаю в удобное место
+chmod -v 700 /scriptinstall
+chown -v 1000:wheel /scriptinstall
+mv -v /scriptinstall /home/${USER_NAME}/
 
 # Установка и настройка Grub
 #sed -i -e 's/#GRUB_DISABLE_OS_PROBER/GRUB_DISABLE_OS_PROBER/' /etc/default/grub # Обнаруживать другие ОС и добавлять их в grub (нужен пакет os-prober)
