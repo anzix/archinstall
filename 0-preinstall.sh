@@ -138,7 +138,8 @@ pacman -Sy
 # 2. Убрать все коментарии
 # 3. Убрать все одиночные кавычки с названий пакетов
 # 4. Убрать все пустые пробелы
-pacstrap -K /mnt $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' packages/base)
+# 5. Сделать всё в одну строку
+pacstrap -K /mnt $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' packages/base | tr -s '\n' ' '; echo)
 
 # Генерирую fstab
 genfstab -U /mnt >> /mnt/etc/fstab

@@ -4,9 +4,7 @@
 # https://github.com/gjpin/arch-linux/blob/main/setup_plasma.sh
 
 echo "==> Установка пакетов для окружения KDE Plasma"
-PKGS=(
-)
-sudo pacman -S "${PKGS[@]}" --noconfirm --needed
+sudo pacman -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' packages/plasma | tr -s '\n' ' '; echo)
 
 # Вытягиваю конфиги для KDE Plasma
 cd dotfiles/plasma
