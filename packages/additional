@@ -1,15 +1,15 @@
 # --- TUI/CLI Утилиты и прочее необходимое
 
  'mpd' # Музыкальный сервер
- 'mpc' # CLI Контроллер управления музыкой
- 'ncmpcpp' # TUI музыкальный плеер
+ 'mpc' # CLI Музыкальный клиент управлением музыкой
+ 'ncmpcpp' # TUI Музыкальный плеер
  'mediainfo' # CLI Информация о медиа
  'alsa-utils' # CLI Утилиты ALSA, в числе которых alsamixer и amixer
  'pulsemixer' # TUI Регулятор громкости PulseAudio.
  'btop' # TUI Диспетчер задач
  'hexedit' # TUI HEX-редактор
  'testdisk' # TUI Востановления данных
- 'ncdu' # TUI анализатор свободного места
+ 'ncdu' # TUI Анализатор свободного места
  'radeontop' # TUI мониторинг AMD GPU
  'zbar' # CLI Сканер QR кодов
  'translate-shell' # CLI Переводчик в терминале
@@ -17,6 +17,8 @@
  'jq' # CLI обработчик JSON (Необходимо для mpv-webtorrent-hook)
  'eza' # Замена ls
  'bat' # Замена cat
+ 'ripgrep' # Замена grep
+ 'fd' # Замена find
  'expac' # Утилита извлечения данных alpm (базы данных pacman)
  'rebuild-detector' # Показывает лист AUR пакетов которые были собраны на старых версиях зависимостей, для их дальнейшей пересборки
  'archlinux-wallpaper' # Arch Linux обои
@@ -27,8 +29,6 @@
  'gtk2' # Для устаревших программ
  'yt-dlp' # Скачивать видео
  'ffmpeg' # Конвертер/Декодер/Рекордер видео
- 'ripgrep' # Более быстрая альтернатива grep
- 'fd' # Поиск файлов
  'pkgfile' # Для плагина zsh "command-not-found"
  'netctl' # Управление сетью systemd на основе профилей
  'net-tools' # Для прослушивания портов

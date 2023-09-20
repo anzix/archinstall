@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # раскомментируйте, чтобы просмотреть информацию об отладке
-#set -xeuo pipefail
+#set -xe
 
 # Руссифицируемся
 sed -i "s/#\(en_US\.UTF-8\)/\1/; s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
@@ -80,7 +80,7 @@ elif [ "${SUDO_PRIV}" = 'n' ]; then
 fi
 
 # Создание пользовательских XDG директорий
-# Используются английские названия для простоты работы с терминала
+# Используются английские названия для удобной работы с терминала
 LC_ALL=C sudo -u "${USER_NAME}" xdg-user-dirs-update --force
 
 # Настройка pacman
@@ -318,10 +318,9 @@ fi
 # Добавления моих опций ядра grub
 sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 mitigations=off pcie_aspm=off intel_iommu=on iommu=pt nowatchdog amdgpu.ppfeaturemask=0xffffffff cpufreq.default_governor=performance intel_pstate=passive zswap.enabled=0"/g' /etc/default/grub
 
-# Правка разрешений папке скриптов и перемещаю в удобное место
+# Правка разрешений папке скриптов
 chmod -v 700 /scriptinstall
 chown -v 1000:wheel /scriptinstall
-mv -v /scriptinstall /home/${USER_NAME}/
 
 # Установка и настройка Grub
 #sed -i -e 's/#GRUB_DISABLE_OS_PROBER/GRUB_DISABLE_OS_PROBER/' /etc/default/grub # Обнаруживать другие ОС и добавлять их в grub (нужен пакет os-prober)

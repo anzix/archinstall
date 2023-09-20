@@ -6,7 +6,7 @@
 # https://github.com/gjpin/arch-linux/blob/main/setup.sh
 
 # раскомментируйте, чтобы просмотреть информацию об отладке
-#set -xeuo pipefail
+#set -xe
 
 PS3="Выберите окружение: "
 select ENTRY in "plasma" "gnome" "i3wm" "sway"; do

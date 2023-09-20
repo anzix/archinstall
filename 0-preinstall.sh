@@ -6,7 +6,7 @@
 # https://github.com/YurinDoctrine/arch-linux-base-setup/
 
 # раскомментируйте, чтобы просмотреть информацию об отладке
-#set -xeuo pipefail
+#set -xe
 
 # Русские шрифты
 setfont cyr-sun16
@@ -60,7 +60,6 @@ export time_zone=$(curl -s https://ipinfo.io/timezone)
 
 # Удаляем старую схему разделов и перечитываем таблицу разделов
 sgdisk --zap-all --clear $DISK # Удаляет (уничтожает) структуры данных GPT и MBR
-wipefs --all --force $DISK # Стирает все доступные сигнатуры
 partprobe $DISK # Информировать ОС об изменениях в таблице разделов
 
 # Разметка диска и перечитываем таблицу разделов
@@ -162,7 +161,7 @@ EOF
 cp -r /root/scriptinstall /mnt
 
 # Chroot'инг
-arch-chroot /mnt /bin/bash 1-chroot.sh
+arch-chroot /mnt /bin/bash /scriptinstall/1-chroot.sh
 
 # Действия после chroot
 if read -re -p "arch-chroot /mnt? [y/N]: " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then
