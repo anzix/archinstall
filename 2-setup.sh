@@ -9,12 +9,12 @@
 #set -xe
 
 echo "==> Вытягиваю из моего dotfiles основные конфиги"
-git clone --recurse-submodules https://github.com/anzix/dotfiles
-cd ~/dotfiles/base
+git clone --recurse-submodules https://github.com/anzix/dotfiles ~/.dotfiles
+cd ~/.dotfiles/base
 stow -vt ~ */
 # Переменные при активной сессии Xorg или Wayland
 # Некоторые DM экспортируют только ~/.profile независимо от используемого $SHELL'а, измените если необходимо
-ln -siv $HOME/dotfiles/base/zsh/.config/zsh/profile.zsh ~/.zprofile
+ln -siv $HOME/.dotfiles/base/zsh/.config/zsh/profile.zsh ~/.zprofile
 
 # Выполняю ~/.zprofile для использования переменных (спецификаций каталогов XDG BASE)
 source ~/.zprofile
@@ -88,7 +88,7 @@ for EXTENSION in "${EXTENSIONS[@]}"; do
 done
 
 # Импорт Firefox конфига
-cp -v ~/dotfiles/user.js "${FIREFOX_PROFILE_PATH}"
+cp -v ~/.dotfiles/user.js "${FIREFOX_PROFILE_PATH}"
 fi
 
 # Установка и настройка окружения

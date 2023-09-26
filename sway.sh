@@ -4,9 +4,8 @@ echo "==> Установка пакетов для оконного менедж
 yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/sway | column -t)
 
 # Вытягиваю мои конфиги для sway
-cd dotfiles/sway
+cd ~/.dotfiles/sway
 stow -vt ~ */
 
 # Включаю сервисы
 sudo systemctl enable sddm
-

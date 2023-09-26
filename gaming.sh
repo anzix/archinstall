@@ -7,8 +7,8 @@ echo "==> Установка основных пакетов Pacman"
 yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/gaming | column -t)
 
 # Экспорт игровых конфигов
-cd ~/dotfiles/base
-stow -vt ~ mangohud vkBasalt
+# cd ~/.dotfiles/base
+# stow -vt ~ mangohud vkBasalt
 
 # Автозапуск и тихий запуск Steam
 mkdir -pv ~/.config/autostart/

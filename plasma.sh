@@ -7,8 +7,8 @@ echo "==> Установка пакетов для окружения KDE Plasma
 sudo pacman -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/plasma | column -t)
 
 # Вытягиваю конфиги для KDE Plasma
-cd dotfiles/plasma
-stow -vt ~ konsole
+cd ~/.dotfiles/plasma
+stow -vt ~ */
 
 # Отключает baloo (файловый индекстор)
 sudo balooctl suspend # Усыпляем работу индексатора

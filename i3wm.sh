@@ -4,8 +4,8 @@ echo "==> Установка пакетов для оконного менедж
 yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/i3wm | column -t)
 
 # Вытягиваю мои конфиги для i3-wm
-cd dotfiles/i3wm
-stow -vt ~ x alacritty dunst rofi feh greenclip i3 polybar picom sxhkd lf libfm nitrogen nsxiv zathura qt5ct redshift
+cd ~/.dotfiles/i3wm
+stow -vt ~ */
 
 if [ "$(systemd-detect-virt)" = "none" ]; then
 echo "==> Настройка Xorg для AMDGPU"
