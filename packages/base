@@ -42,6 +42,7 @@
  'xorg-xinput' # Для работы граф.планшета XP-PEN G640 + OpenTabletDriver
  'xorg-xgamma' # Позволяет менять и исправлять гамму для игр используя Lutris
  'xf86-video-amdgpu' # Открытые драйвера AMDGPU
+ 'xclip' # Поддержка буфер обмена
 
 # --- ВИДЕО [OPENGL+VULKAN]
 

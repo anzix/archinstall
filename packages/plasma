@@ -37,7 +37,6 @@
  'kio-admin' # Поддержка управления файлами от имени администратора для dolphin
  'kimageformats' # Добавляет поддержку форматов jxl, xcf, psd для gwenview
  'kdenetwork-filesharing' # Делится каталогом по локальной сети используя Samba
- 'libappindicator-gtk2' 'libappindicator-gtk3' # Для правильного отображения иконок в трее
 # 'kdeconnect' # Управление Linux с Android
  'phonon-qt5-gstreamer' # Бэкенд для Qt5
 

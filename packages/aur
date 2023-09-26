@@ -15,11 +15,12 @@
 
  'chromium-widevine' # Плагин для работы DRM контента в браузере ungoogled-chromium
  'mpd-mpris' # MPRIS поддержка для MPD
- 'webtorrent-cli' 'xidel' # Просмотр онлайн торренты (Необходимо для mpv-webtorrent-hook)
+ 'webtorrent-cli' 'xidel' # Просмотр онлайн торрентов (Необходимо для mpv-webtorrent-hook)
  'obs-gstreamer' # Более эффективный плагин кодировщик для OBS (Для RDNA 1)
  'obs-vkcapture-git' 'lib32-obs-vkcapture-git' # OBS плагин для захвата напрямую через API OpenGL/Vulkan (минимизирует затраты)
  'amd-vulkan-prefixes' # Быстрое переключение icd драйверов AMD используя переменные (vk_radv, vk_amdvlk, vk_pro)
 # 'android-apktool' # Декомпиляция apk файлов
+# 'f3' # Проверка накопителя на фальшивый объём
 # 'gallery-dl' # Скачивать с различных платформ (deviantart, pixiv и т.д) без регистрации и смс
+# 'hw-probe' # Иследование системы на совместимость оборудования linux-hardware.org
 # 'kyocera-print-driver' # Драйвер для Kyocera FS-1060DN
-

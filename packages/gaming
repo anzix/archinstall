@@ -1,7 +1,6 @@
 # --- Основные пакеты, библиотеки wine и эмуляторы
 
  'steam'
- 'lib32-libudev0-shim' 'lib32-libnm' # Исправляют вылет Steam
  'mangohud' 'lib32-mangohud' # Мониторинг для игр
  'lutris' # GUI обвёртка Wine
  'wine-staging' 'wine-gecko' 'wine-mono'
@@ -20,16 +19,16 @@
 
 # 'lgogdownloader-qt5' # CLI обвёртка GOG (с рабочим логином)
  'heroic-games-launcher-bin' # Удобный EGS / GOG лаунчер для Linux
+# 'gzdoom' 'qzdl-git' # Doom движок с GUI менеджером аддонов
 # 'legacylauncher' # Minecraft лаунчер
  'dxvk-bin' # Свежий dxvk для ручных префиксов Wine
  'vkd3d-proton-bin' # Свежий vkd3d-proton (форк vkd3d) для ручных префиксов Wine
  'protontricks' # Протаскивать библиотеки/dll'ки в префикс Steam Proton
  'protonup-qt' # Удобная утилитка для скачки runner'ов Wine
 # 'goverlay-bin' # GUI настройка оверлея MangoHud
- 'vkbasalt' 'lib32-vkbasalt' # Постпроцессинг для игр
- 'reshade-shaders-git' # Набор шейдеров необходимых для VkBasalt
+ 'vkbasalt' 'lib32-vkbasalt' 'reshade-shaders-git' # Постпроцессинг для игр + набор шейдеров
 # 'rpcs3-bin' # PS3 Эмулятор
-# 'cemu' # Wii U Эмулятор
+# 'cemu-bin' # Wii U Эмулятор
  'game-devices-udev' # Udev правила для работы контроллеров 8BitDo в эмуляторов Cemu и других
  'joycond-git' # Альтернатива BetterJoy
  'joycond-cemuhook-git' # Для работы по UDP Switch контроллера (8BitDo Pro 2) в режиме гироскопа

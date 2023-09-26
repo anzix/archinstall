@@ -57,6 +57,9 @@ wget -qO- https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts \
 # Выставляю максимальный размер журнала systemd
 sed -i 's/#SystemMaxUse=/SystemMaxUse=50M/g' /etc/systemd/journald.conf
 
+# Усиление защиты
+sed -ri -e "s/^#PermitRootLogin.*/PermitRootLogin\ no/g" /etc/ssh/sshd_config
+
 # Пароль root пользователя
 echo "root:${USER_PASSWORD}" | chpasswd
 
@@ -64,7 +67,7 @@ echo "root:${USER_PASSWORD}" | chpasswd
 pacman-key --init
 pacman-key --populate archlinux
 
-# Добавления юзера и присваивание групп к юзеру
+# Добавления юзера с созданием $HOME и присваивание групп к юзеру, оболочка zsh
 useradd -m -G wheel,audio,video,input,optical,users,uucp,games -s /bin/zsh "${USER_NAME}"
 
 # Пароль пользователя
@@ -82,6 +85,9 @@ fi
 # Создание пользовательских XDG директорий
 # Используются английские названия для удобной работы с терминала
 LC_ALL=C sudo -u "${USER_NAME}" xdg-user-dirs-update --force
+
+# Создание других каталогов
+mkdir -pv $(xdg-user-dir PICTURES)/{Screenshots/mpv,Gif}
 
 # Настройка pacman
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Делаем pacman красивее
@@ -156,7 +162,7 @@ if [ "${FS}" = 'btrfs' ]; then
   # Правка mkinitcpio.conf
   sed -i 's/^MODULES.*/MODULES=(btrfs amdgpu)/' /etc/mkinitcpio.conf
 
-  # Add the btrfs binary in order to do maintenence on system without mounting it
+  # Добавяем бинарный файл btrfs, чтобы выполнять обслуживание системы без ее монтирования
   sed -i 's/^BINARIES=.*$/BINARIES=(btrfs)/' /etc/mkinitcpio.conf
   sed -i "s/^HOOKS.*/HOOKS=(base consolefont udev autodetect modconf block filesystems keyboard keymap)/g" /etc/mkinitcpio.conf
 
@@ -320,7 +326,7 @@ sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 
 
 # Правка разрешений папке скриптов
 chmod -v 700 /scriptinstall
-chown -v 1000:wheel /scriptinstall
+chown -v 1000:users /scriptinstall
 
 # Установка и настройка Grub
 #sed -i -e 's/#GRUB_DISABLE_OS_PROBER/GRUB_DISABLE_OS_PROBER/' /etc/default/grub # Обнаруживать другие ОС и добавлять их в grub (нужен пакет os-prober)
@@ -328,6 +334,7 @@ grub-install --efi-directory=/boot/efi
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # Врубаю сервисы
+# BTRFS: discard=async можно использовать вместе с fstrim.timer
 systemctl enable NetworkManager.service
 systemctl enable bluetooth.service
 systemctl enable sshd.service
