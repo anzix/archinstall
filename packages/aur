@@ -1,26 +1,35 @@
 # --- ПРОГРАММЫ
 
  'ungoogled-chromium-bin' # Полностью вычещенный от Гуглятины браузер Chromium
-# 'fancontrol-gui' # GUI обвертка fancontrol для управление вентиляторами
 # 'czkawka-gui-bin' # Удобный инструмент для удаления дубликатов
+# 'spotify' # Стриминговый музыкальный сервис для халявных рекомендаций
  'opentabletdriver' # Драйвер для граф. планшета XP-PEN G640
  'ventoy-bin' # Создание загрузочной флешки для Win/Linux образов
+# 'torrserver-bin' # Стриминг пиратского контента
+# 'jamesdsp' # Процессор звуковых эффектов, улучшает звук для наушников
+# 'edb-debugger' # AArch32/x86/x86-64 отладчик, созданный на основе Ollydbg
 # 'cpu-x' # CPU-Z для Linux
 
 # --- ШРИФТЫ
 
+# 'ttf-ms-win11-auto' # Microsoft шрифты
 # 'otf-monocraft' # Пиксельный шрифт для Mangohud
+# 'cozette-ttf' # Пиксельный шрифт но для терминала (family: CozetteVector)
 
 # --- Утилиты и разное
 
  'chromium-widevine' # Плагин для работы DRM контента в браузере ungoogled-chromium
  'mpd-mpris' # MPRIS поддержка для MPD
- 'webtorrent-cli' 'xidel' # Просмотр онлайн торрентов (Необходимо для mpv-webtorrent-hook)
  'obs-gstreamer' # Более эффективный плагин кодировщик для OBS (Для RDNA 1)
  'obs-vkcapture-git' 'lib32-obs-vkcapture-git' # OBS плагин для захвата напрямую через API OpenGL/Vulkan (минимизирует затраты)
  'amd-vulkan-prefixes' # Быстрое переключение icd драйверов AMD используя переменные (vk_radv, vk_amdvlk, vk_pro)
-# 'android-apktool' # Декомпиляция apk файлов
-# 'f3' # Проверка накопителя на фальшивый объём
-# 'gallery-dl' # Скачивать с различных платформ (deviantart, pixiv и т.д) без регистрации и смс
+# 'python-eyed3' # Правка обложек для mp3 файлов
+# 'android-apktool' # Декомпилятор apk файлов
+# 'f3' # CLI утилита для проверки накопителя на фальшивый объём
+# 'gallery-dl' # CLI утилита для скачивания с различных платформ (deviantart, pixiv и т.д) без регистрации и смс
+# 'xdg-ninja' # CLI Скрипт проверяющий ваш $HOME на соответствие спецификаций XDG Base Directory
 # 'hw-probe' # Иследование системы на совместимость оборудования linux-hardware.org
-# 'kyocera-print-driver' # Драйвер для Kyocera FS-1060DN
+# 'pacgraph' # Рисует график установленных пакетов Pacman
+# 'debtap' # Конвертер .deb пакета в Arch Linux совместимый
+# 'kyocera-print-driver' # Драйвер для принтера Kyocera FS-1060DN
+# 'oneko' # Милые котики бегают за твоим курсором

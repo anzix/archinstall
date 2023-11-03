@@ -53,7 +53,7 @@
  'kate' # Тектовый редактор
  'kcalc' # Калькулятор
  'kcolorchooser' # Инструмент для работы с цветовой палитрой
- 'konsole'
+ 'konsole' # Консоль
  'kwalletmanager' # Инструмент управления кошельком
  'okular' # Просмоторщик документов
  'partitionmanager' # Менеджер дисков KDE
@@ -75,3 +75,7 @@
  'sshfs'
 
 # --- AUR
+
+# 'fancontrol-gui' # GUI обвертка fancontrol для управление вентиляторами
+ 'soulseekqt' # P2P-сеть для передачи файлов и поиска музыки (многое можно найти)
+ 'xwaylandvideobridge-bin' # Для возможности транслировать экран в xwayland приложениях, которые не имеют нативную поддержку pipewire (пример: discord)

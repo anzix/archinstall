@@ -1,0 +1,22 @@
+# TODO
+# Основные
+
+ 'alacritty'
+ 'ydotool' # Wayland замена sxhkd (X11)
+ 'wl-clipboard'
+ 'grim'
+ 'slurp'
+ 'hyprland'
+ 'hyprpaper'
+ 'xdg-desktop-portal-hyprland'
+ 'waybar'
+ 'mpv'
+ 'dunst или mako'
+ 'pavucontrol'
+ 'qt5ct'
+ 'kvantum'
+
+# AUR
+
+ 'nwg-look'
+ 'tofi' # Rofi like (дефолтная тема ужасна, необходимо сменить)

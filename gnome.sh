@@ -6,7 +6,7 @@
 echo "==> Установка пакетов для окружения Gnome"
 yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/gnome | column -t)
 
-# Переменные для последовательного стиля QT приложений
+# Переменные для последовательного стиля приложений
 sudo tee -a /etc/environment << EOF
 
 # Qt
@@ -77,11 +77,6 @@ fi
 
 # Импорт конфигурации Gnome
 dconf load / << EOF
-[org/gnome/desktop/interface]
-gtk-theme='adw-gtk3-dark'
-color-scheme='prefer-dark'
-enable-hot-corners=false
-
 [org/gnome/desktop/wm/keybindings]
 close=['<Shift><Super>q']
 switch-applications=@as []
@@ -121,11 +116,17 @@ command='gnome-system-monitor'
 name='Gnome System Monitor'
 
 [org/gnome/shell]
+disable-user-extensions=false
 enabled-extensions=['appindicatorsupport@rgcjonas.gmail.com']
 
 [org/gnome/desktop/peripherals/keyboard]
 delay=uint32 210
 repeat-interval=uint32 35
+
+[org/gnome/Console]
+custom-font='JetBrainsMonoNL Nerd Font 11'
+font-scale=1.3000000000000003
+use-system-font=false
 
 [org/gnome/desktop/sound]
 allow-volume-above-100-percent=false
@@ -133,10 +134,11 @@ event-sounds=false
 
 [org/gtk/settings/file-chooser]
 sort-directories-first=true
+sort-column='name'
+sort-order='ascending'
 
 [org/gnome/nautilus/preferences]
 show-create-link=true
-always-use-location-entry=true
 
 [org/gnome/mutter]
 center-new-windows=true
@@ -159,9 +161,10 @@ show-weekdate=true
 accel-profile='flat'
 
 [org/gnome/desktop/interface]
-monospace-font-name='JetBrainsMono Nerd Font Medium 10'
-
-[org/gnome/desktop/interface]
+color-scheme='prefer-dark'
+enable-hot-corners=false
+font-antialiasing='rgba'
+gtk-theme='adw-gtk3-dark'
 font-name='Noto Sans 10'
 document-font-name='Noto Sans 10'
 monospace-font-name='Noto Sans Mono 10'
@@ -169,20 +172,11 @@ monospace-font-name='Noto Sans Mono 10'
 [org/gnome/desktop/wm/preferences]
 titlebar-font='Noto Sans Bold 10'
 
-[org/gnome/shell]
-disable-user-extensions=false
-
-[org/gnome/desktop/wm/preferences]
-button-layout='appmenu:minimize,maximize,close'
-
 [org/gnome/desktop/screensaver]
 lock-enabled=false
 
 [org/gnome/desktop/session]
 idle-delay=uint32 600
-
-[org/gnome/desktop/interface]
-font-antialiasing='rgba'
 EOF
 
 

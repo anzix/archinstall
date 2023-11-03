@@ -57,7 +57,7 @@ wget -qO- https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts \
 # Выставляю максимальный размер журнала systemd
 sed -i 's/#SystemMaxUse=/SystemMaxUse=50M/g' /etc/systemd/journald.conf
 
-# Усиление защиты
+# Разрешение на вход по SSH отключено для пользователя root
 sed -ri -e "s/^#PermitRootLogin.*/PermitRootLogin\ no/g" /etc/ssh/sshd_config
 
 # Пароль root пользователя
@@ -204,7 +204,7 @@ Operation = Remove
 Target = *
 
 [Action]
-Description = Очистка устаревших кэшированных пакетов (с сохранением двух последних)...
+Description = Чистка кэш пакетов (с сохранением двух последних)...
 When = PostTransaction
 Exec = /usr/bin/paccache -rk2
 EOF
@@ -219,7 +219,7 @@ Target = grub
 [Action]
 Description = Upgrading GRUB...
 When = PostTransaction
-Exec = /usr/bin/sh -c "grub-install --efi-directory=/boot/efi; grub-mkconfig -o /boot/grub/grub.cfg"
+Exec = /usr/bin/sh -c "grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB; grub-mkconfig -o /boot/grub/grub.cfg"
 EOF
 
 # Хук для предотвращения создания Wine ассоциации файлов
@@ -248,11 +248,25 @@ if [ "$(systemd-detect-virt)" = "none" ]; then
 # https://ventureo.codeberg.page/source/generic-system-acceleration.html#swap
 # https://wiki.archlinux.org/title/Sysctl#Improving_performance
 
-tee /etc/sysctl.d/99-sysctl.conf > /dev/null << EOF
-# Исправляет системные тормоза когда копируется большое кол-во/огромных файлов
+tee /etc/sysctl.d/99-sysctl-performance-tweaks.conf > /dev/null << EOF
+# TLDR по первым 4: Исправляет системные тормоза когда копируется большое кол-во/огромных файлов
+
+# Параметр swappiness sysctl представляет предпочтение (или избегание) ядром пространства подкачки. Swappiness может иметь значение от 0 до 100, значение по умолчанию равно 60.
+# Низкое значение заставляет ядро избегать подкачки, более высокое - пытаться использовать пространство подкачки. Известно, что использование низкого значения при достаточном объеме памяти улучшает быстродействие многих систем.
+# Для 4Gb или 8Gb RAM - оставляем значение по умолчанию 60 или меняем на 80 чтобы стимулировать больше свопа
+# Если у вас 16gb RAM - ставим значение 10
 vm.swappiness = 10
+
+# Значение контролирует склонность ядра к освобождению памяти, используемой для кэширования объектов каталогов и инодов (VFS-кэш).
+# Уменьшение этого значения по сравнению со значением по умолчанию, равным 100, делает ядро менее склонным к восстановлению VFS-кэша (не устанавливайте его равным 0, это может привести к OoM т.е нехватке памяти)
+# Рекомендуемым значением будет от 50 до 500
 vm.vfs_cache_pressure = 50
+
+# Содержит в процентах от общей доступной памяти, содержащей свободные страницы и страницы, подлежащие восстановлению,
+# количество страниц, при котором процесс, генерирующий записи на диск, сам начнет выписывать грязные данные (по умолчанию - 20).
 vm.dirty_ratio = 10
+
+# Содержит в процентах от общей доступной памяти, содержащей свободные страницы и страницы, которые можно восстановить, количество страниц, на которых потоки фоновой очистки ядра начнут записывать "грязные" данные (по умолчанию - 10).
 vm.dirty_background_ratio = 5
 
 # Исправляет различные проблемы связанные с играми используя SteamPlay (Proton)
@@ -268,7 +282,7 @@ net.core.netdev_max_backlog = 16384
 # Максимальное число входящих соединений, ожидающих приёма (accept) программой, на одном сокете: (default 4096):
 net.core.somaxconn = 8192
 
-# Скрывает любые сообщения ядра с консоли.
+# Скрывает низкоприоритетные сообщения ядра с консоли.
 kernel.printk = 3 3 3 3
 
 # TCP Fast Open — это расширение протокола управления передачей (TCP), которое помогает уменьшить задержки в сети,
@@ -322,7 +336,7 @@ EOF
 fi
 
 # Добавления моих опций ядра grub
-sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 mitigations=off pcie_aspm=off intel_iommu=on iommu=pt nowatchdog amdgpu.ppfeaturemask=0xffffffff cpufreq.default_governor=performance intel_pstate=passive zswap.enabled=0"/g' /etc/default/grub
+sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 mitigations=off intel_iommu=on iommu=pt amdgpu.ppfeaturemask=0xffffffff cpufreq.default_governor=performance zswap.enabled=0"/g' /etc/default/grub
 
 # Правка разрешений папке скриптов
 chmod -v 700 /scriptinstall
@@ -330,7 +344,7 @@ chown -v 1000:users /scriptinstall
 
 # Установка и настройка Grub
 #sed -i -e 's/#GRUB_DISABLE_OS_PROBER/GRUB_DISABLE_OS_PROBER/' /etc/default/grub # Обнаруживать другие ОС и добавлять их в grub (нужен пакет os-prober)
-grub-install --efi-directory=/boot/efi
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # Врубаю сервисы

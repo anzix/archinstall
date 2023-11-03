@@ -12,19 +12,7 @@ git clone https://github.com/anzix/scriptinstall && cd scriptinstall
 ./0-preinstall.sh
 ```
 
-Когда установка первого скрипта закончиться, вы должны перезагрузиться и после клонируем мои dotfiles. И тянем только zsh конфиги
-
-```sh
-git clone https://github.com/anzix/dotfiles ~/.dotfiles && cd ~/.dotfiles/base
-stow -vt ~ zsh
-ln -svi /home/$USER/.dotfiles/base/zsh/.config/zsh/profile.zsh ~/.zprofile
-exit # перелогиниваемся для применения результатов
-```
-
-После перелогина пойдёт установка необходимых плагинов zsh, если что-то не работает например substring search попробуйте снова перелогинится
-
-Теперь перемещаем папку со скриптами в домашнюю директорию и запускаем второй скрипт установки
-
+Когда установка первого скрипта закончиться, вы должны перезагрузиться и после перемещаем папку со скриптами в домашнюю директорию и запускаем финальный скрипт установки
 
 ```sh
 sudo mv /scriptinstall ~

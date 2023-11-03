@@ -19,7 +19,7 @@
  'wofi' # Менеджер приложений
  'polkit-gnome'
  'file-roller' # Gnome менеджер архивов
- 'pcmanfm-qt' # Графический файловый менеджер (версия QT)
+ 'pcmanfm-qt' # Графический файловый менеджер (версия QT) / Или Nemo
  'ffmpegthumbnailer' # Для отображения миниатюр в pcmanfm
  'playerctl' # Для работы fn+f6/7/8 и других приколюх
  'wayland'
@@ -32,7 +32,6 @@
  'udiskie' # Автоматическое монторование USB флешек с треем
  'qt5ct' # QT5 оформления
  'kvantum' # QT оформления
- 'blueman' # Bluetooth менеджер
 
  'sddm' # Дисплей менеджер
 
@@ -57,8 +56,10 @@
 
 # --- AUR
 
+ 'bluetuith-bin' # TUI Bluetooth менеджер
  'nwg-look-bin' # GTK Оформления
  'cliphist' # Менеджер буфера обмена для sway
  'wshowkeys-git' # Показ клавиш для sway
  'autotiling' # Script for sway and i3 to automatically switch the horizontal / vertical window split orientation
+# 'virtboard' # Экранная клавиатура
 # 'polkit-dumb-agent-git' # Супер минималистичный polkit аутентификатор

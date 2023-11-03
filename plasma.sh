@@ -4,17 +4,29 @@
 # https://github.com/gjpin/arch-linux/blob/main/setup_plasma.sh
 
 echo "==> Установка пакетов для окружения KDE Plasma"
-sudo pacman -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/plasma | column -t)
+yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/plasma | column -t)
 
 # Вытягиваю конфиги для KDE Plasma
 cd ~/.dotfiles/plasma
 stow -vt ~ */
 
+# Переменные для последовательного стиля приложений
+sudo tee -a /etc/environment << EOF
+
+# Qt
+QT_QPA_PLATFORMTHEME="xdgdesktopportal"
+QT_STYLE_OVERRIDE=kvantum
+EOF
+
 # Отключает baloo (файловый индекстор)
+# Это исправляет медленную работу dolphin при монтировании sshfs
 sudo balooctl suspend # Усыпляем работу индексатора
 sudo balooctl disable # Отключаем Baloo
 sudo balooctl purge # Чистим кэш
 
+
+# Проверяю наличие браузера Firefox
+if pacman -Qs firefox > /dev/null; then
 # Set Firefox profile path
 FIREFOX_PROFILE_PATH=$(realpath ${HOME}/.mozilla/firefox/*.default-release)
 
@@ -27,10 +39,10 @@ user_pref("widget.use-xdg-desktop-portal.file-picker", 1);
 // Предотвращает дублирование записей в виджете медиаплеера KDE Plasma
 user_pref("media.hardwaremediakeys.enabled", false);
 EOF
+fi
 
 # Тёмная тема Plasma
-plasma-apply-colorscheme BreezeDark
-plasma-apply-lookandfeel -a org.kde.breezedark.desktop
+kwriteconfig5 --file kdeglobals --group KDE --key LookAndFeelPackage "org.kde.breezedark.desktop"
 
 # Ставлю тему Breeze для SDDM
 sudo kwriteconfig5 --file /etc/sddm.conf.d/kde_settings.conf --group Theme --key "Current" "breeze"
@@ -47,8 +59,7 @@ EOF
 kwriteconfig5 --file kcminputrc --group Keyboard --key RepeatDelay "210"
 kwriteconfig5 --file kcminputrc --group Keyboard --key RepeatRate "35"
 
-# Шрифты
-# Моноширинный (терминал) для поддержки powerlevel10k
+# Моноширинный шрифт для поддержки powerlevel10k в терминале
 kwriteconfig5 --file kdeglobals --group General --key fixed 'Насk Nerd Font,14,-1,5,50,0,0,0,0,0'
 
 # Отключает одиночный клик для открытия файлов/папок
@@ -107,21 +118,21 @@ kwriteconfig5 --file klaunchrc --group FeedbackStyle --key "BusyCursor" --type b
 # Disable screen edges
 kwriteconfig5 --file kwinrc --group Effect-windowview --key BorderActivateAll "9"
 
-# Konsole shortcut
+# Комбинация открытия Konsole
 kwriteconfig5 --file kglobalshortcutsrc --group org.kde.konsole.desktop --key "_launch" "Meta+Return,none,Konsole"
 
-# Spectacle shortcut
+# Комбинация открытия Spectacle (скриншот выделенной зоны)
 kwriteconfig5 --file kglobalshortcutsrc --group "org.kde.spectacle.desktop" --key "RectangularRegionScreenShot" "Meta+Shift+S,none,Capture Rectangular Region"
 
-# Overview shortcut
+# Комбинация режима "Обзор"
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Overview" "Meta+Tab,none,Toggle Overview"
 
-# Close windows shortcut
+# Комбинация закрытия окна
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window Close" "Meta+Shift+Q,none,Close Window"
 
-# Перезагрузка plasmashell (не работает)
-# kwriteconfig5 --file kglobalshortcutsrc --group "plasmashell.desktop" --key "_k_friendly_name" "plasmashell --replace"
-# kwriteconfig5 --file kglobalshortcutsrc --group "plasmashell.desktop" --key "_launch" "Ctrl+Alt+Del,none,plasmashell --replace"
+# Перезагрузка plasmashell
+kwriteconfig5 --file kglobalshortcutsrc --group "plasmashell.desktop" --key "_k_friendly_name" "plasmashell --replace"
+kwriteconfig5 --file kglobalshortcutsrc --group "plasmashell.desktop" --key "_launch" "Ctrl+Alt+Del,none,plasmashell --replace"
 
 # Включает 2 рабочих стола
 kwriteconfig5 --file kwinrc --group Desktops --key Name_2 "Рабочий стол 2"

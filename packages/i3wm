@@ -1,10 +1,8 @@
 # --- Основное для оконного менеджера i3
 
- 'blueman' # Bluetooth менеджер
  'dmenu' # Меню приложений
  'dunst' # Демон уведомлений
  'feh' # Минималистичный просмотрорщик изображений
- 'ffmpegthumbnailer' # Для отображения миниатюр в pcmanfm
  'file-roller' # Gnome менеджер архивов
  'galculator' # GNOME калькулятор
  'i3-wm' # i3wm с отступами (gaps)
@@ -13,8 +11,7 @@
  'maim' # Очень минималистичный скриншотер (хорошо сочетается с xclip)
  'nitrogen' # Менеджер обоев рабочего стола X Window System
  'nsxiv' # Простой и удобный просмоторщик картинок
- 'pasystray' # System tray volume control
- 'pcmanfm-gtk3' # Графический файловый менеджер (версия GTK3)
+ 'pcmanfm-gtk3' 'ffmpegthumbnailer' # Графический файловый менеджер (версия GTK3) + отображение миниатюр
  'playerctl' # Для работы fn+f6/7/8 и других приколюх
  'polybar' # Статус бар
  'qpwgraph' # Графический интерфейс управления узлами PipeWire (QT)
@@ -31,7 +28,7 @@
 # --- ТЕМЫ
 
  'breeze' # Для доступа к тёмной теме kdenlive
- 'capitaine-cursors' # Cursor Icons
+ 'capitaine-cursors' # Cursor Icons like KDE
  'gtk-engine-murrine' # Для работоспособности темы Materia Theme
  'materia-gtk-theme' # Desktop Theme
  'papirus-icon-theme' # Desktop Icons
@@ -50,9 +47,9 @@
 
 # --- AUR
 
+ 'bluetuith-bin' # TUI Bluetooth менеджер
  'autotiling' # Script for sway and i3 to automatically switch the horizontal / vertical window split orientation
  'giph' # Gif рекордер (для maim)
  'picom-git' # Прозрачность окон + blur dual_kawase
  'rofi-greenclip' # Rofi/Dmenu Менеджер буфера обмена с поддержкой картинок
  'rofi-power-menu' # Меню выключения
-# 'betterlockscreen' # A simple, minimal lockscreen

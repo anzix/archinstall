@@ -7,6 +7,14 @@ yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$
 cd ~/.dotfiles/i3wm
 stow -vt ~ */
 
+# Переменные для последовательного стиля приложений
+sudo tee -a /etc/environment << EOF
+
+# Qt
+QT_QPA_PLATFORMTHEME=qt5ct
+QT_STYLE_OVERRIDE=kvantum
+EOF
+
 if [ "$(systemd-detect-virt)" = "none" ]; then
 echo "==> Настройка Xorg для AMDGPU"
 sudo bash -c 'cat <<EOF > /etc/X11/xorg.conf.d/20-amdgpu.conf

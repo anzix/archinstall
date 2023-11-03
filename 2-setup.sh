@@ -30,7 +30,7 @@ cd .. && rm -rf yay-bin
 yay --save --nodiffmenu --batchinstall
 
 echo "==> Установка дополнительных пакетов, моих программ и шрифтов [Pacman+AUR]"
-yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/{additional,fonts,programs,aur} | column -t)
+yay -S --noconfirm --nobatchinstall --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/{additional,fonts,programs,aur} | column -t)
 
 # Проверяю наличие браузера Firefox
 if pacman -Qs firefox > /dev/null; then
@@ -137,16 +137,15 @@ fi
 
 
 # Скрыть приложения из меню запуска
-# TODO: не работает в KDE
-APPLICATIONS=('assistant' 'avahi-discover' 'designer' 'electron' 'electron21' 'htop' 'linguist' 'lstopo' 'nvim' 'org.kde.kuserfeedback-console' 'qdbusviewer' 'qt5ct' 'qv4l2' 'qvidcap' 'bssh' 'bvnc' 'mpv' 'uxterm' 'xterm' 'btop' 'scrcpy' 'scrcpy-console')
+APPLICATIONS=('assistant' 'avahi-discover' 'designer' 'electron' 'electron22' 'electron23' 'electron24' 'electron25' 'htop' 'linguist' 'lstopo' 'vim' 'nvim' 'org.kde.kuserfeedback-console' 'qdbusviewer' 'qt5ct' 'qv4l2' 'qvidcap' 'bssh' 'bvnc' 'mpv' 'uxterm' 'xterm' 'btop' 'scrcpy' 'scrcpy-console' 'rofi' 'rofi-theme-selector' 'picom')
+# 'jconsole-java-openjdk' 'jshell-java-openjdk'
 for APPLICATION in "${APPLICATIONS[@]}"
 do
     # Создаём локальную копию ярлыков в пользовательскую директорию для применение свойств
-    cp /usr/share/applications/${APPLICATION}.desktop /home/${USERNAME}/.local/share/applications/${APPLICATION}.desktop 2>/dev/null || :
+    cp -v /usr/share/applications/${APPLICATION}.desktop /home/${USERNAME}/.local/share/applications/${APPLICATION}.desktop 2>/dev/null || :
 
     if test -f "/home/${USERNAME}/.local/share/applications/${APPLICATION}.desktop"; then
         echo "NoDisplay=true" >> /home/${USERNAME}/.local/share/applications/${APPLICATION}.desktop
-        echo "Hidden=true" >> /home/${USERNAME}/.local/share/applications/${APPLICATION}.desktop
         echo "NotShowIn=GNOME;Xfce;KDE;" >> /home/${USERNAME}/.local/share/applications/${APPLICATION}.desktop
     fi
 done
