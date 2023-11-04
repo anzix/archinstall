@@ -10,19 +10,20 @@
 
 echo "==> Вытягиваю из моего dotfiles основные конфиги"
 git clone --recurse-submodules https://github.com/anzix/dotfiles ~/.dotfiles
-cd ~/.dotfiles/base
-stow -vt ~ */
+pushd ~/.dotfiles/base && stow -vt ~ */
+
 # Переменные при активной сессии Xorg или Wayland
 # Некоторые DM экспортируют только ~/.profile независимо от используемого $SHELL'а, измените если необходимо
 ln -siv $HOME/.dotfiles/base/zsh/.config/zsh/profile.zsh ~/.zprofile
+popd
 
 # Выполняю ~/.zprofile для использования переменных (спецификаций каталогов XDG BASE)
 source ~/.zprofile
 
 # Установка Yay (AUR помощник)
-git clone https://aur.archlinux.org/yay-bin.git
-cd yay-bin && makepkg -si --noconfirm
-cd .. && rm -rf yay-bin
+git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin
+pushd /tmp/yay-bin && makepkg -si --noconfirm
+popd
 
 # Настройка yay
 # --nodiffmenu - Не спрашивать об показе изменений (diff)
