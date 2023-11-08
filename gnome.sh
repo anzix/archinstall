@@ -10,7 +10,7 @@ yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$
 sudo tee -a /etc/environment << EOF
 
 # Qt
-# QT_WAYLAND_DECORATION=adwaita
+QT_WAYLAND_DECORATION=adwaita
 QT_QPA_PLATFORMTHEME=gnome
 QT_STYLE_OVERRIDE=kvantum
 XCURSOR_THEME=Adwaita

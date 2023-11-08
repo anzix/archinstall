@@ -71,3 +71,4 @@
  'npm' # Для neovim
  'yarn' # Для neovim плагина https://github.com/iamcco/markdown-preview.nvim
  'tidy' # Инструмент для приведения HTML-кода к чистому стилю
+ 'onefetch' # CLI утилита для вывода информации git реозитория

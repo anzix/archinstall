@@ -22,9 +22,9 @@
  'gnome-system-monitor'
  'gnome-text-editor'
  'gnome-tweaks' # Экстра настройки Gnome
+ 'gnome-passwordsafe' # Локальный менеджер паролей
  'gpaste' # Clipboard Manager
  'grilo-plugins' # Media discovery for Music
- 'gvfs-mtp'
  'gvfs-nfs'
  'mutter'
  'nautilus' # Файловый менеджер
@@ -45,17 +45,18 @@
 # --- GNOME/GTK программы
 
  'gitg' # GUI для Git
- 'ghex' # GUI Hex редактор
  'helvum' # GUI управления узлами PipeWire
  'transmission-gtk' # Торрент клиент
  'nicotine+' # P2P-сеть для передачи файлов и поиска музыки (многое можно найти)
+# 'ghex' # GUI Hex редактор
 
 # --- AUR
 
- 'adw-gtk3' # Adwaita тема для устаревших GTK3 приложений
+# 'shared-mime-info-gnome' # Ассоциации файлов GNOME по умолчанию
  'gcdemu' # CDEmu интеграция (эмуляция образов)
+ 'adw-gtk3' # Adwaita тема для устаревших GTK3 приложений
  'kvantum-theme-libadwaita-git' # LibAdwaita тема для QT 5/6 приложений
-# 'qadwaitadecorations-qt6' # Адаптация QT под GNOME (сырой)
+ 'qadwaitadecorations-qt6' 'qadwaitadecorations-qt5' # Новая адаптация QT 5/6 под GNOME
 # 'gnome-shell-extension-dash-to-dock' # Dock панель
 # 'gnome-shell-extension-freon-git' # Отображение CPU/GPU/HDD/SSD температуры
 # 'gnome-shell-extension-kimpanel-git' # Реализация KDE kimpanel для GNOME Shell, теперь поддерживает fcitx

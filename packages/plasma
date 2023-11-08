@@ -62,13 +62,14 @@
 
 # --- KDE/QT программы
 
+ 'keepassxc' # Локальный менеджер паролей
  'audacious' # Аудиоплеер с поддержкой скинов Winamp
  'qbittorrent' # Торрент клиент
- 'okteta' # QT Hex редактор
  'qpwgraph' # GUI управления узлами PipeWire (QT)
 # 'doublecmd-qt5' # Альтернатива Total Commander
-# 'kdiskmark' # Бенчмарк для накопителей
 # 'krita' # Рисование
+# 'kdiskmark' # Бенчмарк для накопителей
+# 'okteta' # QT Hex редактор
 
 # --- Дополнительные пакеты Plasma
 

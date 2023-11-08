@@ -134,6 +134,10 @@ yay -S "${PKGS[@]}" --noconfirm --needed
 
 # Включение мониторинга списков снимков grub
 sudo systemctl enable grub-btrfsd
+
+# Востановление прав доступа по требованию пакетов
+sudo chmod -v 775 /var/lib/AccountsService/
+sudo chmod -v 1770 /var/lib/gdm/
 fi
 
 
@@ -143,11 +147,11 @@ APPLICATIONS=('assistant' 'avahi-discover' 'designer' 'electron' 'electron22' 'e
 for APPLICATION in "${APPLICATIONS[@]}"
 do
     # Создаём локальную копию ярлыков в пользовательскую директорию для применение свойств
-    cp -v /usr/share/applications/${APPLICATION}.desktop /home/${USERNAME}/.local/share/applications/${APPLICATION}.desktop 2>/dev/null || :
+    cp -v /usr/share/applications/${APPLICATION}.desktop ${HOME}/.local/share/applications/${APPLICATION}.desktop 2>/dev/null || :
 
-    if test -f "/home/${USERNAME}/.local/share/applications/${APPLICATION}.desktop"; then
-        echo "NoDisplay=true" >> /home/${USERNAME}/.local/share/applications/${APPLICATION}.desktop
-        echo "NotShowIn=GNOME;Xfce;KDE;" >> /home/${USERNAME}/.local/share/applications/${APPLICATION}.desktop
+    if test -f "${HOME}/.local/share/applications/${APPLICATION}.desktop"; then
+        echo "NoDisplay=true" >> ${HOME}/.local/share/applications/${APPLICATION}.desktop
+        echo "NotShowIn=GNOME;Xfce;KDE;" >> ${HOME}/.local/share/applications/${APPLICATION}.desktop
     fi
 done
 
