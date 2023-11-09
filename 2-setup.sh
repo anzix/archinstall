@@ -147,6 +147,7 @@ APPLICATIONS=('assistant' 'avahi-discover' 'designer' 'electron' 'electron22' 'e
 for APPLICATION in "${APPLICATIONS[@]}"
 do
     # Создаём локальную копию ярлыков в пользовательскую директорию для применение свойств
+	mkdir -v ${HOME}/.local/share/applications
     cp -v /usr/share/applications/${APPLICATION}.desktop ${HOME}/.local/share/applications/${APPLICATION}.desktop 2>/dev/null || :
 
     if test -f "${HOME}/.local/share/applications/${APPLICATION}.desktop"; then
@@ -158,12 +159,11 @@ done
 # Отключить мониторный режим микрофона Samson C01U Pro при старте системы
 amixer sset -c 3 Mic mute
 
-# Врубаю сервисы
+# Включение сервисов
 systemctl --user enable \
  mpd \
  mpd-mpris \
  opentabletdriver.service
-# cdemu-daemon.service
 
 # Чистка
 sudo pacman -R --noconfirm $(/bin/pacman -Qtdq)

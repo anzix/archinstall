@@ -28,8 +28,6 @@ EndSection
 EOF'
 fi
 
-sudo mkinitcpio -P
-
 # Настройка раскладки
 if grep -q ruwin_alt_sh-UTF-8 "/etc/vconsole.conf"; then
     # Переключение раскладки по Alt+Shift
@@ -50,3 +48,11 @@ Section "InputClass"
      Option "AccelSpeed" "0"
 EndSection
 EOF'
+
+# Включение сервисов
+systemctl --user enable \
+	redshift.service `# Беречь глаза` \
+	greenclip.service `# dmenu менеджер буфера обмена` \
+	dunst.service `# Демон уведомлений` \
+	cdemu-daemon.service `# Эмуляция iso образов`
+

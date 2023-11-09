@@ -15,7 +15,6 @@ sudo tee -a /etc/environment << EOF
 
 # Qt
 QT_QPA_PLATFORMTHEME="xdgdesktopportal"
-QT_STYLE_OVERRIDE=kvantum
 EOF
 
 # Отключает baloo (файловый индекстор)
@@ -62,6 +61,9 @@ kwriteconfig5 --file kcminputrc --group Keyboard --key RepeatRate "35"
 # Моноширинный шрифт для поддержки powerlevel10k в терминале
 kwriteconfig5 --file kdeglobals --group General --key fixed 'Насk Nerd Font,14,-1,5,50,0,0,0,0,0'
 
+# Подсвечивать non-default пункты в настройках KDE
+kwriteconfig5 --file systemsettingsrc --group systemsettings_sidebar_mode --key "HighlightNonDefaultSettings" "true"
+
 # Отключает одиночный клик для открытия файлов/папок
 kwriteconfig5 --file kdeglobals --group KDE --key SingleClick --type bool false
 
@@ -88,6 +90,12 @@ fi
 # Увеличение скорости анимации
 kwriteconfig5 --file kdeglobals --group KDE --key AnimationDurationFactor "0.5"
 
+# Предпочитать низкую задержку
+kwriteconfig5 --file kwinrc --group Compositing --key "LatencyPolicy" "Low"
+
+# Выставляю мою тему для konsole
+kwriteconfig5 --file konsolerc --group Desktop\ Entry --key DefaultProfile "Profile 1.profile"
+
 # Ночной режим
 kwriteconfig5 --file kwinrc --group NightColor --key "Active" "true"
 kwriteconfig5 --file kwinrc --group NightColor --key LatitudeAuto 54.799
@@ -99,23 +107,22 @@ kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "DPMSControl
 # Отключить энергосбережение монитора DPMS
 # kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "DPMSControl" --key "idleTime" --delete
 
-# Change window decorations
-kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnLeft ""
-# kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnRight "IAX"
+# Смена оформлений окон
+kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnRight "IAX"
 kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ShowToolTips --type bool false
 
-# Change Task Switcher behaviour on ALT+TAB
+# Изменение поведения переключателя задач ALT+TAB
 kwriteconfig5 --file kwinrc --group TabBox --key LayoutName "thumbnail_grid"
 
 # Отключает splash screen при включении сессии
 kwriteconfig5 --file ksplashrc --group KSplash --key Engine "none"
 kwriteconfig5 --file ksplashrc --group KSplash --key Theme "none"
 
-# Disable app launch feedback
+# Отключить обратную связь курсора при запуске приложения
 kwriteconfig5 --file klaunchrc --group BusyCursorSettings --key "Bouncing" --type bool false
 kwriteconfig5 --file klaunchrc --group FeedbackStyle --key "BusyCursor" --type bool false
 
-# Disable screen edges
+# Отключить появление "Обзор" при крае экрана курсора
 kwriteconfig5 --file kwinrc --group Effect-windowview --key BorderActivateAll "9"
 
 # Комбинация открытия Konsole
@@ -139,7 +146,7 @@ kwriteconfig5 --file kwinrc --group Desktops --key Name_2 "Рабочий сто
 kwriteconfig5 --file kwinrc --group Desktops --key Number "2"
 kwriteconfig5 --file kwinrc --group Desktops --key Rows "1"
 
-# Desktop shortcuts
+# Горячие клавиши рабочего стола
 kwriteconfig5 --file kglobalshortcutsrc --group plasmashell --key "activate task manager entry 1" "none,none,Activate Task Manager Entry 1"
 kwriteconfig5 --file kglobalshortcutsrc --group plasmashell --key "activate task manager entry 2" "none,none,Activate Task Manager Entry 2"
 kwriteconfig5 --file kglobalshortcutsrc --group plasmashell --key "activate task manager entry 3" "none,none,Activate Task Manager Entry 3"

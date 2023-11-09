@@ -35,7 +35,7 @@
  'ffmpegthumbs' # Предпросмотрщик видео для проводника dolphin
 # 'icoutils' # Отобраения иконок для wine (exe файлов) в dolphin
  'kio-admin' # Поддержка управления файлами от имени администратора для dolphin
- 'kimageformats' # Добавляет поддержку форматов jxl, xcf, psd для gwenview
+ 'kimageformats5' # Добавляет поддержку форматов jxl, xcf, psd для gwenview
  'kdenetwork-filesharing' # Делится каталогом по локальной сети используя Samba
 # 'kdeconnect' # Управление Linux с Android
  'phonon-qt5-gstreamer' # Бэкенд для Qt5
