@@ -146,12 +146,12 @@ if [ "${FS}" = 'btrfs' ]; then
   sed -i "s|^TIMELINE_LIMIT_MONTHLY=.*|TIMELINE_LIMIT_MONTHLY=\"0\"|g" /etc/snapper/configs/root
   sed -i "s|^TIMELINE_LIMIT_YEARLY=.*|TIMELINE_LIMIT_YEARLY=\"0\"|g" /etc/snapper/configs/root
 
-  # Включение Snapper сервисов
+  # Включение таймеров создания снимков по времени и их очистку
   systemctl enable \
 	  snapper-timeline.timer \
       snapper-cleanup.timer
 
-  # Btrfs твики
+  # Включение таймеров проверки целостности файловой системы для home и /
   systemctl enable \
 	  btrfs-scrub@home.timer \
       btrfs-scrub@-.timer
@@ -205,6 +205,7 @@ Target = *
 
 [Action]
 Description = Чистка кэш пакетов (с сохранением двух последних)...
+Depends=pacman-contrib
 When = PostTransaction
 Exec = /usr/bin/paccache -rk2
 EOF

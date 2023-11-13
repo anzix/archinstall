@@ -7,15 +7,9 @@ echo "==> Установка пакетов для окружения KDE Plasma
 yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/plasma | column -t)
 
 # Вытягиваю конфиги для KDE Plasma
-cd ~/.dotfiles/plasma
+pushd ~/.dotfiles/plasma
 stow -vt ~ */
-
-# Переменные для последовательного стиля приложений
-sudo tee -a /etc/environment << EOF
-
-# Qt
-QT_QPA_PLATFORMTHEME="xdgdesktopportal"
-EOF
+popd
 
 # Отключает baloo (файловый индекстор)
 # Это исправляет медленную работу dolphin при монтировании sshfs
@@ -30,7 +24,7 @@ if pacman -Qs firefox > /dev/null; then
 FIREFOX_PROFILE_PATH=$(realpath ${HOME}/.mozilla/firefox/*.default-release)
 
 # KDE specific configurations
-tee -a ${FIREFOX_PROFILE_PATH}/user.js << 'EOF'
+tee -a ${FIREFOX_PROFILE_PATH}/user.js > /dev/null << 'EOF'
 // Использовать KDE Plasma file picker
 user_pref("widget.use-xdg-desktop-portal.mime-handler", 1);
 user_pref("widget.use-xdg-desktop-portal.file-picker", 1);

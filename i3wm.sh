@@ -4,16 +4,9 @@ echo "==> Установка пакетов для оконного менедж
 yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/i3wm | column -t)
 
 # Вытягиваю мои конфиги для i3-wm
-cd ~/.dotfiles/i3wm
+pushd ~/.dotfiles/i3wm
 stow -vt ~ */
-
-# Переменные для последовательного стиля приложений
-sudo tee -a /etc/environment << EOF
-
-# Qt
-QT_QPA_PLATFORMTHEME=qt5ct
-QT_STYLE_OVERRIDE=kvantum
-EOF
+popd
 
 if [ "$(systemd-detect-virt)" = "none" ]; then
 echo "==> Настройка Xorg для AMDGPU"

@@ -6,16 +6,10 @@
 echo "==> Установка пакетов для окружения Gnome"
 yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/gnome | column -t)
 
-# Переменные для последовательного стиля приложений
-sudo tee -a /etc/environment << EOF
-
-# Qt
-QT_WAYLAND_DECORATION=adwaita
-QT_QPA_PLATFORMTHEME=gnome
-QT_STYLE_OVERRIDE=kvantum
-XCURSOR_THEME=Adwaita
-XCURSOR_SIZE=24
-EOF
+# Вытягиваю конфиги для GNOME
+pushd ~/.dotfiles/gnome
+stow -vt ~ */
+popd
 
 # Установка KvLibadwaitaDark в качестве темы для QT 5/6 приложений
 mkdir -v ~/.config/Kvantum

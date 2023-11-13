@@ -144,10 +144,10 @@ fi
 # Скрыть приложения из меню запуска
 APPLICATIONS=('assistant' 'avahi-discover' 'designer' 'electron' 'electron22' 'electron23' 'electron24' 'electron25' 'htop' 'linguist' 'lstopo' 'vim' 'nvim' 'org.kde.kuserfeedback-console' 'qdbusviewer' 'qt5ct' 'qv4l2' 'qvidcap' 'bssh' 'bvnc' 'mpv' 'uxterm' 'xterm' 'btop' 'scrcpy' 'scrcpy-console' 'rofi' 'rofi-theme-selector' 'picom')
 # 'jconsole-java-openjdk' 'jshell-java-openjdk'
+mkdir -v ${HOME}/.local/share/applications
 for APPLICATION in "${APPLICATIONS[@]}"
 do
     # Создаём локальную копию ярлыков в пользовательскую директорию для применение свойств
-	mkdir -v ${HOME}/.local/share/applications
     cp -v /usr/share/applications/${APPLICATION}.desktop ${HOME}/.local/share/applications/${APPLICATION}.desktop 2>/dev/null || :
 
     if test -f "${HOME}/.local/share/applications/${APPLICATION}.desktop"; then
