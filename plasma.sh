@@ -88,7 +88,7 @@ kwriteconfig5 --file kdeglobals --group KDE --key AnimationDurationFactor "0.5"
 kwriteconfig5 --file kwinrc --group Compositing --key "LatencyPolicy" "Low"
 
 # Выставляю мою тему для konsole
-kwriteconfig5 --file konsolerc --group Desktop\ Entry --key DefaultProfile "Profile 1.profile"
+kwriteconfig5 --file konsolerc --group Desktop\ Entry --key DefaultProfile "Profile.profile"
 
 # Ночной режим
 kwriteconfig5 --file kwinrc --group NightColor --key "Active" "true"

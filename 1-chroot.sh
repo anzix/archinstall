@@ -87,7 +87,7 @@ fi
 LC_ALL=C sudo -u "${USER_NAME}" xdg-user-dirs-update --force
 
 # Создание других каталогов
-mkdir -pv $(xdg-user-dir PICTURES)/{Screenshots/mpv,Gif}
+mkdir -pv $(xdg-user-dir PICTURES)/{Screenshots/Gif}
 
 # Настройка pacman
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Делаем pacman красивее

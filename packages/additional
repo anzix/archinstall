@@ -49,6 +49,7 @@
  'libfaketime' # Подделывать время для программ или пиратских игр (man faketime)
  'flashrom' # Для прошивания чипов программатором ch341a
  'dfu-util' # Для обновления прошивки паяльника Pinecil первой версии
+ 'tmux' # Мультиплексор для одноконных терминалов (напр. alacritty)
  'scrcpy' # Демонстрация экрана Android для Linux используя USB ADB
  'i2pd' # Невидимый интернет протокол
  'cdemu-client' 'vhba-module-dkms' # Эмуляция iso/mds/nrg образов
@@ -72,3 +73,5 @@
  'yarn' # Для neovim плагина https://github.com/iamcco/markdown-preview.nvim
  'tidy' # Инструмент для приведения HTML-кода к чистому стилю
  'onefetch' # CLI утилита для вывода информации git реозитория
+# 'docker' 'docker-compose' # Контейнеры
+# 'podman' 'podman-compose' # Контейнеры, альтернатива docker'у
