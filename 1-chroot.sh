@@ -337,6 +337,9 @@ EOF
 fi
 
 # Добавления моих опций ядра grub
+# intel_iommu=on - Включает драйвер intel iommu
+# iommu=pt - Проброс только тех устройств которые поддерживаются
+# zswap.enabled=0 - Отключает приоритетный zswap который заменяется на zram
 sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 mitigations=off intel_iommu=on iommu=pt amdgpu.ppfeaturemask=0xffffffff cpufreq.default_governor=performance zswap.enabled=0"/g' /etc/default/grub
 
 # Правка разрешений папке скриптов

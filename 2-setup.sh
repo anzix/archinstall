@@ -93,8 +93,13 @@ cp -v ~/.dotfiles/user.js "${FIREFOX_PROFILE_PATH}"
 fi
 
 # Установка и настройка окружения
-PS3="Выберите окружение: "
-select ENTRY in "plasma" "gnome" "i3wm" "sway"; do
+PS3="Выберите окружение/WM: "
+select ENTRY in "plasma" "gnome" "i3wm" "sway" "Пропуск"; do
+    if [ "$ENTRY" = "Пропуск" ]; then
+        echo "Установка пропущена."
+        break
+    fi
+
     export DESKTOP_ENVIRONMENT=$ENTRY && echo "Выбран ${DESKTOP_ENVIRONMENT}."
 
     if [ ${DESKTOP_ENVIRONMENT} = "plasma" ]; then
@@ -134,15 +139,11 @@ yay -S "${PKGS[@]}" --noconfirm --needed
 
 # Включение мониторинга списков снимков grub
 sudo systemctl enable grub-btrfsd
-
-# Востановление прав доступа по требованию пакетов
-sudo chmod -v 775 /var/lib/AccountsService/
-sudo chmod -v 1770 /var/lib/gdm/
 fi
 
 
 # Скрыть приложения из меню запуска
-APPLICATIONS=('assistant' 'avahi-discover' 'designer' 'electron' 'electron22' 'electron23' 'electron24' 'electron25' 'htop' 'linguist' 'lstopo' 'vim' 'nvim' 'org.kde.kuserfeedback-console' 'qdbusviewer' 'qt5ct' 'qv4l2' 'qvidcap' 'bssh' 'bvnc' 'mpv' 'uxterm' 'xterm' 'btop' 'scrcpy' 'scrcpy-console' 'rofi' 'rofi-theme-selector' 'picom')
+APPLICATIONS=('assistant' 'avahi-discover' 'designer' 'electron' 'electron22' 'electron23' 'electron24' 'electron25' 'htop' 'linguist' 'lstopo' 'vim' 'nvim' 'org.kde.kuserfeedback-console' 'qdbusviewer' 'qt5ct' 'qt6ct' 'qv4l2' 'qvidcap' 'bssh' 'bvnc' 'mpv' 'uxterm' 'xterm' 'btop' 'scrcpy' 'scrcpy-console' 'rofi' 'rofi-theme-selector' 'picom')
 # 'jconsole-java-openjdk' 'jshell-java-openjdk'
 mkdir -v ${HOME}/.local/share/applications
 for APPLICATION in "${APPLICATIONS[@]}"

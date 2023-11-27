@@ -68,6 +68,7 @@ sgdisk -n 0:0:0 -t 0:8300 -c 0:root $DISK
 partprobe $DISK
 
 # Файловая система
+# TODO: необходимо /var/lib/AccountsService и /var/lib/gdm изменить права доступа на 0775
 if [ ${FS} = 'ext4' ]; then
 	yes | mkfs.ext4 -L ArchLinux $DISK_MNT
 	# yes | mkfs.ext4 -L home $DISK_HOME
@@ -110,6 +111,10 @@ elif [ ${FS} = 'btrfs' ]; then
 		mkdir -pv /mnt/var/lib/gdm
 		mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_gdm $DISK_MNT /mnt/var/lib/gdm
 	fi
+
+	# Востановление прав доступа по требованию пакетов
+	chmod -v 775 /mnt/var/lib/AccountsService/
+	chmod -v 1770 /mnt/var/lib/gdm/
 
 	# При обнаружении добавляется в список для pacstrap
 	echo "snapper btrfs-progs" >> packages/base

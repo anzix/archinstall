@@ -34,7 +34,8 @@
  'wl-clipboard' # Wayland clipboard
  'xdg-desktop-portal-gnome'
  'xdg-user-dirs-gtk'
-# 'kvantum' # Движок тем на основе SVG для Qt5/6
+ 'kvantum' # Движок тем на основе SVG для Qt5/6
+ 'qt5ct' 'qt6ct' # Конфигурация тулкита Qt5/6
 # 'dconf-editor' # Все настройки gnome в одном месте
 
 # --- Дополнения для GNOME/GTK

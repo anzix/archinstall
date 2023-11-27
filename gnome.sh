@@ -118,7 +118,7 @@ delay=uint32 210
 repeat-interval=uint32 35
 
 [org/gnome/Console]
-custom-font='JetBrainsMonoNL Nerd Font 11'
+custom-font='JetBrainsMonoNL NF 11'
 font-scale=1.3000000000000003
 use-system-font=false
 
