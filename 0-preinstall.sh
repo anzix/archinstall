@@ -68,7 +68,6 @@ sgdisk -n 0:0:0 -t 0:8300 -c 0:root $DISK
 partprobe $DISK
 
 # Файловая система
-# TODO: необходимо /var/lib/AccountsService и /var/lib/gdm изменить права доступа на 0775
 if [ ${FS} = 'ext4' ]; then
 	yes | mkfs.ext4 -L ArchLinux $DISK_MNT
 	# yes | mkfs.ext4 -L home $DISK_HOME
@@ -89,17 +88,14 @@ elif [ ${FS} = 'btrfs' ]; then
 	btrfs su cr /mnt/@var_log
 	btrfs su cr /mnt/@var_lib_libvirt_images
 	btrfs su cr /mnt/@var_lib_AccountsService
-
-	if [[ ${DESKTOP_ENVIRONMENT} = 'gnome' ]]; then
-		btrfs su cr /mnt/@var_lib_gdm
-	fi
+	# btrfs su cr /mnt/@var_lib_gdm
 
 	umount -v /mnt
 
 	# BTRFS сам обнаруживает и добавляет опцию "ssd" при монтировании
 	# BTRFS с версией ядра 6.2 по умолчанию включена опция "discard=async"
 	mount -v -o noatime,compress=zstd:2,space_cache=v2 $DISK_MNT /mnt
-	mkdir -pv /mnt/{home,btrfsroot,.snapshots,var/log,var/lib/AccountsService,var/lib/libvirt/images}
+	mkdir -pv /mnt/{home,btrfsroot,.snapshots,var/log,var/lib/AccountsService,var/lib/gdm,var/lib/libvirt/images}
 	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
 	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots
 	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log $DISK_MNT /mnt/var/log
@@ -107,14 +103,15 @@ elif [ ${FS} = 'btrfs' ]; then
 	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvolid=5 $DISK_MNT /mnt/btrfsroot
 	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_AccountsService $DISK_MNT /mnt/var/lib/AccountsService
 
-	if [[ ${DESKTOP_ENVIRONMENT} = 'gnome' ]]; then
-		mkdir -pv /mnt/var/lib/gdm
-		mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_gdm $DISK_MNT /mnt/var/lib/gdm
-	fi
+	# mkdir -pv /mnt/var/lib/gdm
+	# mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_gdm $DISK_MNT /mnt/var/lib/gdm
 
 	# Востановление прав доступа по требованию пакетов
 	chmod -v 775 /mnt/var/lib/AccountsService/
 	chmod -v 1770 /mnt/var/lib/gdm/
+
+	# Запрещаю snap-pac выполнять pre и post снапшоты на текущий момент
+	export SNAP_PAC_SKIP=y
 
 	# При обнаружении добавляется в список для pacstrap
 	echo "snapper btrfs-progs" >> packages/base
