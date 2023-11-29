@@ -97,17 +97,15 @@ elif [ ${FS} = 'btrfs' ]; then
 	# BTRFS с версией ядра 6.2 по умолчанию включена опция "discard=async"
 	# FIXME: Нужна ли опция subvol=@ в /mnt?
 	mount -v -o noatime,compress=zstd:2,space_cache=v2 $DISK_MNT /mnt
-	mkdir -pv /mnt/{home/.snapshots,btrfsroot,.snapshots,var/log,var/lib/AccountsService,var/lib/gdm,var/lib/libvirt/images}
-	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
-	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots
-	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home.snapshots $DISK_MNT /mnt/home/.snapshots
-	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log $DISK_MNT /mnt/var/log
-	mount -v -o noatime,nodatacow,compress=zstd:2,space_cache=v2,subvol=@var_lib_libvirt_images $DISK_MNT /mnt/var/lib/libvirt/images
-	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvolid=5 $DISK_MNT /mnt/btrfsroot
-	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_AccountsService $DISK_MNT /mnt/var/lib/AccountsService
+	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
+	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots
+	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home.snapshots $DISK_MNT /mnt/home/.snapshots
+	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log $DISK_MNT /mnt/var/log
+	mount --mkdir -v -o noatime,nodatacow,compress=zstd:2,space_cache=v2,subvol=@var_lib_libvirt_images $DISK_MNT /mnt/var/lib/libvirt/images
+	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvolid=5 $DISK_MNT /mnt/btrfsroot
+	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_AccountsService $DISK_MNT /mnt/var/lib/AccountsService
 
-	# mkdir -pv /mnt/var/lib/gdm
-	# mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_gdm $DISK_MNT /mnt/var/lib/gdm
+	# mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_gdm $DISK_MNT /mnt/var/lib/gdm
 
 	# Востановление прав доступа по требованию пакетов
 	chmod -v 775 /mnt/var/lib/AccountsService/
