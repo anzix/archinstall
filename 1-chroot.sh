@@ -116,27 +116,26 @@ pacman -Syy
 # Настройка snapper и btrfs в случае обнаружения
 if [ "${FS}" = 'btrfs' ]; then
 
-  # Unmount .snapshots
-  umount -v /.snapshots
-  rm -rfv /.snapshots
+  # Размонтируем и удаляем /.snapshots и /home/.snapshots
+  umount -v /.snapshots /home/.snapshots
+  rm -rfv /.snapshots /home/.snapshots
 
   # Создаю конфигурацию Snapper для / и /home
   snapper --no-dbus -c root create-config /
   snapper --no-dbus -c home create-config /home
 
   # Удаляем подтом .snapshots Snapper'а
-  btrfs subvolume delete /.snapshots
+  btrfs subvolume delete /.snapshots /home/.snapshots
 
   # Пересоздаём и переподключаем /.snapshots
-  mkdir -v /.snapshots
+  mkdir -v /.snapshots /home/.snapshots
   mount -v -a
 
   # Меняем права доступа для легкой замены снимка @ в любое время без потери снимков snapper.
-  chmod -v 750 /.snapshots
+  chmod -v 750 /.snapshots /home/.snapshots
 
   # Доступ к снимкам для non-root пользователям
-  chown -vR :wheel /.snapshots
-  chown -v :wheel /home/.snapshots
+  chown -vR :wheel /.snapshots /home/.snapshots
 
   # Настройка Snapper
   # Позволять группе wheel использовать команду snapper non-root пользователю
@@ -162,7 +161,7 @@ if [ "${FS}" = 'btrfs' ]; then
       btrfs-scrub@-.timer
 
   # Предотвращение индексирования снимков программой "updatedb", что замедляло бы работу системы
-  sed -i '/^PRUNENAMES/s/"\(.*\)"/"\1 .snapshots"/' /etc/updatedb.conf
+  sed -i '/PRUNEPATHS/s/"$/ \/\.snapshots \/home\/\.snapshots"/' /etc/updatedb.conf
 
   # Правка mkinitcpio.conf
   sed -i 's/^MODULES.*/MODULES=(btrfs amdgpu)/' /etc/mkinitcpio.conf
@@ -367,3 +366,9 @@ systemctl enable systemd-oomd.service
 systemctl enable dbus-broker.service
 systemctl enable fancontrol.service
 systemctl mask systemd-networkd.service
+
+# Создаю снимок / и /home
+if [ "${FS}" = 'btrfs' ]; then
+snapper -c root create -d "***System Installed***"
+snapper -c home create -d "***System Installed***"
+fi
