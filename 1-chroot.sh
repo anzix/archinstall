@@ -123,6 +123,8 @@ if [ "${FS}" = 'btrfs' ]; then
   # Создаю конфигурацию Snapper для /
   snapper --no-dbus -c root create-config /
 
+  sudo snapper -c home create-config /home
+
   # Удаляем подтом .snapshots Snapper'а
   btrfs subvolume delete /.snapshots
 
@@ -135,6 +137,7 @@ if [ "${FS}" = 'btrfs' ]; then
 
   # Доступ к снимкам для non-root пользователям
   chown -R :wheel /.snapshots
+  chown -v :wheel /home/.snapshots
 
   # Настройка Snapper
   # Позволять группе wheel использовать команду snapper non-root пользователю
@@ -146,6 +149,8 @@ if [ "${FS}" = 'btrfs' ]; then
   sed -i "s|^TIMELINE_LIMIT_WEEKLY=.*|TIMELINE_LIMIT_WEEKLY=\"0\"|g" /etc/snapper/configs/root
   sed -i "s|^TIMELINE_LIMIT_MONTHLY=.*|TIMELINE_LIMIT_MONTHLY=\"0\"|g" /etc/snapper/configs/root
   sed -i "s|^TIMELINE_LIMIT_YEARLY=.*|TIMELINE_LIMIT_YEARLY=\"0\"|g" /etc/snapper/configs/root
+
+  sed -i "s|^TIMELINE_CREATE=.*|TIMELINE_CREATE=\"no\"|g" /etc/snapper/configs/home
 
   # Включение таймеров создания снимков по времени и их очистку
   systemctl enable \

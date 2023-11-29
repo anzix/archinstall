@@ -85,6 +85,7 @@ elif [ ${FS} = 'btrfs' ]; then
 	btrfs su cr /mnt/@
 	btrfs su cr /mnt/@home
 	btrfs su cr /mnt/@snapshots
+	btrfs su cr /mnt/@home.snapshots
 	btrfs su cr /mnt/@var_log
 	btrfs su cr /mnt/@var_lib_libvirt_images
 	btrfs su cr /mnt/@var_lib_AccountsService
@@ -96,9 +97,10 @@ elif [ ${FS} = 'btrfs' ]; then
 	# BTRFS с версией ядра 6.2 по умолчанию включена опция "discard=async"
 	# FIXME: Нужна ли опция subvol=@ в /mnt?
 	mount -v -o noatime,compress=zstd:2,space_cache=v2 $DISK_MNT /mnt
-	mkdir -pv /mnt/{home,btrfsroot,.snapshots,var/log,var/lib/AccountsService,var/lib/gdm,var/lib/libvirt/images}
+	mkdir -pv /mnt/{home/.snapshots,btrfsroot,.snapshots,var/log,var/lib/AccountsService,var/lib/gdm,var/lib/libvirt/images}
 	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
 	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots
+	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home.snapshots $DISK_MNT /mnt/home/.snapshots
 	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log $DISK_MNT /mnt/var/log
 	mount -v -o noatime,nodatacow,compress=zstd:2,space_cache=v2,subvol=@var_lib_libvirt_images $DISK_MNT /mnt/var/lib/libvirt/images
 	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvolid=5 $DISK_MNT /mnt/btrfsroot
