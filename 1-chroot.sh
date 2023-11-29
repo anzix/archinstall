@@ -87,6 +87,7 @@ fi
 LC_ALL=C sudo -u "${USER_NAME}" xdg-user-dirs-update --force
 
 # Создание других каталогов
+# FIXME: не создаются каталоги
 mkdir -pv $HOME/Pictures/Screenshots/Gif
 
 # Настройка pacman
@@ -343,8 +344,8 @@ fi
 sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 mitigations=off intel_iommu=on iommu=pt amdgpu.ppfeaturemask=0xffffffff cpufreq.default_governor=performance zswap.enabled=0"/g' /etc/default/grub
 
 # Рекурсивная правка разрешений в папке скриптов
-chmod -vR 700 /scriptinstall
-chown -vR 1000:users /scriptinstall
+chmod -R 700 /scriptinstall
+chown -R 1000:users /scriptinstall
 
 # Установка и настройка Grub
 #sed -i -e 's/#GRUB_DISABLE_OS_PROBER/GRUB_DISABLE_OS_PROBER/' /etc/default/grub # Обнаруживать другие ОС и добавлять их в grub (нужен пакет os-prober)

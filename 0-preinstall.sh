@@ -94,6 +94,7 @@ elif [ ${FS} = 'btrfs' ]; then
 
 	# BTRFS сам обнаруживает и добавляет опцию "ssd" при монтировании
 	# BTRFS с версией ядра 6.2 по умолчанию включена опция "discard=async"
+	# FIXME: Нужна ли опция subvol=@ в /mnt?
 	mount -v -o noatime,compress=zstd:2,space_cache=v2 $DISK_MNT /mnt
 	mkdir -pv /mnt/{home,btrfsroot,.snapshots,var/log,var/lib/AccountsService,var/lib/gdm,var/lib/libvirt/images}
 	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
