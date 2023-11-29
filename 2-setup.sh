@@ -8,6 +8,16 @@
 # раскомментируйте, чтобы просмотреть информацию об отладке
 #set -xe
 
+# Установка Yay (AUR помощник)
+git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin
+pushd /tmp/yay-bin && makepkg -si --noconfirm
+popd
+
+# Настройка yay
+# --nodiffmenu - Не спрашивать об показе изменений (diff)
+# --batchinstall - Ставит каждый собранный пакеты в очередь для установки (легче мониторить что происходит)
+yay --save --nodiffmenu --batchinstall
+
 # Включение снимков и настройка отката системы
 if hash snapper 2>/dev/null; then
 PKGS+=(
@@ -27,6 +37,9 @@ sudo systemctl enable grub-btrfsd
 # Создаю снимок / и /home
 snapper --no-dbus -c root create -d "***System Installed***"
 snapper --no-dbus -c home create -d "***System Installed***"
+
+# Запрещаю snap-pac выполнять pre и post снапшоты на текущий момент
+export SNAP_PAC_SKIP=y
 fi
 
 echo "==> Вытягиваю из моего dotfiles основные конфиги"
@@ -40,16 +53,6 @@ popd
 
 # Выполняю ~/.zprofile для использования переменных (спецификаций каталогов XDG BASE)
 source ~/.zprofile
-
-# Установка Yay (AUR помощник)
-git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin
-pushd /tmp/yay-bin && makepkg -si --noconfirm
-popd
-
-# Настройка yay
-# --nodiffmenu - Не спрашивать об показе изменений (diff)
-# --batchinstall - Ставит каждый собранный пакеты в очередь для установки (легче мониторить что происходит)
-yay --save --nodiffmenu --batchinstall
 
 echo "==> Установка дополнительных пакетов, моих программ и шрифтов [Pacman+AUR]"
 yay -S --noconfirm --nobatchinstall --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/{additional,fonts,programs,aur} | column -t)
