@@ -33,22 +33,11 @@ yay -S "${PKGS[@]}" --noconfirm --needed
 
 # Включение мониторинга списков снимков grub
 sudo systemctl enable grub-btrfsd
-
-# Создаю снимок / и /home
-snapper --no-dbus -c root create -d "***System Installed***"
-snapper --no-dbus -c home create -d "***System Installed***"
-
-# Запрещаю snap-pac выполнять pre и post снапшоты на текущий момент
-export SNAP_PAC_SKIP=y
 fi
 
 echo "==> Вытягиваю из моего dotfiles основные конфиги"
 git clone --recurse-submodules https://github.com/anzix/dotfiles ~/.dotfiles
 pushd ~/.dotfiles/base && stow -vt ~ */
-
-# Переменные при активной сессии Xorg или Wayland
-# Некоторые DM экспортируют только ~/.profile независимо от используемого $SHELL'а, измените если необходимо
-ln -siv $HOME/.dotfiles/base/zsh/.config/zsh/profile.zsh ~/.zprofile
 popd
 
 # Выполняю ~/.zprofile для использования переменных (спецификаций каталогов XDG BASE)
@@ -56,6 +45,10 @@ source ~/.zprofile
 
 echo "==> Установка дополнительных пакетов, моих программ и шрифтов [Pacman+AUR]"
 yay -S --noconfirm --nobatchinstall --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/{additional,fonts,programs,aur} | column -t)
+
+# Создаю снимок / и /home
+snapper -c root create -d "***System Installed***"
+snapper -c home create -d "***System Installed***"
 
 # Установка и настройка окружения
 PS3="Выберите окружение/WM: "

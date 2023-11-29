@@ -11,6 +11,10 @@ pushd ~/.dotfiles/plasma
 stow -vt ~ */
 popd
 
+# Пользовательские переменные
+# SDDM подхватывает настройки от выбранного $SHELL
+ln -siv $HOME/.dotfiles/base/zsh/.config/zsh/profile.zsh ~/.zprofile
+
 # Отключает baloo (файловый индекстор)
 # Это исправляет медленную работу dolphin при монтировании sshfs
 sudo balooctl suspend # Усыпляем работу индексатора

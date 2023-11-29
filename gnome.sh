@@ -11,6 +11,10 @@ pushd ~/.dotfiles/gnome
 stow -vt ~ */
 popd
 
+# Пользовательские переменные
+# ??GDM подхватывает настройки от выбранного $SHELL??
+ln -siv $HOME/.dotfiles/base/zsh/.config/zsh/profile.zsh ~/.zprofile
+
 # Установка KvLibadwaitaDark в качестве темы для QT 5/6 приложений
 mkdir -v ~/.config/Kvantum
 echo 'theme=KvLibadwaitaDark' > ~/.config/Kvantum/kvantum.kvconfig
