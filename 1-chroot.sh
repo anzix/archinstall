@@ -88,7 +88,7 @@ LC_ALL=C sudo -u "${USER_NAME}" xdg-user-dirs-update --force
 
 # Создание других каталогов
 # FIXME: не создаются каталоги
-mkdir -pv $HOME/Pictures/Screenshots/Gif
+mkdir -pv /home/${USER_NAME}/Pictures/Screenshots/Gif
 
 # Настройка pacman
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Делаем pacman красивее
@@ -120,10 +120,9 @@ if [ "${FS}" = 'btrfs' ]; then
   umount -v /.snapshots
   rm -rfv /.snapshots
 
-  # Создаю конфигурацию Snapper для /
+  # Создаю конфигурацию Snapper для / и /home
   snapper --no-dbus -c root create-config /
-
-  sudo snapper -c home create-config /home
+  snapper --no-dbus -c home create-config /home
 
   # Удаляем подтом .snapshots Snapper'а
   btrfs subvolume delete /.snapshots
@@ -136,7 +135,7 @@ if [ "${FS}" = 'btrfs' ]; then
   chmod -v 750 /.snapshots
 
   # Доступ к снимкам для non-root пользователям
-  chown -R :wheel /.snapshots
+  chown -vR :wheel /.snapshots
   chown -v :wheel /home/.snapshots
 
   # Настройка Snapper
