@@ -1,3 +1,5 @@
+#:se ft=sh
+
 # --- Основные пакеты для окружения GNOME
 
  'loupe' # Просмоторщик изображений
@@ -61,4 +63,3 @@
 # 'gnome-shell-extension-dash-to-dock' # Dock панель
 # 'gnome-shell-extension-freon-git' # Отображение CPU/GPU/HDD/SSD температуры
 # 'gnome-shell-extension-kimpanel-git' # Реализация KDE kimpanel для GNOME Shell, теперь поддерживает fcitx
-

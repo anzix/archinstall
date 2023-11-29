@@ -1,6 +1,6 @@
 # Мой скрипт установки Arch Linux + мой dotfiles (Для личного использования)
 
-### [Для ноутбуков] Установка Wi-Fi-соединения и проверка соединения.
+### [Для ноутбуков] Установка Wi-Fi-соединения и проверка.
 
 ```sh
 ip a
@@ -9,6 +9,8 @@ iwctl station wlan device get-networks
 iwctl station wlan device connect SSID --passphrase ""
 ping archlinux.org
 ```
+
+***
 
 После загрузки Arch Linux образа ISO необходимо подождать минуту чтобы сервис `pacman-init.service` **успешно** инициализировал связку ключей\
 Если всё же вы столкнулись с этим просто выполните `systemctl restart pacman-init.service` и снова произойдёт инициализация ключей\

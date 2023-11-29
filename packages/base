@@ -1,3 +1,5 @@
+#:se ft=sh
+
 # --- ОСНОВНОЕ
 
  'base' 'base-devel'
@@ -76,4 +78,3 @@
 
  'bluez' # Демон для стека протокола Bluetooth
  'bluez-utils' # CLI менеджер подключений bluetoothctl
-

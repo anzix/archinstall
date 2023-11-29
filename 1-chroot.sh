@@ -87,7 +87,6 @@ fi
 LC_ALL=C sudo -u "${USER_NAME}" xdg-user-dirs-update --force
 
 # Создание других каталогов
-# FIXME: не создаются каталоги
 mkdir -pv /home/${USER_NAME}/Pictures/Screenshots/Gif
 
 # Настройка pacman
@@ -124,10 +123,10 @@ if [ "${FS}" = 'btrfs' ]; then
   snapper --no-dbus -c root create-config /
   snapper --no-dbus -c home create-config /home
 
-  # Удаляем подтом .snapshots Snapper'а
+  # Удаляем подтом /.snapshots и /home/.snapshots Snapper'а
   btrfs subvolume delete /.snapshots /home/.snapshots
 
-  # Пересоздаём и переподключаем /.snapshots
+  # Пересоздаём и переподключаем /.snapshots и /home/.snapshots
   mkdir -v /.snapshots /home/.snapshots
   mount -v -a
 
@@ -148,6 +147,7 @@ if [ "${FS}" = 'btrfs' ]; then
   sed -i "s|^TIMELINE_LIMIT_MONTHLY=.*|TIMELINE_LIMIT_MONTHLY=\"0\"|g" /etc/snapper/configs/root
   sed -i "s|^TIMELINE_LIMIT_YEARLY=.*|TIMELINE_LIMIT_YEARLY=\"0\"|g" /etc/snapper/configs/root
 
+  sed -i "s|^ALLOW_GROUPS=.*|ALLOW_GROUPS=\"wheel\"|g" /etc/snapper/configs/home
   sed -i "s|^TIMELINE_CREATE=.*|TIMELINE_CREATE=\"no\"|g" /etc/snapper/configs/home
 
   # Включение таймеров создания снимков по времени и их очистку

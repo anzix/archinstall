@@ -1,3 +1,5 @@
+#:se ft=sh
+
 # --- Sway и относящиеся пакеты
 
  'gammastep' # Redshift форк для sway

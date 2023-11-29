@@ -1,3 +1,5 @@
+#:se ft=sh
+
 # --- ПРОГРАММЫ
 
  'ungoogled-chromium-bin' # Полностью вычещенный от Гуглятины браузер Chromium
