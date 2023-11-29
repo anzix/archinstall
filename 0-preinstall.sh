@@ -110,9 +110,6 @@ elif [ ${FS} = 'btrfs' ]; then
 	chmod -v 775 /mnt/var/lib/AccountsService/
 	chmod -v 1770 /mnt/var/lib/gdm/
 
-	# Запрещаю snap-pac выполнять pre и post снапшоты на текущий момент
-	export SNAP_PAC_SKIP=y
-
 	# При обнаружении добавляется в список для pacstrap
 	echo "snapper btrfs-progs" >> packages/base
 else

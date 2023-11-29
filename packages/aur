@@ -22,7 +22,7 @@
  'mpd-mpris' # MPRIS поддержка для MPD
  'obs-gstreamer' # Более эффективный плагин кодировщик для OBS (Для RDNA 1)
  'obs-vkcapture-git' 'lib32-obs-vkcapture-git' # OBS плагин для захвата напрямую через API OpenGL/Vulkan (минимизирует затраты)
- 'amd-vulkan-prefixes' # Быстрое переключение icd драйверов AMD используя переменные (vk_radv, vk_amdvlk, vk_pro)
+# 'amd-vulkan-prefixes' # Быстрое переключение icd драйверов AMD используя переменные (vk_radv, vk_amdvlk, vk_pro)
 # 'python-eyed3' # Правка обложек для mp3 файлов
 # 'android-apktool' # Декомпилятор apk файлов
 # 'f3' # CLI утилита для проверки накопителя на фальшивый объём

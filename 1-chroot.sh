@@ -119,7 +119,7 @@ if [ "${FS}" = 'btrfs' ]; then
   umount -v /.snapshots
   rm -rfv /.snapshots
 
-  # Create Snapper config
+  # Создаю конфигурацию Snapper для /
   snapper --no-dbus -c root create-config /
 
   # Удаляем подтом .snapshots Snapper'а

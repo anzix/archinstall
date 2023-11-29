@@ -53,7 +53,8 @@ kwriteconfig5 --file kcminputrc --group Keyboard --key RepeatDelay "210"
 kwriteconfig5 --file kcminputrc --group Keyboard --key RepeatRate "35"
 
 # Моноширинный шрифт для поддержки powerlevel10k в терминале
-kwriteconfig5 --file kdeglobals --group General --key fixed 'Насk Nerd Font,14,-1,5,50,0,0,0,0,0'
+kwriteconfig5 --file kdeglobals --group General --key fixed 'JetBrainsMonoNL Nerd Font,14,-1,5,50,0,0,0,0,0'
+# kwriteconfig5 --file kdeglobals --group General --key fixed 'Насk Nerd Font,14,-1,5,50,0,0,0,0,0'
 
 # Подсвечивать non-default пункты в настройках KDE
 kwriteconfig5 --file systemsettingsrc --group systemsettings_sidebar_mode --key "HighlightNonDefaultSettings" "true"

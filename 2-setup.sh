@@ -76,6 +76,9 @@ PKGS+=(
  'snp' # Заворачивает любую shell команду и создаёт снимок до выполнения этой команды (snp sudo pacman -Syu)
  'snapper-rollback' # Скрипт для отката системы который соответствует схеме разметки Arch Linux
 )
+# Запрещаю snap-pac выполнять pre и post снапшоты на текущий момент
+export SNAP_PAC_SKIP=y
+
 yay -S "${PKGS[@]}" --noconfirm --needed
 
 # Включение мониторинга списков снимков grub
