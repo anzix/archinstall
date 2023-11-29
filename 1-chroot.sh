@@ -86,9 +86,6 @@ fi
 # Используются английские названия для удобной работы с терминала
 LC_ALL=C sudo -u "${USER_NAME}" xdg-user-dirs-update --force
 
-# Создание других каталогов
-mkdir -pv /home/${USER_NAME}/Pictures/Screenshots/Gif
-
 # Настройка pacman
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Делаем pacman красивее
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Добавляем цвета в pacman
@@ -366,9 +363,3 @@ systemctl enable systemd-oomd.service
 systemctl enable dbus-broker.service
 systemctl enable fancontrol.service
 systemctl mask systemd-networkd.service
-
-# Создаю снимок / и /home
-if [ "${FS}" = 'btrfs' ]; then
-snapper -c root create -d "***System Installed***"
-snapper -c home create -d "***System Installed***"
-fi

@@ -8,6 +8,27 @@
 # раскомментируйте, чтобы просмотреть информацию об отладке
 #set -xe
 
+# Включение снимков и настройка отката системы
+if hash snapper 2>/dev/null; then
+PKGS+=(
+ 'snap-pac' # Создаёт снапшоты после каждой установки/обновления/удаления пакетов Pacman
+ 'grub-btrfs' # Добавляет grub меню снимков созданных snapper чтобы в них загружаться + демон grub-btrfsd
+ 'inotify-tools' # Необходимая зависимость для демона grub-btrfsd авто-обновляющий записи grub
+
+ 'snp' # Заворачивает любую shell команду и создаёт снимок до выполнения этой команды (snp sudo pacman -Syu)
+ 'snapper-rollback' # Скрипт для отката системы который соответствует схеме разметки Arch Linux
+)
+
+yay -S "${PKGS[@]}" --noconfirm --needed
+
+# Включение мониторинга списков снимков grub
+sudo systemctl enable grub-btrfsd
+
+# Создаю снимок / и /home
+snapper --no-dbus -c root create -d "***System Installed***"
+snapper --no-dbus -c home create -d "***System Installed***"
+fi
+
 echo "==> Вытягиваю из моего dotfiles основные конфиги"
 git clone --recurse-submodules https://github.com/anzix/dotfiles ~/.dotfiles
 pushd ~/.dotfiles/base && stow -vt ~ */
@@ -66,26 +87,6 @@ if read -re -p "Хотите виртуализацию? (y/n): " ans && [[ $ans
 	$HOME/scriptinstall/vm_support.sh
 fi
 
-# Включение снимков и настройка отката системы
-if hash snapper 2>/dev/null; then
-PKGS+=(
- 'snap-pac' # Создаёт снапшоты после каждой установки/обновления/удаления пакетов Pacman
- 'grub-btrfs' # Добавляет grub меню снимков созданных snapper чтобы в них загружаться + демон grub-btrfsd
- 'inotify-tools' # Необходимая зависимость для демона grub-btrfsd авто-обновляющий записи grub
-
- 'snp' # Заворачивает любую shell команду и создаёт снимок до выполнения этой команды (snp sudo pacman -Syu)
- 'snapper-rollback' # Скрипт для отката системы который соответствует схеме разметки Arch Linux
-)
-# Запрещаю snap-pac выполнять pre и post снапшоты на текущий момент
-export SNAP_PAC_SKIP=y
-
-yay -S "${PKGS[@]}" --noconfirm --needed
-
-# Включение мониторинга списков снимков grub
-sudo systemctl enable grub-btrfsd
-fi
-
-
 # Скрыть приложения из меню запуска
 APPLICATIONS=('assistant' 'avahi-discover' 'designer' 'electron' 'electron22' 'electron23' 'electron24' 'electron25' 'htop' 'linguist' 'lstopo' 'vim' 'nvim' \
 	'org.kde.kuserfeedback-console' 'qdbusviewer' 'qt5ct' 'qt6ct' 'qv4l2' 'qvidcap' 'bssh' 'bvnc' 'uxterm' 'xterm' 'btop' 'scrcpy' 'scrcpy-console' 'rofi' \
@@ -102,6 +103,9 @@ do
         echo "NotShowIn=GNOME;Xfce;KDE;" >> ${HOME}/.local/share/applications/${APPLICATION}.desktop
     fi
 done
+
+# Создание других каталогов
+mkdir -pv /home/${USER_NAME}/Pictures/Screenshots/Gif
 
 # Отключить мониторный режим микрофона Samson C01U Pro при старте системы
 amixer sset -c 3 Mic mute
