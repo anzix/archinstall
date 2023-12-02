@@ -44,7 +44,7 @@ EXTENSIONS=(
  "3988430/bookmark_dupes-latest.xpi:bookmarkdupes@martin-vaeth.org" # Bookmark Dupes
  "1705492/fixed_zoom-latest.xpi:{a655a6b2-69a5-40de-a3b8-3f7f200c95a7}" # Fixed Zoom
  "3782841/enforce_browser_fonts-latest.xpi:{83e08b00-32de-44e7-97bb-1bab84d1350f}" # Enforce Browser Fonts - полезно особенно для Linux
- "3941342/dont_accept_webp-latest.xpi:dont-accept-webp@jeffersonscher.com" # Don't "Accept" image/webp
+# "3941342/dont_accept_webp-latest.xpi:dont-accept-webp@jeffersonscher.com" # Don't "Accept" image/webp
 
 # "3988775/7tv-latest.xpi:{7ef0f00c-2ebe-4626-8ed7-3185847fcfad}" # 7TV (Twitch) - Удалён
 # "3998783/floccus-latest.xpi:floccus@handmadeideas.org.xpi"

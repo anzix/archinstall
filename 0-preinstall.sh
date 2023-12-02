@@ -99,7 +99,7 @@ elif [ ${FS} = 'btrfs' ]; then
 	mount -v -o noatime,compress=zstd:2,space_cache=v2 $DISK_MNT /mnt
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots
-	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home.snapshots $DISK_MNT /mnt/home/.snapshots
+	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home_snapshots $DISK_MNT /mnt/home/.snapshots
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log $DISK_MNT /mnt/var/log
 	mount --mkdir -v -o noatime,nodatacow,compress=zstd:2,space_cache=v2,subvol=@var_lib_libvirt_images $DISK_MNT /mnt/var/lib/libvirt/images
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvolid=5 $DISK_MNT /mnt/btrfsroot

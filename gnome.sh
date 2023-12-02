@@ -12,7 +12,7 @@ stow -vt ~ */
 popd
 
 # Пользовательские переменные
-# ??GDM подхватывает настройки от выбранного $SHELL??
+# GDM подхватывает настройки от выбранного $SHELL
 ln -siv $HOME/.dotfiles/base/zsh/.config/zsh/profile.zsh ~/.zprofile
 
 # Установка KvLibadwaitaDark в качестве темы для QT 5/6 приложений

@@ -40,15 +40,18 @@ git clone --recurse-submodules https://github.com/anzix/dotfiles ~/.dotfiles
 pushd ~/.dotfiles/base && stow -vt ~ */
 popd
 
-# Выполняю ~/.zprofile для использования переменных (спецификаций каталогов XDG BASE)
-source ~/.zprofile
+# Выполняю profile.zsh для использования пользовательских переменных (спецификаций каталогов XDG BASE)
+source ~/.dotfiles/base/zsh/.config/zsh/profile.zsh
 
+# FIXME необходимо как-то разделить aur пакеты с основными
 echo "==> Установка дополнительных пакетов, моих программ и шрифтов [Pacman+AUR]"
 yay -S --noconfirm --nobatchinstall --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/{additional,fonts,programs,aur} | column -t)
 
 # Создаю снимок / и /home
+if [ "$(df -T / | tail -1 | awk '{print $2}')" = 'btrfs' ]; then
 snapper -c root create -d "***System Installed***"
 snapper -c home create -d "***System Installed***"
+fi
 
 # Установка и настройка окружения
 PS3="Выберите окружение/WM: "
