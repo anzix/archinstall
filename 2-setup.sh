@@ -14,9 +14,9 @@ pushd /tmp/yay-bin && makepkg -si --noconfirm
 popd
 
 # Настройка yay
-# --nodiffmenu - Не спрашивать об показе изменений (diff)
+# --diffmenu=false - Не спрашивать об показе изменений (diff)
 # --batchinstall - Ставит каждый собранный пакеты в очередь для установки (легче мониторить что происходит)
-yay --save --nodiffmenu --batchinstall
+yay --save --diffmenu=false --batchinstall
 
 # Включение снимков и настройка отката системы
 if hash snapper 2>/dev/null; then
@@ -31,8 +31,14 @@ PKGS+=(
 
 yay -S "${PKGS[@]}" --noconfirm --needed
 
+# Пересоздаю конфиг grub для создания меток востановления
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
 # Включение мониторинга списков снимков grub
 sudo systemctl enable grub-btrfsd
+
+# Запрещаю snap-pac выполнять pre и post снапшоты на текущий момент
+export SNAP_PAC_SKIP=y
 fi
 
 echo "==> Вытягиваю из моего dotfiles основные конфиги"
@@ -104,16 +110,16 @@ do
 done
 
 # Создание других каталогов
-mkdir -pv /home/${USER_NAME}/Pictures/Screenshots/Gif
+mkdir -pv $HOME/Pictures/{Screenshots,Gif}
 
 # Отключить мониторный режим микрофона Samson C01U Pro при старте системы
 amixer sset -c 3 Mic mute
 
 # Включение сервисов
-systemctl --user enable \
- mpd \
- mpd-mpris \
- opentabletdriver.service
+systemctl --user enable mpd
+systemctl --user enable mpd-mpris
+systemctl --user enable opentabletdriver.service
 
 # Чистка
 sudo pacman -R --noconfirm $(/bin/pacman -Qtdq)
+unset -v SNAP_PAC_SKIP

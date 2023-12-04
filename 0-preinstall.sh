@@ -70,6 +70,7 @@ partprobe $DISK
 # Файловая система
 if [ ${FS} = 'ext4' ]; then
 	yes | mkfs.ext4 -L ArchLinux $DISK_MNT
+	# Отдельный раздел под /home
 	# yes | mkfs.ext4 -L home $DISK_HOME
 	mount -v $DISK_MNT /mnt
 	# mkdir /mnt/home
@@ -85,7 +86,7 @@ elif [ ${FS} = 'btrfs' ]; then
 	btrfs su cr /mnt/@
 	btrfs su cr /mnt/@home
 	btrfs su cr /mnt/@snapshots
-	btrfs su cr /mnt/@home.snapshots
+	btrfs su cr /mnt/@home_snapshots
 	btrfs su cr /mnt/@var_log
 	btrfs su cr /mnt/@var_lib_libvirt_images
 	btrfs su cr /mnt/@var_lib_AccountsService
@@ -95,7 +96,7 @@ elif [ ${FS} = 'btrfs' ]; then
 
 	# BTRFS сам обнаруживает и добавляет опцию "ssd" при монтировании
 	# BTRFS с версией ядра 6.2 по умолчанию включена опция "discard=async"
-	# FIXME: Нужна ли опция subvol=@ в /mnt?
+	# FIXME?: Нужна ли опция subvol=@ в /mnt? Мне кажется нет
 	mount -v -o noatime,compress=zstd:2,space_cache=v2 $DISK_MNT /mnt
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots

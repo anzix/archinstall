@@ -117,6 +117,7 @@ if [ "${FS}" = 'btrfs' ]; then
   rm -rfv /.snapshots /home/.snapshots
 
   # Создаю конфигурацию Snapper для / и /home
+  # В случае /home будет отслеживатся снимки всех пользователей
   snapper --no-dbus -c root create-config /
   snapper --no-dbus -c home create-config /home
 

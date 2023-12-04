@@ -107,7 +107,8 @@ kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "DPMSControl
 # kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "DPMSControl" --key "idleTime" --delete
 
 # Смена оформлений окон
-kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnRight "IAX"
+kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnLeft ""
+# kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnRight "IAX"
 kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ShowToolTips --type bool false
 
 # Изменение поведения переключателя задач ALT+TAB
@@ -128,6 +129,7 @@ kwriteconfig5 --file kwinrc --group Effect-windowview --key BorderActivateAll "9
 kwriteconfig5 --file kglobalshortcutsrc --group org.kde.konsole.desktop --key "_launch" "Meta+Return,none,Konsole"
 
 # Комбинация открытия Spectacle (скриншот выделенной зоны)
+# TODO: Убрать когда выйдет Plasma 6 т.к это там будет по дефолту
 kwriteconfig5 --file kglobalshortcutsrc --group "org.kde.spectacle.desktop" --key "RectangularRegionScreenShot" "Meta+Shift+S,none,Capture Rectangular Region"
 
 # Комбинация режима "Обзор"

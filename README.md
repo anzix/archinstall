@@ -41,6 +41,12 @@ cd ~/scriptinstall
 ./2-setup.sh
 ```
 
+Если хотите установить Firefox с моими настройками и расширениями тогда просто выполните скрипт командой
+
+```sh
+./firefox_install.sh
+```
+
 ## Для тестирования на виртуалке
 
 Если QEMU/KVM качаем пакеты `qemu-guest-agent spice-vdagent`
