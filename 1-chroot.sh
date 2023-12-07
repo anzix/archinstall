@@ -4,6 +4,7 @@
 #set -xe
 
 # Руссифицируемся
+# LC_COLLATE=C Приятная сортировка и сравнения строк
 sed -i "s/#\(en_US\.UTF-8\)/\1/; s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
 locale-gen
 tee /etc/locale.conf > /dev/null << EOF
@@ -117,7 +118,7 @@ if [ "${FS}" = 'btrfs' ]; then
   rm -rfv /.snapshots /home/.snapshots
 
   # Создаю конфигурацию Snapper для / и /home
-  # В случае /home будет отслеживатся снимки всех пользователей
+  # Snapper отслеживать /home будет создавать снимки всех пользователей (если они присутствуют)
   snapper --no-dbus -c root create-config /
   snapper --no-dbus -c home create-config /home
 
