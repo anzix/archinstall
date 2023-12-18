@@ -103,17 +103,17 @@ elif [ ${FS} = 'btrfs' ]; then
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home_snapshots $DISK_MNT /mnt/home/.snapshots
-	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,mode=1777,subvol=@var_tmp $DISK_MNT /mnt/var/tmp
+	mount --mkdir=1777 -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_tmp $DISK_MNT /mnt/var/tmp
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log $DISK_MNT /mnt/var/log
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_docker $DISK_MNT /mnt/var/lib/docker
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_containers $DISK_MNT /mnt/var/lib/containers
 	mount --mkdir -v -o noatime,nodatacow,compress=zstd:2,space_cache=v2,subvol=@var_lib_libvirt_images $DISK_MNT /mnt/var/lib/libvirt/images
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvolid=5 $DISK_MNT /mnt/btrfsroot
-	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,mode=775,subvol=@var_lib_AccountsService $DISK_MNT /mnt/var/lib/AccountsService
-	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,mode=1770,subvol=@var_lib_gdm $DISK_MNT /mnt/var/lib/gdm
+	mount --mkdir=755 -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_AccountsService $DISK_MNT /mnt/var/lib/AccountsService
+	mount --mkdir=1770 -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_gdm $DISK_MNT /mnt/var/lib/gdm
 
 	# Ramdisk
-	mount --mkdir -v -t tmpfs -o nodev,nosuid,noatime,size=8G,mode=1777 tmpfs /mnt/tmp
+	mount --mkdir=1777 -v -t tmpfs -o nodev,nosuid,noatime,size=8G tmpfs /mnt/tmp
 
 	# При обнаружении добавляется в список для pacstrap
 	echo "snapper btrfs-progs" >> packages/base
