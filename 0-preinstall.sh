@@ -149,7 +149,6 @@ pacman -Syy
 pacstrap -K /mnt $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/base | column -t)
 
 # Генерирую fstab
-# P - включаяя псевдо файловые системы, tmpfs например
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # Добавление дополнительных разделов
