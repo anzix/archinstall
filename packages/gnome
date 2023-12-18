@@ -24,7 +24,7 @@
  'gnome-system-monitor'
  'gnome-text-editor'
  'gnome-tweaks' # Экстра настройки Gnome
- 'gnome-passwordsafe' # Локальный менеджер паролей
+ 'secrets' # Локальный менеджер паролей
  'gpaste' # Clipboard Manager
  'grilo-plugins' # Media discovery for Music
  'gvfs-nfs'
@@ -60,6 +60,7 @@
  'adw-gtk3' # Adwaita тема для устаревших GTK3 приложений
  'kvantum-theme-libadwaita-git' # LibAdwaita тема для QT 5/6 приложений
  'qadwaitadecorations-qt6' 'qadwaitadecorations-qt5' # Новая адаптация QT 5/6 под GNOME
+# 'gnome-shell-extension-arch-update' # Индикатор обновлений в статус баре
 # 'gnome-shell-extension-dash-to-dock' # Dock панель
 # 'gnome-shell-extension-freon-git' # Отображение CPU/GPU/HDD/SSD температуры
 # 'gnome-shell-extension-kimpanel-git' # Реализация KDE kimpanel для GNOME Shell, теперь поддерживает fcitx

@@ -87,30 +87,33 @@ elif [ ${FS} = 'btrfs' ]; then
 	btrfs su cr /mnt/@home
 	btrfs su cr /mnt/@snapshots
 	btrfs su cr /mnt/@home_snapshots
+	btrfs su cr /mnt/@var_tmp
 	btrfs su cr /mnt/@var_log
+	btrfs su cr /mnt/@var_lib_docker
+	btrfs su cr /mnt/@var_lib_containers
 	btrfs su cr /mnt/@var_lib_libvirt_images
 	btrfs su cr /mnt/@var_lib_AccountsService
-	# btrfs su cr /mnt/@var_lib_gdm
+	btrfs su cr /mnt/@var_lib_gdm
 
 	umount -v /mnt
 
 	# BTRFS сам обнаруживает и добавляет опцию "ssd" при монтировании
 	# BTRFS с версией ядра 6.2 по умолчанию включена опция "discard=async"
-	# FIXME?: Нужна ли опция subvol=@ в /mnt? Мне кажется нет
-	mount -v -o noatime,compress=zstd:2,space_cache=v2 $DISK_MNT /mnt
+	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@ $DISK_MNT /mnt
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home_snapshots $DISK_MNT /mnt/home/.snapshots
+	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,mode=1777,subvol=@var_tmp $DISK_MNT /mnt/var/tmp
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log $DISK_MNT /mnt/var/log
+	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_docker $DISK_MNT /mnt/var/lib/docker
+	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_containers $DISK_MNT /mnt/var/lib/containers
 	mount --mkdir -v -o noatime,nodatacow,compress=zstd:2,space_cache=v2,subvol=@var_lib_libvirt_images $DISK_MNT /mnt/var/lib/libvirt/images
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvolid=5 $DISK_MNT /mnt/btrfsroot
-	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_AccountsService $DISK_MNT /mnt/var/lib/AccountsService
+	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,mode=775,subvol=@var_lib_AccountsService $DISK_MNT /mnt/var/lib/AccountsService
+	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,mode=1770,subvol=@var_lib_gdm $DISK_MNT /mnt/var/lib/gdm
 
-	# mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_gdm $DISK_MNT /mnt/var/lib/gdm
-
-	# Востановление прав доступа по требованию пакетов
-	chmod -v 775 /mnt/var/lib/AccountsService/
-	chmod -v 1770 /mnt/var/lib/gdm/
+	# Ramdisk
+	mount --mkdir -v -t tmpfs -o nodev,nosuid,noatime,size=8G,mode=1777 tmpfs /mnt/tmp
 
 	# При обнаружении добавляется в список для pacstrap
 	echo "snapper btrfs-progs" >> packages/base
@@ -149,8 +152,6 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 # Добавление дополнительных разделов
 tee -a /mnt/etc/fstab >/dev/null << EOF
-# Ramdisk
-tmpfs 	/tmp	tmpfs		rw,nodev,nosuid,noatime,size=8G,mode=1777	 0 0
 
 # Мои доп. разделы
 UUID=F46C28716C2830B2   /media/Distrib  ntfs-3g        rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
@@ -160,10 +161,10 @@ UUID=30C4C35EC4C32546   /media/Games    ntfs-3g        rw,nofail,errors=remount-
 EOF
 
 # Копирование папки установочных скриптов
-cp -r /root/scriptinstall /mnt
+cp -r /root/archinstall /mnt
 
-# Chroot'инг
-arch-chroot /mnt /bin/bash /scriptinstall/1-chroot.sh
+# Chroot'имся
+arch-chroot /mnt /bin/bash /archinstall/1-chroot.sh
 
 # Действия после chroot
 if read -re -p "arch-chroot /mnt? [y/N]: " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then

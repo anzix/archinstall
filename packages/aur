@@ -18,6 +18,12 @@
 # 'otf-monocraft' # Пиксельный шрифт для Mangohud
 # 'cozette-ttf' # Пиксельный шрифт но для терминала (family: CozetteVector)
 
+# --- Оформление
+
+# 'paper-icon-theme-git' # Иконки заточенные под Material Design
+# 'sweet-gtk-theme-dark' # Тема из дистрибутива Garuda Linux (вроде)
+# 'beautyline' # Иконки из дистрибутива Garuda Linux
+
 # --- Утилиты и разное
 
  'chromium-widevine' # Плагин для работы DRM контента в браузере ungoogled-chromium

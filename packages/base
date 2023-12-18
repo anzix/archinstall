@@ -10,7 +10,7 @@
  'zsh' 'git'
  'wget' # Для скачивания файлов
  'neovim' # Консольный текстовый редактор
- 'grub' 'efibootmgr'
+ 'grub' 'efibootmgr' # Загрузчик
  'intel-ucode'
  'terminus-font' # Шрифты разных размеров с кириллицей для tty
  'networkmanager' # Менеджер сети
@@ -48,12 +48,32 @@
 
 # --- ВИДЕО [OPENGL+VULKAN]
 
+ # AMD
+
  'mesa' 'lib32-mesa' # Версия OpenGL с открытым исходным кодом
  'mesa-vdpau' 'lib32-mesa-vdpau' # VDPAU Драйвер
  'libva-mesa-driver' 'lib32-libva-mesa-driver' # VA-API драйвер
 
  'vulkan-radeon' 'lib32-vulkan-radeon' # Реализация Vulkan драйвера от Mesa
  'vulkan-mesa-layers' 'lib32-vulkan-mesa-layers' # Слои Vulkan в Mesa
+
+ # Nvidia проприетарные
+
+ # 'nvidia-dkms'
+ # 'nvidia-utils' 'lib32-nvidia-utils'
+ # 'nvidia-settings' # Настройки
+ # 'egl-wayland'
+ # 'opencl-nvidia' 'lib32-opencl-nvidia'
+ # 'libvdpau'
+ # 'libvdpau-va-gl'
+ # 'cuda' # Cuda пакет, для разработчиков
+
+  # Для ноутбуков Intel/Nvidia
+
+ # 'intel-media-driver'
+ # 'intel-gmmlib'
+ # 'onevpl-intel-gpu'
+ # 'nvidia-prime'
 
 # --- АУДИО
 

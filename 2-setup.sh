@@ -14,9 +14,12 @@ pushd /tmp/yay-bin && makepkg -si --noconfirm
 popd
 
 # Настройка yay
+# --combineupgrade=false - Не комбинировать списки обновлений
+# = --nocleanmenu - Не спрашивать о пакетах для которых требуется очистить кэш сборки
+# --removemake - Всегда удалять зависимости для сборки (make) после установки
 # --diffmenu=false - Не спрашивать об показе изменений (diff)
 # --batchinstall - Ставит каждый собранный пакеты в очередь для установки (легче мониторить что происходит)
-yay --save --diffmenu=false --batchinstall
+yay --save --combineupgrade=false --diffmenu=false --batchinstall
 
 # Включение снимков и настройка отката системы
 if hash snapper 2>/dev/null; then
@@ -70,13 +73,13 @@ select ENTRY in "plasma" "gnome" "i3wm" "sway" "Пропуск"; do
     export DESKTOP_ENVIRONMENT=$ENTRY && echo "Выбран ${DESKTOP_ENVIRONMENT}."
 
     if [ ${DESKTOP_ENVIRONMENT} = "plasma" ]; then
-        $HOME/scriptinstall/plasma.sh
+        $HOME/archinstall/plasma.sh
     elif [ ${DESKTOP_ENVIRONMENT} = "gnome" ]; then
-        $HOME/scriptinstall/gnome.sh
+        $HOME/archinstall/gnome.sh
     elif [ ${DESKTOP_ENVIRONMENT} = "i3wm" ]; then
-        $HOME/scriptinstall/i3wm.sh
+        $HOME/archinstall/i3wm.sh
     elif [ ${DESKTOP_ENVIRONMENT} = "sway" ]; then
-        $HOME/scriptinstall/sway.sh
+        $HOME/archinstall/sway.sh
     fi
 
     break
@@ -84,18 +87,18 @@ done
 
 # Установка игровых пакетов и настройка
 if read -re -p "Хотите играть в игры? (y/n): " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then
-	$HOME/scriptinstall/gaming.sh
+	$HOME/archinstall/gaming.sh
 fi
 
 # Установка пакетов для виртуализации и настройка
 if read -re -p "Хотите виртуализацию? (y/n): " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then
-	$HOME/scriptinstall/vm_support.sh
+	$HOME/archinstall/vm_support.sh
 fi
 
-# Скрыть приложения из меню запуска
+# Скрыть приложения из меню запуска для Arch и Debian
 APPLICATIONS=('assistant' 'avahi-discover' 'designer' 'electron' 'electron22' 'electron23' 'electron24' 'electron25' 'htop' 'linguist' 'lstopo' 'vim' 'nvim' \
-	'org.kde.kuserfeedback-console' 'qdbusviewer' 'qt5ct' 'qt6ct' 'qv4l2' 'qvidcap' 'bssh' 'bvnc' 'uxterm' 'xterm' 'btop' 'scrcpy' 'scrcpy-console' 'rofi' \
-	'rofi-theme-selector' 'picom')
+	'org.kde.kuserfeedback-console' 'qdbusviewer' 'qt5ct' 'qt6ct' 'qv4l2' 'qvidcap' 'bssh' 'bvnc' 'uxterm' 'xterm' 'debian-uxterm' 'debian-xterm' 'btop' \
+	'scrcpy' 'scrcpy-console' 'rofi' 'rofi-theme-selector' 'picom' 'ncmpcpp' 'display-im6.q16')
 # 'mpv' 'jconsole-java-openjdk' 'jshell-java-openjdk'
 mkdir -v ${HOME}/.local/share/applications
 for APPLICATION in "${APPLICATIONS[@]}"
@@ -116,6 +119,7 @@ mkdir -pv $HOME/Pictures/{Screenshots,Gif}
 amixer sset -c 3 Mic mute
 
 # Включение сервисов
+sudo systemctl enable pkgfile-update.timer
 systemctl --user enable mpd
 systemctl --user enable mpd-mpris
 systemctl --user enable opentabletdriver.service

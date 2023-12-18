@@ -73,7 +73,7 @@ fi
 # system-db:local
 # EOF
 
-# Импорт конфигурации Gnome
+# Импорт моих настроек Gnome
 dconf load / << EOF
 [org/gnome/desktop/wm/keybindings]
 close=['<Shift><Super>q']
@@ -190,6 +190,18 @@ disable-while-typing=false
 show-battery-percentage=true
 EOF
 fi
+
+# # Настройка расширения индикатора обновлений arch, если установлено
+# if pacman -Q gnome-shell-extension-arch-update &> /dev/null; then
+# dconf load / << EOF
+# [org/gnome/shell/extensions/arch-update]
+# check-cmd="/bin/sh -c \"(/usr/bin/checkupdates; /usr/bin/yay -Qqu --color never | sed 's/Get .*//') | sort -u -t' ' -k1,1\""
+# update-cmd='kgx -- /bin/sh -c "yay --noconfirm ; echo Done - Press enter to exit; read _" '
+# strip-versions=true
+# EOF
+# # Включаю расширение
+# gnome-extensions enable arch-update@RaphaelRochet
+# fi
 
 # Обновление системных баз данных Gnome
 sudo dconf update

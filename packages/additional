@@ -48,7 +48,7 @@
  'hunspell-en_us' # Английский словарь для проверки орфоргафии
  'hunspell-ru' # Русский словарь для проверки орфографии (работает только с UTF8 кодировкой)
  'atool' # Для предпросмотра архивов
- 'libfaketime' # Подделывать время для программ или пиратских игр (man faketime)
+ 'libfaketime' # CLI утилита чтобы подделывать время для программ или пиратских игр (man faketime)
  'flashrom' # Для прошивания чипов программатором ch341a
  'dfu-util' # Для обновления прошивки паяльника Pinecil первой версии
  'tmux' # Мультиплексор для одноконных терминалов (напр. alacritty)
@@ -64,6 +64,10 @@
 
 # 'rhvoice' 'rhvoice-voice-aleksandr-hq' 'rhvoice-voice-arina' 'rhvoice-voice-alan' 'rhvoice-voice-clb' # Синтезатор речи + голоса (Английский + Русский)
 
+# --- Оформление
+
+# 'adapta-gtk-theme' # GTK Тема основанная на Material Design
+
 # --- Security
 
  'arch-audit' # Аудит системы и обнаружения уязвимостей
@@ -77,3 +81,4 @@
  'onefetch' # CLI утилита для вывода информации git реозитория
 # 'docker' 'docker-compose' # Контейнеры
 # 'podman' 'podman-compose' # Контейнеры, альтернатива docker'у
+# 'distrobox' # Утилита контейнеризации окружения Linux

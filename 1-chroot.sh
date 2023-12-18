@@ -47,7 +47,7 @@ echo "blacklist hid_uclogic" > /etc/modprobe.d/blacklist.conf
 echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
 
 # Установка универсального host файла от StevenBlack (убирает рекламу и вредоносы из WEB'а)
-# Обновление host файла выполняется командой: $ uphosts
+# Обновление host файла выполняется командой: $ uphosts (доступна в dotfiles/base/zsh/funtctions.zsh)
 wget -qO- https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts \
  | grep '^0\.0\.0\.0' \
  | grep -v '^0\.0\.0\.0 [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$' \
@@ -340,14 +340,15 @@ EOF
 fi
 
 # Добавления моих опций ядра grub
+# -quiet - Отключить большинство сообщений журнала
 # intel_iommu=on - Включает драйвер intel iommu
 # iommu=pt - Проброс только тех устройств которые поддерживаются
 # zswap.enabled=0 - Отключает приоритетный zswap который заменяется на zram
 sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 mitigations=off intel_iommu=on iommu=pt amdgpu.ppfeaturemask=0xffffffff cpufreq.default_governor=performance zswap.enabled=0"/g' /etc/default/grub
 
 # Рекурсивная правка разрешений в папке скриптов
-chmod -R 700 /scriptinstall
-chown -R 1000:users /scriptinstall
+chmod -R 700 /archinstall
+chown -R 1000:users /archinstall
 
 # Установка и настройка Grub
 #sed -i -e 's/#GRUB_DISABLE_OS_PROBER/GRUB_DISABLE_OS_PROBER/' /etc/default/grub # Обнаруживать другие ОС и добавлять их в grub (нужен пакет os-prober)
