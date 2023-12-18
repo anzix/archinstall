@@ -100,21 +100,21 @@ elif [ ${FS} = 'btrfs' ]; then
 	# BTRFS сам обнаруживает и добавляет опцию "ssd" при монтировании
 	# BTRFS с версией ядра 6.2 по умолчанию включена опция "discard=async"
 	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@ $DISK_MNT /mnt
-	mkdir -pv /mnt/var/lib # Без этого, разрешение будет выдаватся рекурсивно всему /var
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home_snapshots $DISK_MNT /mnt/home/.snapshots
-	mount --mkdir=1777 -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_tmp $DISK_MNT /mnt/var/tmp
+	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_tmp $DISK_MNT /mnt/var/tmp
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log $DISK_MNT /mnt/var/log
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_docker $DISK_MNT /mnt/var/lib/docker
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_containers $DISK_MNT /mnt/var/lib/containers
 	mount --mkdir -v -o noatime,nodatacow,compress=zstd:2,space_cache=v2,subvol=@var_lib_libvirt_images $DISK_MNT /mnt/var/lib/libvirt/images
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvolid=5 $DISK_MNT /mnt/btrfsroot
-	mount --mkdir=0775 -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_AccountsService $DISK_MNT /mnt/var/lib/AccountsService
-	mount --mkdir=1770 -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_gdm $DISK_MNT /mnt/var/lib/gdm
+	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_AccountsService $DISK_MNT /mnt/var/lib/AccountsService
+	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_gdm $DISK_MNT /mnt/var/lib/gdm
 
-	# Ramdisk
-	mount --mkdir=1777 -v -t tmpfs -o nodev,nosuid,noatime,size=8G tmpfs /mnt/tmp
+	# Востановление прав доступа по требованию пакетов
+	chmod -v 775 /mnt/var/lib/AccountsService/
+	chmod -v 1770 /mnt/var/lib/gdm/
 
 	# При обнаружении добавляется в список для pacstrap
 	echo "snapper btrfs-progs" >> packages/base
@@ -149,16 +149,21 @@ pacman -Syy
 pacstrap -K /mnt $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/base | column -t)
 
 # Генерирую fstab
+# P - включаяя псевдо файловые системы, tmpfs например
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # Добавление дополнительных разделов
 tee -a /mnt/etc/fstab >/dev/null << EOF
+# tmpfs
+# Чтобы не изнашивать SSD во время сборки используя makepkg
+tmpfs                   /tmp            tmpfs           rw,nosuid,nodev,noatime,size=8G,mode=1777,inode64   0 0
 
-# Мои доп. разделы
-UUID=F46C28716C2830B2   /media/Distrib  ntfs-3g        rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
-UUID=CA8C4EB58C4E9BB7   /media/Other    ntfs-3g        rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
-UUID=A81C9E2F1C9DF890   /media/Media    ntfs-3g        rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
-UUID=30C4C35EC4C32546   /media/Games    ntfs-3g        rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0       0
+# /dev/sdb
+# Мои дополнительные разделы HDD диска
+UUID=F46C28716C2830B2   /media/Distrib  ntfs-3g         rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0 0
+UUID=CA8C4EB58C4E9BB7   /media/Other    ntfs-3g         rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0 0
+UUID=A81C9E2F1C9DF890   /media/Media    ntfs-3g         rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0 0
+UUID=30C4C35EC4C32546   /media/Games    ntfs-3g         rw,nofail,errors=remount-ro,noatime,prealloc,fmask=0022,dmask=0022,uid=1000,gid=984,windows_names   0 0
 EOF
 
 # Копирование папки установочных скриптов
