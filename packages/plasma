@@ -7,7 +7,7 @@
  'kde-gtk-config' # GTK2 and GTK3 Configurator for KDE
  'kdeplasma-addons'
  'kdialog' # GUI диалоги
- 'kgamma5' # Управлением гаммой монитора
+ 'kgamma' # Управлением гаммой монитора
  'kinfocenter'
  'kscreen'
  'ksshaskpass' # Помощник ssh-add, использующий kwallet и kpassworddialog

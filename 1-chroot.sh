@@ -136,17 +136,24 @@ if [ "${FS}" = 'btrfs' ]; then
   chown -vR :wheel /.snapshots /home/.snapshots
 
   # Настройка Snapper
-  # Позволять группе wheel использовать команду snapper non-root пользователю
-  sed -i "s|^ALLOW_GROUPS=.*|ALLOW_GROUPS=\"wheel\"|g" /etc/snapper/configs/root
 
-  # Установка лимата снимков
+  # Позволять группе wheel использовать команду snapper non-root пользователю
+  # Закомментируйте это если переживаете за свою безопасность
+  sed -i "s|^ALLOW_GROUPS=.*|ALLOW_GROUPS=\"wheel\"|g" /etc/snapper/configs/root
+  sed -i "s|^ALLOW_GROUPS=.*|ALLOW_GROUPS=\"wheel\"|g" /etc/snapper/configs/home
+
+  # Синхронизировать права на доступ к снимкам при создании и удалении
+  sed -i "s|^SYNC_ACL=.*|SYNC_ACL=\"yes\"|g" /etc/snapper/configs/root
+  sed -i "s|^SYNC_ACL=.*|SYNC_ACL=\"yes\"|g" /etc/snapper/configs/home
+
+  # Установка лимата снимков для /
   sed -i "s|^TIMELINE_LIMIT_HOURLY=.*|TIMELINE_LIMIT_HOURLY=\"3\"|g" /etc/snapper/configs/root
   sed -i "s|^TIMELINE_LIMIT_DAILY=.*|TIMELINE_LIMIT_DAILY=\"6\"|g" /etc/snapper/configs/root
   sed -i "s|^TIMELINE_LIMIT_WEEKLY=.*|TIMELINE_LIMIT_WEEKLY=\"0\"|g" /etc/snapper/configs/root
   sed -i "s|^TIMELINE_LIMIT_MONTHLY=.*|TIMELINE_LIMIT_MONTHLY=\"0\"|g" /etc/snapper/configs/root
   sed -i "s|^TIMELINE_LIMIT_YEARLY=.*|TIMELINE_LIMIT_YEARLY=\"0\"|g" /etc/snapper/configs/root
 
-  sed -i "s|^ALLOW_GROUPS=.*|ALLOW_GROUPS=\"wheel\"|g" /etc/snapper/configs/home
+  # Не создавать timeline-снимки для /home
   sed -i "s|^TIMELINE_CREATE=.*|TIMELINE_CREATE=\"no\"|g" /etc/snapper/configs/home
 
   # Включение таймеров создания снимков по времени и их очистку
@@ -159,8 +166,13 @@ if [ "${FS}" = 'btrfs' ]; then
 	  btrfs-scrub@home.timer \
       btrfs-scrub@-.timer
 
+  # Plocate не показывает индексы найденых файлов если используется файловая система Btrfs
+  # Данная правка конфига исправляет это
+  # Источник: https://devctrl.blog/posts/plocate-not-a-drop-in-replacement-if-you-re-using-btfrs/
+  sed -i 's/PRUNE_BIND_MOUNTS =.*/PRUNE_BIND_MOUNTS = "no"/' /etc/updatedb.conf
+
   # Предотвращение индексирования снимков программой "updatedb", что замедляло бы работу системы
-  sed -i '/PRUNEPATHS/s/"$/ \/\.snapshots \/home\/\.snapshots"/' /etc/updatedb.conf
+  sed -i '/PRUNEPATHS/s/"$/ \/\btrfsroot \/\.snapshots \/home\/\.snapshots"/' /etc/updatedb.conf
 
   # Правка mkinitcpio.conf
   sed -i 's/^MODULES.*/MODULES=(btrfs amdgpu)/' /etc/mkinitcpio.conf

@@ -108,7 +108,7 @@ kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "DPMSControl
 
 # Смена оформлений окон
 kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnLeft ""
-# kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnRight "IAX"
+kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnRight "IAX"
 kwriteconfig5 --file kwinrc --group org.kde.kdecoration2 --key ShowToolTips --type bool false
 
 # Изменение поведения переключателя задач ALT+TAB
@@ -125,11 +125,15 @@ kwriteconfig5 --file klaunchrc --group FeedbackStyle --key "BusyCursor" --type b
 # Отключить появление "Обзор" при крае экрана курсора
 kwriteconfig5 --file kwinrc --group Effect-windowview --key BorderActivateAll "9"
 
+# Отключить напоминание о установке интеграции plasma в браузере
+kwriteconfig5 --file kded5rc --group "Module-browserintegrationreminder"  --key "autoload" "false"
+
 # Комбинация открытия Konsole
 kwriteconfig5 --file kglobalshortcutsrc --group org.kde.konsole.desktop --key "_launch" "Meta+Return,none,Konsole"
 
 # Комбинация открытия Spectacle (скриншот выделенной зоны)
 # TODO: Убрать когда выйдет Plasma 6 т.к это там будет по дефолту
+# FIXME: При выполнении убираются отсальные горячие клавиши такие как Meta+Print для захвата активного окна
 kwriteconfig5 --file kglobalshortcutsrc --group "org.kde.spectacle.desktop" --key "RectangularRegionScreenShot" "Meta+Shift+S,none,Capture Rectangular Region"
 
 # Комбинация режима "Обзор"

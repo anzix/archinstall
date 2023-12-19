@@ -8,18 +8,21 @@
 # раскомментируйте, чтобы просмотреть информацию об отладке
 #set -xe
 
+# Диалог о начале настройки
+if read -re -p "Начать настройку? [y/N]: " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then
+
 # Установка Yay (AUR помощник)
 git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin
 pushd /tmp/yay-bin && makepkg -si --noconfirm
 popd
 
 # Настройка yay
-# --combineupgrade=false - Не комбинировать списки обновлений
+# --combinedupgrade=false - Не комбинировать списки обновлений
 # = --nocleanmenu - Не спрашивать о пакетах для которых требуется очистить кэш сборки
 # --removemake - Всегда удалять зависимости для сборки (make) после установки
 # --diffmenu=false - Не спрашивать об показе изменений (diff)
-# --batchinstall - Ставит каждый собранный пакеты в очередь для установки (легче мониторить что происходит)
-yay --save --combineupgrade=false --diffmenu=false --batchinstall
+# --batchinstall=true - Ставит каждый собранный пакеты в очередь для установки (легче мониторить что происходит)
+yay --save --combinedupgrade=false --diffmenu=false --batchinstall=true
 
 # Включение снимков и настройка отката системы
 if hash snapper 2>/dev/null; then
@@ -34,7 +37,7 @@ PKGS+=(
 
 yay -S "${PKGS[@]}" --noconfirm --needed
 
-# Пересоздаю конфиг grub для создания меток востановления
+# Пересоздаю конфиг grub для создания меток восстановления
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # Включение мониторинга списков снимков grub
@@ -42,6 +45,12 @@ sudo systemctl enable grub-btrfsd
 
 # Запрещаю snap-pac выполнять pre и post снапшоты на текущий момент
 export SNAP_PAC_SKIP=y
+fi
+
+# Создаю снимок / и /home
+if [ "$(df -T / | tail -1 | awk '{print $2}')" = 'btrfs' ]; then
+snapper -c root create -d "***System Installed***"
+snapper -c home create -d "***System Installed***"
 fi
 
 echo "==> Вытягиваю из моего dotfiles основные конфиги"
@@ -52,15 +61,12 @@ popd
 # Выполняю profile.zsh для использования пользовательских переменных (спецификаций каталогов XDG BASE)
 source ~/.dotfiles/base/zsh/.config/zsh/profile.zsh
 
+# Обновление зеркал
+sudo pacman -Sy
+
 # FIXME необходимо как-то разделить aur пакеты с основными
 echo "==> Установка дополнительных пакетов, моих программ и шрифтов [Pacman+AUR]"
 yay -S --noconfirm --nobatchinstall --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/{additional,fonts,programs,aur} | column -t)
-
-# Создаю снимок / и /home
-if [ "$(df -T / | tail -1 | awk '{print $2}')" = 'btrfs' ]; then
-snapper -c root create -d "***System Installed***"
-snapper -c home create -d "***System Installed***"
-fi
 
 # Установка и настройка окружения
 PS3="Выберите окружение/WM: "
@@ -127,3 +133,4 @@ systemctl --user enable opentabletdriver.service
 # Чистка
 sudo pacman -R --noconfirm $(/bin/pacman -Qtdq)
 unset -v SNAP_PAC_SKIP
+fi
