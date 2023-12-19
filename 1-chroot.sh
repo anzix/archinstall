@@ -137,11 +137,6 @@ if [ "${FS}" = 'btrfs' ]; then
 
   # Настройка Snapper
 
-  # Позволять группе wheel использовать команду snapper non-root пользователю
-  # Закомментируйте это если переживаете за свою безопасность
-  sed -i "s|^ALLOW_GROUPS=.*|ALLOW_GROUPS=\"wheel\"|g" /etc/snapper/configs/root
-  sed -i "s|^ALLOW_GROUPS=.*|ALLOW_GROUPS=\"wheel\"|g" /etc/snapper/configs/home
-
   # Синхронизировать права на доступ к снимкам при создании и удалении
   sed -i "s|^SYNC_ACL=.*|SYNC_ACL=\"yes\"|g" /etc/snapper/configs/root
   sed -i "s|^SYNC_ACL=.*|SYNC_ACL=\"yes\"|g" /etc/snapper/configs/home
