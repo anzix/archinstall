@@ -50,8 +50,8 @@ fi
 
 # Создаю снимок / и /home
 if [ "$(df -T / | tail -1 | awk '{print $2}')" = 'btrfs' ]; then
-snapper -c root create -d "***System Installed***"
-snapper -c home create -d "***System Installed***"
+sudo snapper -c root create -d "***System Installed***"
+sudo snapper -c home create -d "***System Installed***"
 fi
 
 echo "==> Вытягиваю из моего dotfiles основные конфиги"
