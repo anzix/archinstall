@@ -62,3 +62,20 @@ done
 
 # Импорт Firefox конфига
 cp -v ~/.dotfiles/user.js "${FIREFOX_PROFILE_PATH}"
+
+# Настраиваю Firefox под окружение
+if [ "${XDG_SESSION_DESKTOP}" = 'KDE' ]; then
+# Set Firefox profile path
+FIREFOX_PROFILE_PATH=$(realpath ${HOME}/.mozilla/firefox/*.default-release)
+
+# KDE specific configurations
+tee -a ${FIREFOX_PROFILE_PATH}/user.js > /dev/null << 'EOF'
+// Использовать KDE Plasma file picker
+user_pref("widget.use-xdg-desktop-portal.mime-handler", 1);
+user_pref("widget.use-xdg-desktop-portal.file-picker", 1);
+
+// Предотвращает дублирование записей в виджете медиаплеера KDE Plasma
+user_pref("media.hardwaremediakeys.enabled", false);
+EOF
+fi
+

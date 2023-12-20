@@ -64,8 +64,9 @@
 
 # --- KDE/QT программы
 
- 'keepassxc' # Локальный менеджер паролей
+ 'haruna' # Видеоплеер
  'audacious' # Аудиоплеер с поддержкой скинов Winamp
+ 'keepassxc' # Локальный менеджер паролей
  'qbittorrent' # Торрент клиент
  'qpwgraph' # GUI управления узлами PipeWire (QT)
 # 'doublecmd-qt5' # Альтернатива Total Commander

@@ -21,23 +21,6 @@ sudo balooctl suspend # Усыпляем работу индексатора
 sudo balooctl disable # Отключаем Baloo
 sudo balooctl purge # Чистим кэш
 
-
-# Проверяю наличие браузера Firefox
-if pacman -Qs firefox > /dev/null; then
-# Set Firefox profile path
-FIREFOX_PROFILE_PATH=$(realpath ${HOME}/.mozilla/firefox/*.default-release)
-
-# KDE specific configurations
-tee -a ${FIREFOX_PROFILE_PATH}/user.js > /dev/null << 'EOF'
-// Использовать KDE Plasma file picker
-user_pref("widget.use-xdg-desktop-portal.mime-handler", 1);
-user_pref("widget.use-xdg-desktop-portal.file-picker", 1);
-
-// Предотвращает дублирование записей в виджете медиаплеера KDE Plasma
-user_pref("media.hardwaremediakeys.enabled", false);
-EOF
-fi
-
 # Тёмная тема Plasma
 kwriteconfig5 --file kdeglobals --group KDE --key LookAndFeelPackage "org.kde.breezedark.desktop"
 
@@ -134,7 +117,7 @@ kwriteconfig5 --file kglobalshortcutsrc --group org.kde.konsole.desktop --key "_
 # Комбинация открытия Spectacle (скриншот выделенной зоны)
 # TODO: Убрать когда выйдет Plasma 6 т.к это там будет по дефолту
 # FIXME: При выполнении убираются отсальные горячие клавиши такие как Meta+Print для захвата активного окна
-kwriteconfig5 --file kglobalshortcutsrc --group "org.kde.spectacle.desktop" --key "RectangularRegionScreenShot" "Meta+Shift+S,none,Capture Rectangular Region"
+# kwriteconfig5 --file kglobalshortcutsrc --group "org.kde.spectacle.desktop" --key "RectangularRegionScreenShot" "Meta+Shift+S,none,Capture Rectangular Region"
 
 # Комбинация режима "Обзор"
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Overview" "Meta+Tab,none,Toggle Overview"

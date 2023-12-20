@@ -29,6 +29,7 @@
  'xdg-desktop-portal-wlr'
  'xorg-xwayland'
 
+ 'mpv' # Лучший видеопроигрыватель
  'galculator' # GNOME калькулятор
  'imv' # Простой просмоторщик изображений
 

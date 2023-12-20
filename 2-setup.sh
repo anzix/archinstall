@@ -44,6 +44,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 sudo systemctl enable grub-btrfsd
 
 # Запрещаю snap-pac выполнять pre и post снапшоты на текущий момент
+# FIXME: Не работает с yay и возможно paru, только c pacman
 export SNAP_PAC_SKIP=y
 fi
 
@@ -66,7 +67,7 @@ sudo pacman -Sy
 
 # FIXME необходимо как-то разделить aur пакеты с основными
 echo "==> Установка дополнительных пакетов, моих программ и шрифтов [Pacman+AUR]"
-yay -S --noconfirm --nobatchinstall --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/{additional,fonts,programs,aur} | column -t)
+yay -S --noconfirm --batchinstall=false --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/{additional,fonts,programs,aur} | column -t)
 
 # Установка и настройка окружения
 PS3="Выберите окружение/WM: "
