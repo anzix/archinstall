@@ -67,7 +67,8 @@ sudo pacman -Sy
 
 # FIXME необходимо как-то разделить aur пакеты с основными
 echo "==> Установка дополнительных пакетов, моих программ и шрифтов [Pacman+AUR]"
-yay -S --noconfirm --batchinstall=false --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/{additional,fonts,programs,aur} | column -t)
+sudo SNAP_PAC_SKIP=y pacman -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/{additional,fonts,programs} | column -t)
+yay -S --noconfirm --batchinstall=false --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/aur | column -t)
 
 # Установка и настройка окружения
 PS3="Выберите окружение/WM: "
