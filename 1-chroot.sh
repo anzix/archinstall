@@ -167,7 +167,7 @@ if [ "${FS}" = 'btrfs' ]; then
   sed -i 's/PRUNE_BIND_MOUNTS =.*/PRUNE_BIND_MOUNTS = "no"/' /etc/updatedb.conf
 
   # Предотвращение индексирования снимков программой "updatedb", что замедляло бы работу системы
-  sed -i '/PRUNEPATHS/s/"$/ \/\btrfsroot \/\.snapshots \/home\/\.snapshots"/' /etc/updatedb.conf
+  sed -i '/PRUNEPATHS/s/"$/ \/\.btrfsroot \/\.snapshots \/home\/\.snapshots"/' /etc/updatedb.conf
 
   # Правка mkinitcpio.conf
   sed -i 's/^MODULES.*/MODULES=(btrfs amdgpu)/' /etc/mkinitcpio.conf

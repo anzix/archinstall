@@ -37,6 +37,9 @@ PKGS+=(
 
 yay -S "${PKGS[@]}" --noconfirm --needed
 
+# Редактирую конфигурационный файл snapper-rollback что точка монтирования /.btrfsroot
+sudo sed -i "s|^mountpoint.*|mountpoint = /.btrfsroot|" /etc/snapper-rollback.conf
+
 # Пересоздаю конфиг grub для создания меток восстановления
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -46,10 +49,8 @@ sudo systemctl enable grub-btrfsd
 # Запрещаю snap-pac выполнять pre и post снапшоты на текущий момент
 # FIXME: Не работает с yay и возможно paru, только c pacman
 export SNAP_PAC_SKIP=y
-fi
 
 # Создаю снимок / и /home
-if [ "$(df -T / | tail -1 | awk '{print $2}')" = 'btrfs' ]; then
 sudo snapper -c root create -d "***System Installed***"
 sudo snapper -c home create -d "***System Installed***"
 fi
