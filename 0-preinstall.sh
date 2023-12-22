@@ -88,8 +88,10 @@ elif [ ${FS} = 'btrfs' ]; then
 	btrfs su cr /mnt/@snapshots
 	btrfs su cr /mnt/@home_snapshots
 	btrfs su cr /mnt/@var_log
-	btrfs su cr /mnt/@var_lib_docker
 	btrfs su cr /mnt/@var_lib_containers
+	btrfs su cr /mnt/@var_lib_docker
+	btrfs su cr /mnt/@vat_lib_machines
+	btrfs su cr /mnt/@vat_lib_portables
 	btrfs su cr /mnt/@var_lib_libvirt_images
 	btrfs su cr /mnt/@var_lib_AccountsService
 	btrfs su cr /mnt/@var_lib_gdm
@@ -98,16 +100,15 @@ elif [ ${FS} = 'btrfs' ]; then
 
 	# BTRFS сам обнаруживает и добавляет опцию "ssd" при монтировании
 	# BTRFS с версией ядра 6.2 по умолчанию включена опция "discard=async"
-	# TODO: сделать btrfsroot скрытым
-	# FIXME: при откате каталоги появляются @2023-12-20T18:38/var/lib/portables и @2023-12-20T18:38/var/lib/machines
 	mount -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@ $DISK_MNT /mnt
-	mkdir -pv /mnt/var/lib/{machines,portables} # Чтобы не создавались вложенные подтома?
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home $DISK_MNT /mnt/home
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@snapshots $DISK_MNT /mnt/.snapshots
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@home_snapshots $DISK_MNT /mnt/home/.snapshots
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_log $DISK_MNT /mnt/var/log
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_containers $DISK_MNT /mnt/var/lib/containers
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_docker $DISK_MNT /mnt/var/lib/docker
+	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_machines $DISK_MNT /mnt/var/lib/machines
+	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_portables $DISK_MNT /mnt/var/lib/portables
 	mount --mkdir -v -o noatime,nodatacow,compress=zstd:2,space_cache=v2,subvol=@var_lib_libvirt_images $DISK_MNT /mnt/var/lib/libvirt/images
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvolid=5 $DISK_MNT /mnt/.btrfsroot
 	mount --mkdir -v -o noatime,compress=zstd:2,space_cache=v2,subvol=@var_lib_AccountsService $DISK_MNT /mnt/var/lib/AccountsService

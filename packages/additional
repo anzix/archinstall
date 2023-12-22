@@ -54,7 +54,7 @@
  'tmux' # Мультиплексор для одноконных терминалов (напр. alacritty)
  'scrcpy' # Демонстрация экрана Android для Linux используя USB ADB
  'i2pd' # Невидимый интернет протокол
- 'cdemu-client' 'vhba-module-dkms' # Эмуляция iso/mds/nrg образов
+ 'cdemu-client' # Эмуляция iso/mds/nrg образов
  'transmission-cli' # Для замены passkey в торрент файлах и многое другое
  'jre-openjdk' # Java библиотеки (для Minecraft)
 

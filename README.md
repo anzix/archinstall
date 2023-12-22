@@ -85,6 +85,13 @@ cd ~/archinstall
    - Активируем systemd сервис `sudo systemctl enable vmtoolsd.service`
    - Если нужно иметь общие папки, [читайте тут](https://wiki.archlinux.org/title/VMware/Install_Arch_Linux_as_a_guest#Shared_Folders_with_vmhgfs-fuse_utility)
 
+## TODO: Пакеты для ноутбуков (на заметку)
+
+```sh
+wpa_supplicant wireless_tools iw # Пакеты для беспроводного соединения
+powertop # Мониторинг энергопотребления и управлением питанием
+```
+
 ## Восстановление Arch, chroot из под LiveISO
 
 Скачиваем Arch LiveISO на флешку и загружаемся с неё
