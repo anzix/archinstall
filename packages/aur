@@ -32,6 +32,7 @@
  'obs-vkcapture-git' 'lib32-obs-vkcapture-git' # OBS плагин для захвата напрямую через API OpenGL/Vulkan (минимизирует затраты)
 # 'amd-vulkan-prefixes' # Быстрое переключение icd драйверов AMD используя переменные (vk_radv, vk_amdvlk, vk_pro)
 # 'python-eyed3' # Правка обложек для mp3 файлов
+# 'spflashtool5-bin' 'qtwebkit-bin' # Прошивальщик Android смартфонов на процессоре MTK
 # 'android-apktool' # Декомпилятор apk файлов
 # 'f3' # CLI утилита для проверки накопителя на фальшивый объём
 # 'gallery-dl-bin' # CLI утилита для скачивания с различных платформ (deviantart, pixiv и т.д) без регистрации и смс
