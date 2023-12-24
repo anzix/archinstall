@@ -19,10 +19,10 @@ popd
 # Настройка yay
 # --combinedupgrade=false - Не комбинировать списки обновлений
 # = --nocleanmenu - Не спрашивать о пакетах для которых требуется очистить кэш сборки
-# --removemake - Всегда удалять зависимости для сборки (make) после установки
-# --diffmenu=false - Не спрашивать об показе изменений (diff)
+# = --removemake - Всегда удалять зависимости для сборки (make) после установки
+# = --diffmenu=false - Не спрашивать об показе изменений (diff)
 # --batchinstall=true - Ставит каждый собранный пакеты в очередь для установки (легче мониторить что происходит)
-yay --save --combinedupgrade=false --diffmenu=false --batchinstall=true
+yay --save --combinedupgrade=false --batchinstall=true
 
 # Включение снимков и настройка отката системы
 if hash snapper 2>/dev/null; then
