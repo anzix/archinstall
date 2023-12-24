@@ -90,8 +90,8 @@ elif [ ${FS} = 'btrfs' ]; then
 	btrfs su cr /mnt/@var_log
 	btrfs su cr /mnt/@var_lib_containers
 	btrfs su cr /mnt/@var_lib_docker
-	btrfs su cr /mnt/@vat_lib_machines
-	btrfs su cr /mnt/@vat_lib_portables
+	btrfs su cr /mnt/@var_lib_machines
+	btrfs su cr /mnt/@var_lib_portables
 	btrfs su cr /mnt/@var_lib_libvirt_images
 	btrfs su cr /mnt/@var_lib_AccountsService
 	btrfs su cr /mnt/@var_lib_gdm

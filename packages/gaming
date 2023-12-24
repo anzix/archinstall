@@ -5,8 +5,6 @@
  'steam'
  'mangohud' 'lib32-mangohud' # Мониторинг для игр
  'lutris' # GUI обвёртка Wine
- 'wine-staging' 'wine-gecko' 'wine-mono'
- 'winetricks' # Протаскивать библиотеки/dll'ки в префикс Wine
  'gamemode' 'lib32-gamemode' # Игровой режим для игр
  'zerotier-one' # Создание и подключение к виртуальным сетям (для игр с друзьями)
 # 'gameconqueror' # (Не)Альтернатива Cheat Engine
@@ -22,7 +20,6 @@
 # 'lgogdownloader-qt5' # CLI обвёртка GOG (с рабочим логином)
  'heroic-games-launcher-bin' # Удобный EGS / GOG лаунчер для Linux
 # 'gzdoom' 'qzdl-git' # Doom движок с GUI менеджером аддонов
-# 'legacylauncher' # Minecraft лаунчер
  'dxvk-bin' # Свежий dxvk для ручных префиксов Wine
  'vkd3d-proton-bin' # Свежий vkd3d-proton (форк vkd3d) для ручных префиксов Wine
  'protontricks' # Протаскивать библиотеки/dll'ки в префикс Steam Proton
@@ -39,5 +36,3 @@
  'joycond-cemuhook-git' # Для работы по UDP Switch контроллера (8BitDo Pro 2) в режиме гироскопа
 # 'flashplayer-standalone' # (Устаревшее) Запуск локальных .swf (Flash) файлов
 # 'ruffle-nightly-bin' # Современный эмулятор Flash плеера для запуска .swf файлов
-
-# --- Wine библиотеки

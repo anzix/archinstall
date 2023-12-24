@@ -47,6 +47,7 @@ kwriteconfig5 --file kdeglobals --group General --key fixed 'JetBrainsMonoNL Ner
 kwriteconfig5 --file systemsettingsrc --group systemsettings_sidebar_mode --key "HighlightNonDefaultSettings" "true"
 
 # Отключает одиночный клик для открытия файлов/папок
+# В Plasma 6 это действие по умолчанию
 kwriteconfig5 --file kdeglobals --group KDE --key SingleClick --type bool false
 
 # Настройка раскладки
@@ -81,6 +82,8 @@ kwriteconfig5 --file konsolerc --group Desktop\ Entry --key DefaultProfile "Prof
 # Ночной режим
 kwriteconfig5 --file kwinrc --group NightColor --key "Active" "true"
 kwriteconfig5 --file kwinrc --group NightColor --key LatitudeAuto 54.799
+kwriteconfig5 --file kwinrc --group NightColor --key LatitudeFixed=54.8
+kwriteconfig5 --file kwinrc --group NightColor --key LongitudeFixed=55.91
 kwriteconfig5 --file kwinrc --group NightColor --key LongtitudeAuto 55.9053
 kwriteconfig5 --file kwinrc --group NightColor --key Mode Location
 
