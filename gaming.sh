@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Загружаю wine-staging и все дополнительные библиотеки
-sudo pacman -S --needed --noconfirm $(expac -S '%o' wine-staging) wine-staging winetciks wine-mono wine-gecko
+sudo pacman -S --needed --noconfirm $(expac -S '%o' wine-staging) wine-staging winetricks wine-mono wine-gecko
 
 echo "==> Установка основных пакетов Pacman"
 yay -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/gaming | column -t)
