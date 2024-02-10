@@ -19,6 +19,7 @@ if [ "${XKB_LAYOUT}" = 'Alt+Shift' ]; then
 elif [ "${XKB_LAYOUT}" = 'Caps Lock' ]; then
   echo "KEYMAP=ruwin_cplk-UTF-8" > /etc/vconsole.conf
 fi
+# TODO: Более приятный шрифт но только мелкий ruscii_8x16
 echo "FONT=ter-v22b" >> /etc/vconsole.conf
 
 # Часовой пояс и апаратные часы
