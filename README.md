@@ -99,7 +99,7 @@ powertop # Мониторинг энергопотребления и управ
 ```sh
 # Монтируем
 mount -v -o subvol=@ /dev/vda2 /mnt
-mount -v /dev/vda1 /mnt/boot
+mount -v /dev/vda1 /mnt/boot/efi
 
 # Чрутимся
 chroot /mnt
