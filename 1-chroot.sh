@@ -175,11 +175,11 @@ if [ "${FS}" = 'btrfs' ]; then
 
   # Добавяем бинарный файл btrfs, чтобы выполнять обслуживание системы без ее монтирования
   sed -i 's/^BINARIES=.*$/BINARIES=(btrfs)/' /etc/mkinitcpio.conf
-  sed -i "s/^HOOKS.*/HOOKS=(base consolefont udev autodetect modconf block filesystems keyboard keymap)/g" /etc/mkinitcpio.conf
+  sed -i "s/^HOOKS.*/HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block filesystems)/g" /etc/mkinitcpio.conf
 
 else
   sed -i 's/^MODULES.*/MODULES=(amdgpu)/' /etc/mkinitcpio.conf
-  sed -i "s/^HOOKS.*/HOOKS=(base consolefont udev autodetect modconf block filesystems keyboard keymap fsck)/g" /etc/mkinitcpio.conf
+  sed -i "s/^HOOKS.*/HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block filesystems fsck)/g" /etc/mkinitcpio.conf
 fi
 mkinitcpio -P
 
@@ -281,10 +281,6 @@ vm.dirty_ratio = 10
 # Содержит в процентах от общей доступной памяти, содержащей свободные страницы и страницы, которые можно восстановить, количество страниц, на которых потоки фоновой очистки ядра начнут записывать "грязные" данные (по умолчанию - 10).
 vm.dirty_background_ratio = 5
 
-# Исправляет различные проблемы связанные с играми используя SteamPlay (Proton)
-# https://wiki.archlinux.org/title/gaming#Increase_vm.max_map_count
-vm.max_map_count=2147483642
-
 # Увеличение длины очереди входящих пакетов.
 # После получения пакетов из кольцевого буфера сетевой карты они помещаются в специальную очередь в ядре.
 # При использовании высокоскоростных сетевых карт увеличение размера очереди может помочь предотвратить потерю пакетов:
@@ -348,6 +344,9 @@ EOF
 fi
 
 # Добавления моих опций ядра grub
+# Отключает всякие ненужные systemd сообщения
+# -rd.systemd.show_status=false
+# -rd.udev.log_level=3
 # -quiet - Отключить большинство сообщений журнала
 # intel_iommu=on - Включает драйвер intel iommu
 # iommu=pt - Проброс только тех устройств которые поддерживаются
@@ -355,8 +354,8 @@ fi
 sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 mitigations=off intel_iommu=on iommu=pt amdgpu.ppfeaturemask=0xffffffff cpufreq.default_governor=performance zswap.enabled=0"/g' /etc/default/grub
 
 # Рекурсивная правка разрешений в папке скриптов
-chmod -R 700 /archinstall
-chown -R 1000:users /archinstall
+chmod 700 /archinstall
+chown 1000:users /archinstall
 
 # Установка и настройка Grub
 #sed -i -e 's/#GRUB_DISABLE_OS_PROBER/GRUB_DISABLE_OS_PROBER/' /etc/default/grub # Обнаруживать другие ОС и добавлять их в grub (нужен пакет os-prober)
@@ -365,12 +364,12 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 # Врубаю сервисы
 # BTRFS: discard=async можно использовать вместе с fstrim.timer
-systemctl enable NetworkManager.service
-systemctl enable bluetooth.service
-systemctl enable sshd.service
-systemctl enable fstrim.timer
-systemctl enable plocate-updatedb.timer
-systemctl enable systemd-oomd.service
-systemctl enable dbus-broker.service
-systemctl enable fancontrol.service
+# systemctl enable systemd-timesyncd.service # Нужно? Синхронизация времени
+systemctl enable NetworkManager.service # Сеть
+systemctl enable bluetooth.service # Bluetooth
+systemctl enable sshd.service # SSH
+systemctl enable fstrim.timer # Trim для SSD
+systemctl enable plocate-updatedb.timer # Индексация файлов
+systemctl enable systemd-oomd.service # OoO Killer
+systemctl enable fancontrol.service # Контроль вентиляторов GPU
 systemctl mask systemd-networkd.service
