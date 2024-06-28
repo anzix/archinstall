@@ -37,6 +37,7 @@
  'ffmpegthumbs' # Предпросмотрщик видео для проводника dolphin
 # 'icoutils' # Отобраения иконок для wine (exe файлов) в dolphin
  'kio-admin' # Поддержка управления файлами от имени администратора для dolphin
+# 'ksystemlog' # Просмоторщик системных логов
  'kimageformats5' # Добавляет поддержку форматов jxl, xcf, psd для gwenview
  'kdenetwork-filesharing' # Делится каталогом по локальной сети используя Samba
 # 'kdeconnect' # Управление Linux с Android
@@ -77,9 +78,9 @@
 # --- Дополнительные пакеты Plasma
 
  'sshfs'
+ 'xwaylandvideobridge' # Для возможности транслировать экран в xwayland приложениях, которые не имеют нативную поддержку pipewire (пример: discord)
 
 # --- AUR
 
 # 'fancontrol-gui' # GUI обвертка fancontrol для управление вентиляторами
  'soulseekqt' # P2P-сеть для передачи файлов и поиска музыки (многое можно найти)
- 'xwaylandvideobridge-bin' # Для возможности транслировать экран в xwayland приложениях, которые не имеют нативную поддержку pipewire (пример: discord)

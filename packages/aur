@@ -10,6 +10,7 @@
 # 'torrserver-bin' # Стриминг пиратского контента
 # 'jamesdsp' # Процессор звуковых эффектов, улучшает звук для наушников
 # 'edb-debugger' # AArch32/x86/x86-64 отладчик, созданный на основе Ollydbg
+# 'gf2-git' # Минималистичный X11 GUI отладчик на основе GDB
 # 'cpu-x' # CPU-Z для Linux
 
 # --- ШРИФТЫ
@@ -23,6 +24,7 @@
 # 'paper-icon-theme-git' # Иконки заточенные под Material Design
 # 'sweet-gtk-theme-dark' # Тема из дистрибутива Garuda Linux (вроде)
 # 'beautyline' # Иконки из дистрибутива Garuda Linux
+# 'googledot-cursor-theme' # Интересный курсор
 
 # --- Утилиты и разное
 
@@ -42,3 +44,4 @@
 # 'debtap' # Конвертер .deb пакета в Arch Linux совместимый
 # 'kyocera-print-driver' # Драйвер для принтера Kyocera FS-1060DN
 # 'oneko' # Милые котики бегают за твоим курсором
+# 'neo-matrix' # Улучшенный cmatrix. Цифровой дождь

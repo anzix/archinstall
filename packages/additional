@@ -6,27 +6,31 @@
  'mpc' # CLI Музыкальный клиент для управления mpd
  'ncmpcpp' # TUI Музыкальный плеер, обвёртка для mpd
 # 'ncspot' # TUI Spotify плеер
+ 'streamlink' # CLI просмотр потоков Twitch/YouTube и т.д
  'mediainfo' # CLI Информация о медиа
- 'alsa-utils' # CLI Утилиты ALSA, в числе которых alsamixer и amixer
+ 'alsa-utils' # CLI Утилиты ALSA (alsamixer, amixer)
  'pulsemixer' # TUI Регулятор громкости PulseAudio.
  'btop' # TUI Диспетчер задач
+ 'nvtop' # TUI Статистика утилизации GPU от AMD/Nvidia/Intel
+# 'nload' # TUI Минималистичный статус интернет трафика
  'hexedit' # TUI HEX-редактор
  'testdisk' # TUI Востановления данных из накопителей
- 'hdparm' # CLI Проверка состояния S.M.A.R.T'а HDD и SSD
+ 'hdparm' # CLI Утилита манипулирования HDD/SSD (Бенчмарки и т.д)
+ 'smartmontools' # CLI Мониторинг состояния S.M.A.R.T'а HDD/SSD
  'ncdu' # TUI Анализатор свободного места
+# 'dua-cli' # TUI Анализатор свободного места на Rust
  'fdupes' # CLI Поиск и удаление дубликатов файлов
- 'radeontop' # TUI мониторинг AMD GPU
  'zbar' # CLI Сканер QR кодов
+ 'optipng' # CLI Сжатие изображения png
  'translate-shell' # CLI Переводчик в терминале
  'xdg-utils' # CLI инструменты для решения различных задач с интеграцией рабочего стола
  'jq' # CLI обработчик JSON
  'bc' # CLI Калькулятор
  'tree' # Древовидный список
- 'eza' # Замена ls
+ 'eza' # Замена ls и tree
  'bat' # Замена cat
  'ripgrep' # Замена grep
  'fd' # Замена find
-# 'lurk' # Замена strace
 # 'systeroid' # Замена sysctl
  'expac' # Утилита извлечения данных alpm (базы данных pacman)
  'rebuild-detector' # Показывает лист AUR пакетов которые были собраны на старых версиях зависимостей, для их дальнейшей пересборки
@@ -38,10 +42,9 @@
  'gvfs' # Поддержка мусорки для файлого менеджера
  'gtk2' # Для устаревших программ
  'yt-dlp' # Скачивать видео
- 'streamlink' # CLI просмотр потоков Twitch/YouTube и т.д
  'btfs' # Файловая система Bittorrent, основанная на FUSE. Для просмотра онлайн торрентов
  'ffmpeg' # Конвертер/Декодер/Рекордер видео
- 'libnotify' # Информирование используя notify-send
+ 'libnotify' # Уведомления используя notify-send
  'netctl' # Управление сетью systemd на основе профилей
  'net-tools' # Для прослушивания портов
  'tesseract' # OCR сканер
@@ -50,6 +53,7 @@
  'hunspell-ru' # Русский словарь для проверки орфографии (работает только с UTF8 кодировкой)
  'atool' # Для предпросмотра архивов
  'libfaketime' # CLI утилита чтобы подделывать время для программ или пиратских игр (man faketime)
+ 'perl-image-exiftool' # Утилита для удаления метаданных изображений (man exiftool)
  'flashrom' # Для прошивания чипов программатором ch341a
  'dfu-util' # Для обновления прошивки паяльника Pinecil первой версии
  'tmux' # Мультиплексор для одноконных терминалов (напр. alacritty)
@@ -57,18 +61,23 @@
  'i2pd' # Невидимый интернет протокол
  'cdemu-client' # Эмуляция iso/mds/nrg образов
  'transmission-cli' # Для замены passkey в торрент файлах и многое другое
- 'jre-openjdk' # Java библиотеки (для Minecraft)
+ 'jre-openjdk' # Последние Java библиотеки
+ 'jre21-openjdk' # Рабочая версия библиотек Java для работы с Legacy Launcher
+ 'glfw' # OpenGL библиотека отрисовки окон для нативного Minecraft на Wayland
 
  'libva-utils' # Проверка VA-API дравера командой (vainfo)
  'vdpauinfo' # Проверка VDPAU драйвера командой (vdpauinfo)
  'vulkan-tools' # Инструменты vulkan (vulkaninfo)
 
- 'python-pipx' # Установка пакетов python в изолированной окружении
 # 'rhvoice' 'rhvoice-voice-aleksandr-hq' 'rhvoice-voice-arina' 'rhvoice-voice-alan' 'rhvoice-voice-clb' # Синтезатор речи + голоса (Английский + Русский)
 
 # --- Оформление
 
 # 'adapta-gtk-theme' # GTK Тема основанная на Material Design
+
+# -- Компрессоры/Декомпрессоры и Сжимальщики
+
+ 'ghostscript' # Сжимает PDF архивы
 
 # --- Security
 
@@ -78,11 +87,22 @@
 # --- DEV
 
  'gdb' # Отладка
+ 'clang' # clang также включает clang-tidy и clang-query
+ 'ltrace' # Отображение вызовов динамической библиотеки процесса.
+# 'lurk' # Замена strace
+# 'rz-cutter' # GUI C/C++ отладчик + очень удобный дизассемблер как IDA Pro
+# 'rz-ghidra' # Нативный плагин ghidra для декомпиляции
+# 'heaptrack' # GUI профилировщик, отслеживание отечек памяти, распределяет горячие точки и т.д
  'tinyxxd' # Крошечная версия xxd без vim
+ 'pyenv' # Выставлять загруженные версии Python глобально не заменяя системную
+ 'python-pip' # Рекомендуемый PyPA инструмент для установки пакетов Python.
+ 'python-pipx' # Установка пакетов python в изолированной окружении
+ 'python-virtualenv' # Для создания виртуального окружения
  'npm' # Для neovim
  'yarn' # Для neovim плагина https://github.com/iamcco/markdown-preview.nvim
  'tidy' # Инструмент для приведения HTML-кода к чистому стилю
  'onefetch' # CLI утилита для вывода информации git реозитория
+ 'cloc' # CLI утилита позволяющая считать кол-во строк кода/комментарий
 # 'docker' 'docker-compose' # Контейнеры
 # 'podman' 'podman-compose' # Контейнеры, альтернатива docker'у
 # 'distrobox' # Утилита контейнеризации окружения Linux

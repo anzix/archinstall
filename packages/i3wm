@@ -24,7 +24,7 @@
  'rofi-emoji' # Плагин Rofi для выбора смайликов
  'screenkey' # Показывать набранные клавиши
  'scrot' # Необходим для maim
- 'udiskie' # Автоматическое монторование USB флешек с треем
+ 'udiskie' 'udisks2' # Автоматическое монторование USB флешек с треем + демон манипуляции с дисками
  'xclip' # System Clipboard (необходимо для neovim)
  'xsel' # Для копирования текста из neovim
 
@@ -39,6 +39,7 @@
 # --- РАЗНОЕ
 
  'alacritty' # Терминал
+ 'tmux' # Мультиплексор для терминалов без вкладок (т.к alacritty)
  'lf' # Удобный TUI файлоый менеджер
  'network-manager-applet' # Аплет NetworkManager
  'pavucontrol' # GTK PulseAudio volume control

@@ -51,6 +51,7 @@
  'helvum' # GUI управления узлами PipeWire
  'transmission-gtk' # Торрент клиент
  'nicotine+' # P2P-сеть для передачи файлов и поиска музыки (многое можно найти)
+ 'uget' # GTK GUI менеджер закачек http/ftp (альтернатива jdownloader 2)
 # 'ghex' # GUI Hex редактор
 
 # --- AUR

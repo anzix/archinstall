@@ -12,7 +12,11 @@
 
 # --- Игровые утилиты
 
+ 'oxyromon' # Органайзер ROM'ов (All-in-One)
+
  'mame-tools' # Конвертирование .iso / .cue образов PS2 игр в сжатый .chd образ (chdman)
+ 'maxcso' # Быстрый конвертор ISO в сжатый CSO образ для PSP и PS2
+ 'nsz' #  Конвертирование nsz в nsp образ для Nintendo Switch
  'xdelta3' # Для применения патчей бинарных файлов/образов (n64 и т.д)
 
 # --- AUR
@@ -26,13 +30,15 @@
  'protonup-qt' # Удобная утилитка для скачки runner'ов Wine
 # 'goverlay-bin' # GUI настройка оверлея MangoHud
  'vkbasalt' 'lib32-vkbasalt' 'reshade-shaders-git' # Постпроцессинг для игр + набор шейдеров
-# 'yuzu-mainline-git' # Switch Эмулятор (Нативная git версия)
+# 'suyu-git' # Nintendo Switch Эмулятор (Нативная git версия)
+# 'lime3ds-git' # Nintendo 3DS Эмулятор (Нативная git версия)
 # 'rpcs3-bin' # PS3 Эмулятор
 # 'cemu-bin' # Wii U Эмулятор
 # 'pcsx2-latest-bin' # PS2 Эмулятор (AppImage)
+# 'duckstation-qt-bin' # PS1 Эмулятор (AppImage)
+# 'noods-git' # Nintendo DS эмулятор
 # 'xnp2' # Эмулятор PC98 (Touhou 1-5)
  'game-devices-udev' # Udev правила для работы контроллеров 8BitDo в эмуляторов Cemu и других
- 'joycond-git' # Альтернатива BetterJoy
- 'joycond-cemuhook-git' # Для работы по UDP Switch контроллера (8BitDo Pro 2) в режиме гироскопа
-# 'flashplayer-standalone' # (Устаревшее) Запуск локальных .swf (Flash) файлов
+ 'joycond-git' # CLI Альтернатива BetterJoy
+ 'joycond-cemuhook-git' # CLI инструмент для работы по UDP Switch контроллера (8BitDo Pro 2) в режиме гироскопа
 # 'ruffle-nightly-bin' # Современный эмулятор Flash плеера для запуска .swf файлов

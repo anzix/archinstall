@@ -10,8 +10,8 @@
  'zsh' 'git'
  'wget' # Для скачивания файлов
  'neovim' # Консольный текстовый редактор
- 'grub' 'efibootmgr' # Загрузчик
- 'intel-ucode'
+ 'grub' 'efibootmgr' # Загрузчик и менеджер UEFI
+ 'intel-ucode' # Микрокод
  'terminus-font' # Шрифты разных размеров с кириллицей для tty
  'networkmanager' # Менеджер сети
  'htop' # Простой консольный диспетчер задач
@@ -19,7 +19,7 @@
  'reflector' # Инструмент для оптимизации зеркал Pacman
  'pacman-contrib' # Скрипты и инструменты для Pacman
  'openssh' # SSH соединение
- 'neofetch' # Чтобы выпендриватся
+ 'fastfetch' # Альтернатива neofetch, чтобы выпендриватся
  'exfat-utils' # Поддержка файловой системы exFAT (Для sd-карт)
  'ntfs-3g' # Поддержка файловой системы NTFS
  'dosfstools' # Поддержка файловой системы vFAT
@@ -33,7 +33,7 @@
  'dbus-broker' 'dbus-broker-units' # Оптимизированная система шины сообщений, для надёжности и интеграции с systemd
  'ccache' # Ускоряет перекомпиляцию за счет кэширования предыдущих компиляций
  'man-pages' 'man-db' # Мануалы
- 'unzip' 'unrar' 'p7zip' # Архивирование и распаковка файлов zip/rar/7z
+ 'unzip' 'unrar' 'p7zip' 'zip' # Архивирование и распаковка файлов zip/rar/7z
 
 # --- XORG
 
@@ -43,6 +43,7 @@
  'xorg-xrandr' # Менять разрешение
  'xorg-xinput' # Для работы граф.планшета XP-PEN G640 + OpenTabletDriver
  'xorg-xgamma' # Позволяет менять и исправлять гамму для игр используя Lutris
+ 'xorg-xlsclients' # Для показа всех запущенных клиентов Xorg командой xlsclients
  'xclip' # Поддержка буфер обмена
 
 # --- ВИДЕО [OPENGL+VULKAN]
@@ -58,10 +59,14 @@
  'vulkan-radeon' 'lib32-vulkan-radeon' # Реализация Vulkan драйвера от Mesa
  'vulkan-mesa-layers' 'lib32-vulkan-mesa-layers' # Слои Vulkan в Mesa
 
+ # Слои совместимости (нет необходимости в их наличии для AMD)
+ # 'libvdpau-va-gl' # Ускорение на основе VA-API для программ на основе VDPAU
+ # 'libva-vdpau-driver и lib32-libva-vdpau-driver' # Ускорение на основе VDPAU для программ на основе VA-API
+
  # Nvidia проприетарные
 
  # 'nvidia-dkms'
- # 'nvidia-utils' 'lib32-nvidia-utils'
+ # 'nvidia-utils' 'lib32-nvidia-utils' # Для воспроизведения 32bit игр/программ
  # 'nvidia-settings' # Настройки
  # 'egl-wayland'
  # 'opencl-nvidia' 'lib32-opencl-nvidia'
@@ -69,7 +74,7 @@
  # 'libvdpau-va-gl'
  # 'cuda' # Cuda пакет, для разработчиков
 
-  # Для ноутбуков Intel/Nvidia
+  # Для ноутбуков с гибридной графикой Intel/Nvidia
 
  # 'intel-media-driver'
  # 'intel-gmmlib'
@@ -99,12 +104,15 @@
 
  'noise-suppression-for-voice' # Плагин подавления шума микрофона в реальном времени (Pipewire only)
 
+ 'v4l2loopback-dkms' # Для создания виртуальной камеры в OBS
+
  'gstreamer'
  'gst-libav'
  'gst-plugins-base' 'lib32-gst-plugins-base'
  'gst-plugins-good' 'lib32-gst-plugins-good'
  'gst-plugins-bad' 'gst-plugins-ugly' # Библеотеки для воспроизведения мультимедия (для запуска старья)
- 'gstreamer-vaapi' # Эффективный плагин кодировщик для RDNA1 AMDGPU (для использования нужен AUR пакет obs-gstreamer)
+ 'gstreamer-vaapi' # Эффективный плагин кодировщик для GPU от AMD/Intel/NVIDIA (для использования нужен AUR пакет obs-gstreamer)
+
 
 # --- BLUETOOTH
 
