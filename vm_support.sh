@@ -3,18 +3,29 @@
 echo "==> Установка пакетов для виртуализации"
 sudo pacman -S --noconfirm --needed --ask 4 $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/vm_support | column -t)
 
-# Использовать как обычный пользователь
-sudo usermod -aG libvirt $(whoami)
+# libvirt - Использовать как обычный пользователь
+# kvm - для проброса input устройств (VFIO)
+sudo usermod -aG kvm,libvirt $(whoami)
+
+# Иметь доступ к локальным .qcow2 образам за пределами /var/lib/libvirt/images
+sudo cp /etc/libvirt/qemu.conf /etc/libvirt/qemu.conf.bak
+sudo sed -i 's|#user = .*|user = "'$(id -un)'"|g' /etc/libvirt/qemu.conf
+sudo sed -i 's|^#group = .*|group = "'$(id -un)'"|g' /etc/libvirt/qemu.conf
 
 # Включаем сервис
 sudo systemctl enable libvirtd
 
 PS3="Выберите настройку сети VM: "
-select ENTRY in "Default" "Bridge"; do
+select ENTRY in "Default virbr0 (NAT)" "Bridge"; do
 	export NETWORK_VM=$ENTRY
 	echo "Выбран ${NETWORK_VM}."
 	break
 done
+
+# FIXME: исправить второй вариант Bridge
+# так как это НЕ мост по своей сути это
+# тот же NAT
+# https://linuxconfig.org/how-to-use-bridged-networking-with-libvirt-and-kvm
 
 # Установка сети VM
 if [ ${NETWORK_VM} = 'Default' ]; then
