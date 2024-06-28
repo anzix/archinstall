@@ -210,5 +210,10 @@ sudo dconf update
 gnome-extensions enable GPaste@gnome-shell-extensions.gnome.org
 gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
 
+# Использование gnome-keyring для добавления ssh ключей
+# Прописан путь на gcr-ssh-agent в ~/.config/environment.d/50-gnome.conf
+# TODO: протестировать
+
 # Запуск
 sudo systemctl enable gdm.service
+systemctl --user enable gcr-ssh-agent.service
