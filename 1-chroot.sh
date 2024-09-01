@@ -24,7 +24,7 @@ echo "FONT=ter-v22b" >> /etc/vconsole.conf
 
 # Часовой пояс и апаратные часы
 ln -sf /usr/share/zoneinfo/"${time_zone}" /etc/localtime
-hwclock --systohc # Эта команда предполагает, что аппаратные часы настроены в формате UTC.
+hwclock --systohc # Синхронизация аппаратных часов
 
 # Имя хоста
 echo "${HOST_NAME}" > /etc/hostname
