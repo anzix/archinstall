@@ -35,9 +35,11 @@
 # 'amd-vulkan-prefixes' # Быстрое переключение icd драйверов AMD используя переменные (vk_radv, vk_amdvlk, vk_pro)
 # 'python-eyed3' # Правка обложек для mp3 файлов
 # 'spflashtool5-bin' 'qtwebkit-bin' # Прошивальщик Android смартфонов на процессоре MTK
+# 'qdl' # CLI Прошивальщик Android смартфонов на процессоре Qualcomm (альтернатива QFIL)
 # 'android-apktool' # Декомпилятор apk файлов
+# 'imsprog' # QT Программатор CH341a для I2C, SPI, DataFlash и MicroWire EEPROM/Flash микросхем (серий 24xxx, 25xxx, 45xxx, 93xxx, 95xxx)
 # 'f3' # CLI утилита для проверки накопителя на фальшивый объём
-# 'gallery-dl-bin' # CLI утилита для скачивания с различных платформ (deviantart, pixiv и т.д) без регистрации и смс
+# 'gallery-dl-bin' # CLI утилита для скачивания с различных платформ (deviantart, pixiv и т.д)
 # 'xdg-ninja' # CLI Скрипт проверяющий ваш $HOME на соответствие спецификаций XDG Base Directory
 # 'hw-probe' # Иследование системы на совместимость оборудования linux-hardware.org
 # 'pacgraph' # Рисует график установленных пакетов Pacman

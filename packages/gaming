@@ -42,3 +42,4 @@
  'joycond-git' # CLI Альтернатива BetterJoy
  'joycond-cemuhook-git' # CLI инструмент для работы по UDP Switch контроллера (8BitDo Pro 2) в режиме гироскопа
 # 'ruffle-nightly-bin' # Современный эмулятор Flash плеера для запуска .swf файлов
+# 'lib32-gst-plugins-ugly' # Необходим для Японских визуальных новелл

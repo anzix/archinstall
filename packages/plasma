@@ -22,7 +22,7 @@
  'plasma-vault' # Plasma applet and services for creating encrypted vaults
  'plasma-wayland-session'
  'plasma-workspace-wallpapers'
- 'plasma5-applets-window-buttons' # Апплет смены раскладки клавиатуры
+ 'plasma-applet-window-buttons' # Апплет смены раскладки клавиатуры
  'powerdevil' # KDE Bluetooth applet
  'sddm' # Дисплей менеджер
  'sddm-kcm' # KDE Config Module for SDDM
@@ -38,7 +38,7 @@
 # 'icoutils' # Отобраения иконок для wine (exe файлов) в dolphin
  'kio-admin' # Поддержка управления файлами от имени администратора для dolphin
 # 'ksystemlog' # Просмоторщик системных логов
- 'kimageformats5' # Добавляет поддержку форматов jxl, xcf, psd для gwenview
+ 'kimageformats' # Добавляет поддержку форматов avif, jxl, xcf, psd для gwenview
  'kdenetwork-filesharing' # Делится каталогом по локальной сети используя Samba
 # 'kdeconnect' # Управление Linux с Android
  'phonon-qt5-gstreamer' # Бэкенд для Qt5
@@ -84,3 +84,5 @@
 
 # 'fancontrol-gui' # GUI обвертка fancontrol для управление вентиляторами
  'soulseekqt' # P2P-сеть для передачи файлов и поиска музыки (многое можно найти)
+ 'fooyin-bin' # QT альтернатива Foobar2000 на Linux
+ # 'qdiskinfo' # QT альтернатива CrystalDiskInfo на Linux
