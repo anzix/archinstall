@@ -128,7 +128,7 @@ if [ "${FS}" = 'btrfs' ]; then
 
   # Пересоздаём и переподключаем /.snapshots и /home/.snapshots
   mkdir -v /.snapshots /home/.snapshots
-  mount -v -a
+  mount -v /.snapshots /home/.snapshots
 
   # Меняем права доступа для легкой замены снимка @ в любое время без потери снимков snapper.
   chmod -v 750 /.snapshots /home/.snapshots
