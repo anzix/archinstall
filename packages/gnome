@@ -57,6 +57,7 @@
 # --- AUR
 
 # 'shared-mime-info-gnome' # Ассоциации файлов GNOME по умолчанию
+ 'gearlever' # Простое управдение AppImage пакетов, написано на GTK LibAdwaita
  'gcdemu' # CDEmu интеграция (эмуляция образов)
  'adw-gtk3' # Adwaita тема для устаревших GTK3 приложений
  'kvantum-theme-libadwaita-git' # LibAdwaita тема для QT 5/6 приложений

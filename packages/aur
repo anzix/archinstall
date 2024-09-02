@@ -28,6 +28,7 @@
 
 # --- Утилиты и разное
 
+ 'appimagelauncher' # Управление AppImage пакетов, написана на QT
  'chromium-widevine' # Плагин для работы DRM контента в браузере ungoogled-chromium
  'mpd-mpris' # MPRIS поддержка для MPD
  'obs-gstreamer' # Более эффективный плагин кодировщик для OBS (Для RDNA 1)

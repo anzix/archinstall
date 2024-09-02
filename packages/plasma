@@ -2,51 +2,32 @@
 
 # --- Основные пакеты для окружения KDE Plasma
 
- 'bluedevil'
- 'breeze-gtk' # Улучшение интеграции приложений GTK
- 'kde-gtk-config' # GTK2 and GTK3 Configurator for KDE
- 'kdeplasma-addons'
- 'kdialog' # GUI диалоги
+ 'plasma-desktop' # Минимальный пакет для окружения Plasma
+ 'kdeplasma-addons' # Дополнения для Plasma
+
+# --- Опциональные зависимости Plasma и дополнения из plasma-meta
+
+ 'kscreen' # Поддержка параметров экрана (менять разрешение, герцовку и т.д)
  'kgamma' # Управлением гаммой монитора
- 'kinfocenter'
- 'kscreen'
+ 'bluedevil' # Поддержка Bluetooth
+ 'plasma-nm' # Поддержка Network Manager
+ 'plasma-pa' # Поддержка PulseAudio (Pipewire)
+ 'kwayland-integration' # Интеграция Wayland для приложений Qt5
+
+ 'plasma-disks' # Контролирует устройства с поддержкой SMART на предмет неминуемого сбоя
+ 'plasma-firewall' # Поддержка управления панели Firewall
+ 'plasma-vault' # Апплет Plasma и сервисы для создания зашифрованных хранилищ
+ 'kwallet-pam' # Поддержка интеграции PAM
+ 'plasma-workspace-wallpapers' # Дополнительные обои для окружения Plasma
  'ksshaskpass' # Помощник ssh-add, использующий kwallet и kpassworddialog
- 'kwallet-pam'
- 'kwayland-integration'
- 'plasma-browser-integration'
- 'plasma-desktop'
- 'plasma-disks'
- 'plasma-firewall'
- 'plasma-nm'
- 'plasma-pa'
- 'plasma-vault' # Plasma applet and services for creating encrypted vaults
- 'plasma-wayland-session'
- 'plasma-workspace-wallpapers'
- 'plasma-applet-window-buttons' # Апплет смены раскладки клавиатуры
- 'powerdevil' # KDE Bluetooth applet
- 'sddm' # Дисплей менеджер
- 'sddm-kcm' # KDE Config Module for SDDM
- 'wl-clipboard' # Wayland clipboard copy+paste
- 'xdg-desktop-portal'
- 'xdg-desktop-portal-kde'
+ 'breeze-gtk' # Улучшение интеграции приложений GTK
+ 'kde-gtk-config' # Конфигуратор GTK2 и GTK3 для KDE
+
 # 'flatpak-kcm' # Интеграция разрешений Flatpak
 
-# --- Non-Plasma пакеты (дополнения, расширения и т.д)
+ 'xdg-desktop-portal-kde' # KDE'шный XDG портал
 
- 'dolphin-plugins' # Добавляет действия для git, mount и umount для iso
- 'ffmpegthumbs' # Предпросмотрщик видео для проводника dolphin
-# 'icoutils' # Отобраения иконок для wine (exe файлов) в dolphin
- 'kio-admin' # Поддержка управления файлами от имени администратора для dolphin
-# 'ksystemlog' # Просмоторщик системных логов
- 'kimageformats' # Добавляет поддержку форматов avif, jxl, xcf, psd для gwenview
- 'kdenetwork-filesharing' # Делится каталогом по локальной сети используя Samba
-# 'kdeconnect' # Управление Linux с Android
- 'phonon-qt5-gstreamer' # Бэкенд для Qt5
-
-# --- Сторонние пакеты
-
- 'xdg-desktop-portal-gtk' # Улучшение интеграции между порталами с GTK приложениями
- 'xsettingsd' # Применять настройки GTK приложений на лету
+ 'sddm' 'sddm-kcm' # Дисплей менеджер и модуль для управления SDDM
 
 # --- Семейство KDE программ
 
@@ -63,6 +44,25 @@
  'plasma-systemmonitor' # Системный монитор
  'spectacle' # Скриншотер
 
+# --- Non-Plasma пакеты (дополнения, расширения и т.д)
+
+ 'dolphin-plugins' # Добавляет действия для git, mount и umount для iso
+ 'ffmpegthumbs' # Предпросмотрщик видео для проводника dolphin
+# 'icoutils' # Отобраения иконок для wine (exe файлов) в dolphin
+ 'libappimage' # Отображения иконок для AppImage в dolphin
+ 'kio-admin' # Поддержка управления файлами от имени администратора для dolphin
+# 'ksystemlog' # Просмоторщик системных логов
+ 'kimageformats' # Добавляет поддержку форматов avif, jxl, xcf, psd для gwenview
+ 'kdenetwork-filesharing' # Делится каталогом по локальной сети используя Samba
+# 'kdeconnect' # Управление Linux с Android
+ 'phonon-qt5-gstreamer' # Бэкенд для Qt5
+
+# --- Сторонние пакеты
+
+ 'xdg-desktop-portal-gtk' # Улучшение интеграции между порталами с GTK приложениями
+ 'xsettingsd' # Применять настройки GTK приложений на лету
+ 'wl-clipboard' # Копирование+вставка из буфера обмена Wayland
+
 # --- KDE/QT программы
 
  'haruna' # Видеоплеер
@@ -77,6 +77,7 @@
 
 # --- Дополнительные пакеты Plasma
 
+ 'kdialog' # GUI диалоги
  'sshfs'
  'xwaylandvideobridge' # Для возможности транслировать экран в xwayland приложениях, которые не имеют нативную поддержку pipewire (пример: discord)
 
