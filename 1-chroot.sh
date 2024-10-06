@@ -3,9 +3,12 @@
 # раскомментируйте, чтобы просмотреть информацию об отладке
 #set -xe
 
-# Руссифицируемся
+# Руссифицируемся и добавляем дополнительные локали
 # LC_COLLATE=C Приятная сортировка и сравнения строк
-sed -i "s/#\(en_US\.UTF-8\)/\1/; s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
+sed -i -e "s/#\(en_US\.UTF-8\)/\1/" \
+       -e "s/#\(ru_RU\.UTF-8\)/\1/" \
+       -e "s/#\(ja_JP\.UTF-8\)/\1/" \
+   /etc/locale.gen
 locale-gen
 tee /etc/locale.conf > /dev/null << EOF
 LANG=ru_RU.UTF-8
@@ -235,18 +238,18 @@ Exec = /usr/bin/sh -c "grub-install --target=x86_64-efi --efi-directory=/boot/ef
 EOF
 
 # Хук для предотвращения создания Wine ассоциации файлов
-tee /etc/pacman.d/hooks/stop-wine-associations.hook > /dev/null << "EOF"
-[Trigger]
-Operation = Install
-Operation = Upgrade
-Type = Path
-Target = usr/share/wine/wine.inf
-
-[Action]
-Description = Остановливаю Wine от перехвата ассоциаций файлов...
-When = PostTransaction
-Exec = /bin/sh -c '/usr/bin/grep -q "HKCU,\"Software\\\Wine\\\FileOpenAssociations\",\"Enable\",2,\"N\"" /usr/share/wine/wine.inf || /usr/bin/sed -i "s/\[Services\]/\[Services\]\nHKCU,\"Software\\\Wine\\\FileOpenAssociations\",\"Enable\",2,\"N\"/g" /usr/share/wine/wine.inf'
-EOF
+# tee /etc/pacman.d/hooks/stop-wine-associations.hook > /dev/null << "EOF"
+# [Trigger]
+# Operation = Install
+# Operation = Upgrade
+# Type = Path
+# Target = usr/share/wine/wine.inf
+#
+# [Action]
+# Description = Остановливаю Wine от перехвата ассоциаций файлов...
+# When = PostTransaction
+# Exec = /bin/sh -c '/usr/bin/grep -q "HKCU,\"Software\\\Wine\\\FileOpenAssociations\",\"Enable\",2,\"N\"" /usr/share/wine/wine.inf || /usr/bin/sed -i "s/\[Services\]/\[Services\]\nHKCU,\"Software\\\Wine\\\FileOpenAssociations\",\"Enable\",2,\"N\"/g" /usr/share/wine/wine.inf'
+# EOF
 
 # Размер Zram
 tee /etc/systemd/zram-generator.conf > /dev/null << EOF
@@ -372,4 +375,13 @@ systemctl enable fstrim.timer # Trim для SSD
 systemctl enable plocate-updatedb.timer # Индексация файлов
 systemctl enable systemd-oomd.service # OoO Killer
 systemctl enable fancontrol.service # Контроль вентиляторов GPU
+
+# Добавление указателя мыши в TTY.
+# FIXME: появляется ошибка в журнале, не влияющее ни на что
+# disable-paste[1030]: *** err
+# disable-paste[1030]: /dev/tty1: Permission denied
+# disable-paste[1030]: *** err
+# disable-paste[1030]: Oh, oh, it's an error! possibly I die!
+systemctl enable gpm.service
+
 systemctl mask systemd-networkd.service
