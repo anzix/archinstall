@@ -28,11 +28,13 @@
  'vkd3d-proton-bin' # Свежий vkd3d-proton (форк vkd3d) для ручных префиксов Wine
  'protontricks' # Протаскивать библиотеки/dll'ки в префикс Steam Proton
  'protonup-qt' # Удобная утилитка для скачки runner'ов Wine
-# 'goverlay-bin' # GUI настройка оверлея MangoHud
+# 'goverlay-bin' # Графическая утилита по настройке Mangohud на QT
+# 'mangojuice' # Графическая утилита по настройке Mangohud на Libadwaita
  'vkbasalt' 'lib32-vkbasalt' 'reshade-shaders-git' # Постпроцессинг для игр + набор шейдеров
 # 'suyu-git' # Nintendo Switch Эмулятор (Нативная git версия)
 # 'lime3ds-git' # Nintendo 3DS Эмулятор (Нативная git версия)
 # 'lime3ds-appimage' # Nintendo 3DS Эмулятор (AppImage, полу-рабочая, не советую)
+# 'shadps4-git' # PS4 Эмулятор
 # 'rpcs3-bin' # PS3 Эмулятор
 # 'cemu-bin' # Wii U Эмулятор
 # 'pcsx2-latest-bin' # PS2 Эмулятор (AppImage)

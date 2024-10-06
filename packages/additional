@@ -61,8 +61,9 @@
  'vsftpd' # Очень защищённый FTP демон
  'scrcpy' # Демонстрация экрана Android для Linux используя USB ADB
  'i2pd' # Невидимый интернет протокол
- 'cdemu-client' # Эмуляция iso/mds/nrg образов
+ 'cdemu-client' # Эмуляция CD/DVD привода для iso/mds/nrg образов
  'transmission-cli' # Для замены passkey в торрент файлах и многое другое
+# 'asciinema' # Запись сессий терминала
  'jre-openjdk' # Последние Java библиотеки
  'jre21-openjdk' # Рабочая версия библиотек Java для работы с Legacy Launcher
  'glfw' # OpenGL библиотека отрисовки окон для нативного Minecraft на Wayland

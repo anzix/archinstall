@@ -40,11 +40,6 @@
  'qt5ct' 'qt6ct' # Конфигурация тулкита Qt5/6
 # 'dconf-editor' # Все настройки gnome в одном месте
 
-# --- Дополнения для GNOME/GTK
-
- 'xdg-desktop-portal-gtk' # Улучшение интеграции между порталами с GTK приложениями
-# 'gnome-themes-extra' # Экстра темы для Gnome
-
 # --- GNOME/GTK программы
 
  'gitg' # GUI для Git

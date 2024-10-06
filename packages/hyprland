@@ -11,9 +11,10 @@
  'hyprpaper'
  'xdg-desktop-portal-hyprland'
  'waybar'
- 'mpv'
+ 'mpv' # Лучший видеопроигрыватель
  'dunst или mako'
  'pavucontrol'
+ 'qt5-wayland' 'qt6-wayland' # Для QT Wayland XDG Desktop Portal (XDP)
  'qt5ct'
  'kvantum'
 
