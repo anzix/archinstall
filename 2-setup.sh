@@ -115,14 +115,9 @@ done
 # Создание других каталогов
 mkdir -pv $HOME/Pictures/{Screenshots,Gif}
 
-# Отключить мониторный режим микрофона Samson C01U Pro при старте системы
-amixer sset -c 3 Mic mute
 
 # Включение сервисов
 sudo systemctl enable pkgfile-update.timer
-systemctl --user enable mpd
-systemctl --user enable mpd-mpris
-systemctl --user enable opentabletdriver.service
 
 # Чистка
 sudo pacman -R --noconfirm $(/bin/pacman -Qtdq)
