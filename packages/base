@@ -9,6 +9,7 @@
  'linux-firmware'
  'zsh' 'git'
  'wget' # Для скачивания файлов
+ 'nano'
  # 'neovim' # Консольный текстовый редактор
  'grub' 'efibootmgr' # Загрузчик и менеджер UEFI
  'amd-ucode' # Микрокод
