@@ -6,23 +6,23 @@
  'mangohud' 'lib32-mangohud' # Мониторинг для игр
  'lutris' # GUI обвёртка Wine
  'gamemode' 'lib32-gamemode' # Игровой режим для игр
- 'zerotier-one' # Создание и подключение к виртуальным сетям (для игр с друзьями)
+ # 'zerotier-one' # Создание и подключение к виртуальным сетям (для игр с друзьями)
 # 'gameconqueror' # (Не)Альтернатива Cheat Engine
 # 'dolphin-emu' # Gamecube Эмулятор
 
 # --- Игровые утилиты
 
- 'oxyromon' # Органайзер ROM'ов (All-in-One)
+ # 'oxyromon' # Органайзер ROM'ов (All-in-One)
 
- 'mame-tools' # Конвертирование .iso / .cue образов PS2 игр в сжатый .chd образ (chdman)
- 'maxcso' # Быстрый конвертор ISO в сжатый CSO образ для PSP и PS2
- 'nsz' #  Конвертирование nsz в nsp образ для Nintendo Switch
- 'xdelta3' # Для применения патчей бинарных файлов/образов (n64 и т.д)
+ # 'mame-tools' # Конвертирование .iso / .cue образов PS2 игр в сжатый .chd образ (chdman)
+ # 'maxcso' # Быстрый конвертор ISO в сжатый CSO образ для PSP и PS2
+ # 'nsz' #  Конвертирование nsz в nsp образ для Nintendo Switch
+ # 'xdelta3' # Для применения патчей бинарных файлов/образов (n64 и т.д)
 
 # --- AUR
 
 # 'lgogdownloader-qt5' # CLI обвёртка GOG (с рабочим логином)
- 'heroic-games-launcher-bin' # Удобный EGS / GOG лаунчер для Linux
+ # 'heroic-games-launcher-bin' # Удобный EGS / GOG лаунчер для Linux
 # 'gzdoom' 'qzdl-git' # Doom движок с GUI менеджером аддонов
  'dxvk-bin' # Свежий dxvk для ручных префиксов Wine
  'vkd3d-proton-bin' # Свежий vkd3d-proton (форк vkd3d) для ручных префиксов Wine
@@ -30,7 +30,7 @@
  'protonup-qt' # Удобная утилитка для скачки runner'ов Wine
 # 'goverlay-bin' # Графическая утилита по настройке Mangohud на QT
 # 'mangojuice' # Графическая утилита по настройке Mangohud на Libadwaita
- 'vkbasalt' 'lib32-vkbasalt' 'reshade-shaders-git' # Постпроцессинг для игр + набор шейдеров
+ # 'vkbasalt' 'lib32-vkbasalt' 'reshade-shaders-git' # Постпроцессинг для игр + набор шейдеров
 # 'suyu-git' # Nintendo Switch Эмулятор (Нативная git версия)
 # 'lime3ds-git' # Nintendo 3DS Эмулятор (Нативная git версия)
 # 'lime3ds-appimage' # Nintendo 3DS Эмулятор (AppImage, полу-рабочая, не советую)
@@ -41,8 +41,8 @@
 # 'duckstation-qt-bin' # PS1 Эмулятор (AppImage)
 # 'noods-git' # Nintendo DS эмулятор
 # 'xnp2' # Эмулятор PC98 (Touhou 1-5)
- 'game-devices-udev' # Udev правила для работы контроллеров 8BitDo в эмуляторов Cemu и других
- 'joycond-git' # CLI Альтернатива BetterJoy
- 'joycond-cemuhook-git' # CLI инструмент для работы по UDP Switch контроллера (8BitDo Pro 2) в режиме гироскопа
+ # 'game-devices-udev' # Udev правила для работы контроллеров 8BitDo в эмуляторов Cemu и других
+ # 'joycond-git' # CLI Альтернатива BetterJoy
+ # 'joycond-cemuhook-git' # CLI инструмент для работы по UDP Switch контроллера (8BitDo Pro 2) в режиме гироскопа
 # 'ruffle-nightly-bin' # Современный эмулятор Flash плеера для запуска .swf файлов
 # 'lib32-gst-plugins-ugly' # Необходим для Японских визуальных новелл

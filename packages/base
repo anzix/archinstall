@@ -3,15 +3,15 @@
 # --- ОСНОВНОЕ
 
  'base' 'base-devel'
-# 'linux' 'linux-headers'
- 'linux-zen' 'linux-zen-headers'
+'linux' 'linux-headers'
+ # 'linux-zen' 'linux-zen-headers'
 # linux-lts linux-lts-headers
  'linux-firmware'
  'zsh' 'git'
  'wget' # Для скачивания файлов
- 'neovim' # Консольный текстовый редактор
+ # 'neovim' # Консольный текстовый редактор
  'grub' 'efibootmgr' # Загрузчик и менеджер UEFI
- 'intel-ucode' # Микрокод
+ 'amd-ucode' # Микрокод
  'terminus-font' # Шрифты разных размеров с кириллицей для tty
  'networkmanager' # Менеджер сети
  'htop' # Простой консольный диспетчер задач
@@ -65,13 +65,13 @@
 
  # Nvidia проприетарные
 
- # 'nvidia-dkms'
- # 'nvidia-utils' 'lib32-nvidia-utils' # Для воспроизведения 32bit игр/программ
- # 'nvidia-settings' # Настройки
- # 'egl-wayland'
- # 'opencl-nvidia' 'lib32-opencl-nvidia'
- # 'libvdpau'
- # 'libvdpau-va-gl'
+ 'nvidia'
+ 'nvidia-utils' 'lib32-nvidia-utils' # Для воспроизведения 32bit игр/программ
+ 'nvidia-settings' # Настройки
+ 'egl-wayland'
+ 'opencl-nvidia' 'lib32-opencl-nvidia'
+ 'libvdpau'
+ 'libvdpau-va-gl'
  # 'cuda' # Cuda пакет, для разработчиков
 
   # Для ноутбуков с гибридной графикой Intel/Nvidia
@@ -79,7 +79,7 @@
  # 'intel-media-driver'
  # 'intel-gmmlib'
  # 'onevpl-intel-gpu'
- # 'nvidia-prime'
+ 'nvidia-prime'
 
   # Intel (новых)
 
@@ -102,7 +102,7 @@
  'wireplumber' # Modular session / policy manager for PipeWire
  'gst-plugin-pipewire' # Плагины gst для поддержки форматов MP3, AAC, FLAC, MPEG
 
- 'noise-suppression-for-voice' # Плагин подавления шума микрофона в реальном времени (Pipewire only)
+ # 'noise-suppression-for-voice' # Плагин подавления шума микрофона в реальном времени (Pipewire only)
 
  'v4l2loopback-dkms' # Для создания виртуальной камеры в OBS
 

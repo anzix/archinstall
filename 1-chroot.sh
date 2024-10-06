@@ -7,11 +7,10 @@
 # LC_COLLATE=C Приятная сортировка и сравнения строк
 sed -i -e "s/#\(en_US\.UTF-8\)/\1/" \
        -e "s/#\(ru_RU\.UTF-8\)/\1/" \
-       -e "s/#\(ja_JP\.UTF-8\)/\1/" \
    /etc/locale.gen
 locale-gen
 tee /etc/locale.conf > /dev/null << EOF
-LANG=ru_RU.UTF-8
+LANG=en_US.UTF-8
 LC_COLLATE=C
 EOF
 
@@ -37,26 +36,8 @@ tee /etc/hosts > /dev/null << EOF
 127.0.1.1 $HOST_NAME.localdomain $HOST_NAME
 EOF
 
-# Добавление глобальных переменных системы
-tee -a /etc/environment > /dev/null << EOF
-
-# Принудительно включаю icd RADV драйвер (если установлен)
-AMD_VULKAN_ICD=RADV
-EOF
-
-# Для работы граф. планшета Xp-Pen G640 с OpenTabletDriver
-echo "blacklist hid_uclogic" > /etc/modprobe.d/blacklist.conf
-
 # Отключение системного звукового сигнала
 echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
-
-# Установка универсального host файла от StevenBlack (убирает рекламу и вредоносы из WEB'а)
-# Обновление host файла выполняется командой: $ uphosts (доступна в dotfiles/base/zsh/funtctions.zsh)
-wget -qO- https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts \
- | grep '^0\.0\.0\.0' \
- | grep -v '^0\.0\.0\.0 [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$' \
- | sed '1s/^/\n/' \
- | tee --append /etc/hosts >/dev/null
 
 # Не позволять системе становится раздудой
 # Выставляю максимальный размер журнала systemd
@@ -98,19 +79,6 @@ sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 8/g" /etc/pacman.conf  # У
 sed -i "s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf # Более удобный просмотр лист пакетов
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf # Включение multilib репо для запуска 32bit приложений
 
-# Оптимизация makepkg
-cp /etc/makepkg.conf{,.backup}
-sed -i -e 's|CFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fno-plt -fexceptions|CFLAGS="-march=native -mtune=native -O2 -pipe -fno-plt -fexceptions|g' \
-	-e 's|#MAKEFLAGS=.*|MAKEFLAGS="-j$(expr $(nproc) - 1)"|' \
-	-e 's|#RUSTFLAGS=.*|RUSTFLAGS="-C opt-level=2 -C target-cpu=native"|' \
-	-e 's|^BUILDENV.*|BUILDENV=(!distcc color ccache check !sign)|g' \
-	-e 's|#BUILDDIR.*|BUILDDIR=/tmp/makepkg|g' \
-	-e 's|xz.*|xz -c -z -q - --threads=$(nproc))|;s|^#COMPRESSXZ|COMPRESSXZ|' \
-	-e 's|zstd.*|zstd -c -z -q - --threads=$(nproc))|;s|^#COMPRESSZST|COMPRESSZST|' \
-	-e 's|lz4.*|lz4 -q --best)|;s|^#COMPRESSLZ4|COMPRESSLZ4|' \
-	-e "s|PKGEXT.*|PKGEXT='.pkg.tar.lz4'|g" \
- /etc/makepkg.conf
-
 # Синхронизация базы пакетов
 pacman -Syy
 
@@ -146,8 +114,8 @@ if [ "${FS}" = 'btrfs' ]; then
   sed -i "s|^SYNC_ACL=.*|SYNC_ACL=\"yes\"|g" /etc/snapper/configs/home
 
   # Установка лимата снимков для /
-  sed -i "s|^TIMELINE_LIMIT_HOURLY=.*|TIMELINE_LIMIT_HOURLY=\"3\"|g" /etc/snapper/configs/root
-  sed -i "s|^TIMELINE_LIMIT_DAILY=.*|TIMELINE_LIMIT_DAILY=\"6\"|g" /etc/snapper/configs/root
+  sed -i "s|^TIMELINE_LIMIT_HOURLY=.*|TIMELINE_LIMIT_HOURLY=\"2\"|g" /etc/snapper/configs/root
+  sed -i "s|^TIMELINE_LIMIT_DAILY=.*|TIMELINE_LIMIT_DAILY=\"5\"|g" /etc/snapper/configs/root
   sed -i "s|^TIMELINE_LIMIT_WEEKLY=.*|TIMELINE_LIMIT_WEEKLY=\"0\"|g" /etc/snapper/configs/root
   sed -i "s|^TIMELINE_LIMIT_MONTHLY=.*|TIMELINE_LIMIT_MONTHLY=\"0\"|g" /etc/snapper/configs/root
   sed -i "s|^TIMELINE_LIMIT_YEARLY=.*|TIMELINE_LIMIT_YEARLY=\"0\"|g" /etc/snapper/configs/root
@@ -275,7 +243,7 @@ vm.swappiness = 10
 # Значение контролирует склонность ядра к освобождению памяти, используемой для кэширования объектов каталогов и инодов (VFS-кэш).
 # Уменьшение этого значения по сравнению со значением по умолчанию, равным 100, делает ядро менее склонным к восстановлению VFS-кэша (не устанавливайте его равным 0, это может привести к OoM т.е нехватке памяти)
 # Рекомендуемым значением будет от 50 до 500
-vm.vfs_cache_pressure = 50
+vm.vfs_cache_pressure = 100
 
 # Содержит в процентах от общей доступной памяти, содержащей свободные страницы и страницы, подлежащие восстановлению,
 # количество страниц, при котором процесс, генерирующий записи на диск, сам начнет выписывать грязные данные (по умолчанию - 20).
@@ -283,66 +251,6 @@ vm.dirty_ratio = 10
 
 # Содержит в процентах от общей доступной памяти, содержащей свободные страницы и страницы, которые можно восстановить, количество страниц, на которых потоки фоновой очистки ядра начнут записывать "грязные" данные (по умолчанию - 10).
 vm.dirty_background_ratio = 5
-
-# Увеличение длины очереди входящих пакетов.
-# После получения пакетов из кольцевого буфера сетевой карты они помещаются в специальную очередь в ядре.
-# При использовании высокоскоростных сетевых карт увеличение размера очереди может помочь предотвратить потерю пакетов:
-net.core.netdev_max_backlog = 16384
-
-# Увеличение максимального числа ожидающих соединений
-# Максимальное число входящих соединений, ожидающих приёма (accept) программой, на одном сокете: (default 4096):
-net.core.somaxconn = 8192
-
-# Скрывает низкоприоритетные сообщения ядра с консоли.
-kernel.printk = 3 3 3 3
-
-# TCP Fast Open — это расширение протокола управления передачей (TCP), которое помогает уменьшить задержки в сети,
-# позволяя начать передачу данных сразу при отправке клиентом первого TCP SYN [3].
-# Значение 3 вместо стандартного 1 включит TCP Fast Open как для входящих, так и для исходящих соединений:
-net.ipv4.tcp_fastopen = 3
-
-# Включение BBR
-# Алгоритм управления перегрузками BBR может помочь достичь более высокой пропускной способности и более низких задержек для интернет-трафика.
-net.core.default_qdisc = cake
-net.ipv4.tcp_congestion_control = bbr
-
-# Защита от tcp time-wait assassination hazards, отбрасывание RST-пакетов для сокетов в состоянии time-wait.
-# За пределами Linux поддерживается не очень широко, но соответствует RFC:
-net.ipv4.tcp_rfc1337 = 1
-
-# При включении reverse path filtering ядро будет проверять источник пакетов, полученных со всех интерфейсов машины.
-# Это может защитить от злоумышленников, которые используют методы подмены IP-адресов для нанесения вреда.
-net.ipv4.conf.default.rp_filter = 1
-net.ipv4.conf.all.rp_filter = 1
-
-# Отключение перенаправлений ICMP
-net.ipv4.conf.all.accept_redirects = 0
-net.ipv4.conf.default.accept_redirects = 0
-net.ipv4.conf.all.secure_redirects = 0
-net.ipv4.conf.default.secure_redirects = 0
-net.ipv6.conf.all.accept_redirects = 0
-net.ipv6.conf.default.accept_redirects = 0
-net.ipv4.conf.all.send_redirects = 0
-net.ipv4.conf.default.send_redirects = 0
-
-# To use the new FQ-PIE Queue Discipline (>= Linux 5.6) in systems with systemd (>= 217), will need to replace the default fq_codel.
-net.core.default_qdisc = fq_pie
-EOF
-
-# Экспорт fancontrol конфиг для управления вертиляторов (только AMD RX580)
-# 40º - min скорость вентиляторов
-# 79º - max скорость вентиляторов
-tee /etc/fancontrol > /dev/null << EOF
-# Configuration file generated by pwmconfig, changes will be lost
-INTERVAL=5
-DEVPATH=hwmon0=devices/pci0000:00/0000:00:03.0/0000:03:00.0
-DEVNAME=hwmon0=amdgpu
-FCTEMPS=hwmon0/pwm1=hwmon0/temp1_input
-FCFANS= hwmon0/pwm1=
-MINTEMP=hwmon0/pwm1=40
-MAXTEMP=hwmon0/pwm1=79
-MINSTART=hwmon0/pwm1=150
-MINSTOP=hwmon0/pwm1=75
 EOF
 fi
 
@@ -354,7 +262,7 @@ fi
 # intel_iommu=on - Включает драйвер intel iommu
 # iommu=pt - Проброс только тех устройств которые поддерживаются
 # zswap.enabled=0 - Отключает приоритетный zswap который заменяется на zram
-sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 mitigations=off intel_iommu=on iommu=pt amdgpu.ppfeaturemask=0xffffffff cpufreq.default_governor=performance zswap.enabled=0"/g' /etc/default/grub
+sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 zswap.enabled=0"/g' /etc/default/grub
 
 # Рекурсивная правка разрешений в папке скриптов
 chmod 700 /archinstall
@@ -368,20 +276,11 @@ grub-mkconfig -o /boot/grub/grub.cfg
 # Врубаю сервисы
 # BTRFS: discard=async можно использовать вместе с fstrim.timer
 # systemctl enable systemd-timesyncd.service # Нужно? Синхронизация времени
-systemctl enable NetworkManager.service # Сеть
+# systemctl enable NetworkManager.service # Сеть
 systemctl enable bluetooth.service # Bluetooth
 systemctl enable sshd.service # SSH
 systemctl enable fstrim.timer # Trim для SSD
 systemctl enable plocate-updatedb.timer # Индексация файлов
 systemctl enable systemd-oomd.service # OoO Killer
-systemctl enable fancontrol.service # Контроль вентиляторов GPU
-
-# Добавление указателя мыши в TTY.
-# FIXME: появляется ошибка в журнале, не влияющее ни на что
-# disable-paste[1030]: *** err
-# disable-paste[1030]: /dev/tty1: Permission denied
-# disable-paste[1030]: *** err
-# disable-paste[1030]: Oh, oh, it's an error! possibly I die!
-systemctl enable gpm.service
 
 systemctl mask systemd-networkd.service

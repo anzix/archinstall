@@ -2,11 +2,11 @@
 
 # --- ПРОГРАММЫ
 
- 'ungoogled-chromium-bin' # Полностью вычещенный от Гуглятины браузер Chromium
+ # 'ungoogled-chromium-bin' # Полностью вычещенный от Гуглятины браузер Chromium
 # 'czkawka-gui-bin' # Удобный инструмент для удаления дубликатов
 # 'spotify' # Стриминговый музыкальный сервис для халявных рекомендаций
- 'opentabletdriver' # Драйвер для граф. планшета XP-PEN G640
- 'ventoy-bin' # Создание загрузочной флешки для Win/Linux образов
+ # 'opentabletdriver' # Драйвер для граф. планшета XP-PEN G640
+ # 'ventoy-bin' # Создание загрузочной флешки для Win/Linux образов
 # 'torrserver-bin' # Стриминг пиратского контента
 # 'jamesdsp' # Процессор звуковых эффектов, улучшает звук для наушников
 # 'edb-debugger' # AArch32/x86/x86-64 отладчик, созданный на основе Ollydbg
@@ -28,11 +28,11 @@
 
 # --- Утилиты и разное
 
- 'appimagelauncher' # Управление AppImage пакетов, написана на QT
- 'chromium-widevine' # Плагин для работы DRM контента в браузере ungoogled-chromium
- 'mpd-mpris' # MPRIS поддержка для MPD
- 'obs-gstreamer' # Более эффективный плагин кодировщик для OBS (Для RDNA 1)
- 'obs-vkcapture-git' 'lib32-obs-vkcapture-git' # OBS плагин для захвата напрямую через API OpenGL/Vulkan (минимизирует затраты)
+ # 'appimagelauncher' # Управление AppImage пакетов, написана на QT
+ # 'chromium-widevine' # Плагин для работы DRM контента в браузере ungoogled-chromium
+ # 'mpd-mpris' # MPRIS поддержка для MPD
+ # 'obs-gstreamer' # Более эффективный плагин кодировщик для OBS (Для RDNA 1)
+ # 'obs-vkcapture-git' 'lib32-obs-vkcapture-git' # OBS плагин для захвата напрямую через API OpenGL/Vulkan (минимизирует затраты)
 # 'amd-vulkan-prefixes' # Быстрое переключение icd драйверов AMD используя переменные (vk_radv, vk_amdvlk, vk_pro)
 # 'python-eyed3' # Правка обложек для mp3 файлов
 # 'spflashtool5-bin' 'qtwebkit-bin' # Прошивальщик Android смартфонов на процессоре MTK

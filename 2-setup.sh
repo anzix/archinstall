@@ -55,20 +55,12 @@ sudo snapper -c root create -d "***System Installed***"
 sudo snapper -c home create -d "***System Installed***"
 fi
 
-echo "==> Вытягиваю из моего dotfiles основные конфиги"
-git clone --recurse-submodules https://github.com/anzix/dotfiles ~/.dotfiles
-pushd ~/.dotfiles/base && stow -vt ~ */
-popd
-
-# Выполняю profile.zsh для использования пользовательских переменных (спецификаций каталогов XDG BASE)
-source ~/.dotfiles/base/zsh/.config/zsh/profile.zsh
 
 # Обновление зеркал
 sudo pacman -Sy
 
 echo "==> Установка дополнительных пакетов, моих программ и шрифтов [Pacman+AUR]"
 sudo SNAP_PAC_SKIP=y pacman -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/{additional,fonts,programs} | column -t)
-yay -S --noconfirm --batchinstall=false --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/aur | column -t)
 
 # Установка и настройка окружения
 PS3="Выберите окружение/WM: "
