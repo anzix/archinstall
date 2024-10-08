@@ -3,7 +3,7 @@
 # раскомментируйте, чтобы просмотреть информацию об отладке
 #set -xe
 
-# Руссифицируемся и добавляем дополнительные локали
+# Выставляем язык системы и добавляем дополнительные локали
 # LC_COLLATE=C Приятная сортировка и сравнения строк
 sed -i -e "s/#\(en_US\.UTF-8\)/\1/" \
        -e "s/#\(ru_RU\.UTF-8\)/\1/" \
@@ -11,7 +11,7 @@ sed -i -e "s/#\(en_US\.UTF-8\)/\1/" \
    /etc/locale.gen
 locale-gen
 tee /etc/locale.conf > /dev/null << EOF
-LANG=ru_RU.UTF-8
+LANG=$LOCALE.UTF-8
 LC_COLLATE=C
 EOF
 
@@ -131,7 +131,7 @@ if [ "${FS}" = 'btrfs' ]; then
 
   # Пересоздаём и переподключаем /.snapshots и /home/.snapshots
   mkdir -v /.snapshots /home/.snapshots
-  mount -v /.snapshots /home/.snapshots
+  mount -va
 
   # Меняем права доступа для легкой замены снимка @ в любое время без потери снимков snapper.
   chmod -v 750 /.snapshots /home/.snapshots
@@ -157,13 +157,16 @@ if [ "${FS}" = 'btrfs' ]; then
 
   # Включение таймеров создания снимков по времени и их очистку
   systemctl enable \
-	  snapper-timeline.timer \
+      snapper-timeline.timer \
       snapper-cleanup.timer
 
-  # Включение таймеров проверки целостности файловой системы для home и /
+  # Включение таймеров проверки целостности файловой системы
+  # Для home, /, /var/log и /.snapshots
   systemctl enable \
-	  btrfs-scrub@home.timer \
-      btrfs-scrub@-.timer
+      btrfs-scrub@home.timer \
+      btrfs-scrub@-.timer \
+      btrfs-scrub@var-log.timer \
+      btrfs-scrub@\\x2esnapshots.timer
 
   # Plocate не показывает индексы найденых файлов если используется файловая система Btrfs
   # Данная правка конфига исправляет это
@@ -358,7 +361,7 @@ sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 
 
 # Рекурсивная правка разрешений в папке скриптов
 chmod 700 /archinstall
-chown 1000:users /archinstall
+chown 1000:users -R /archinstall
 
 # Установка и настройка Grub
 #sed -i -e 's/#GRUB_DISABLE_OS_PROBER/GRUB_DISABLE_OS_PROBER/' /etc/default/grub # Обнаруживать другие ОС и добавлять их в grub (нужен пакет os-prober)
