@@ -65,13 +65,14 @@
 
  # Nvidia проприетарные
 
- # 'nvidia-dkms'
+ # 'nvidia'
  # 'nvidia-utils' 'lib32-nvidia-utils' # Для воспроизведения 32bit игр/программ
  # 'nvidia-settings' # Настройки
  # 'egl-wayland'
  # 'opencl-nvidia' 'lib32-opencl-nvidia'
  # 'libvdpau'
  # 'libvdpau-va-gl'
+ # 'libva-nvidia-driver' # Реализация VA-API, использующая NVDEC в качестве серверной части
  # 'cuda' # Cuda пакет, для разработчиков
 
   # Для ноутбуков с гибридной графикой Intel/Nvidia
