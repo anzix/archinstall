@@ -11,15 +11,18 @@
 # Необходимо узнать сетевой интерфейс устройства (device)
 ip a
 
+# Входим в интерактивный промпт
+iwctl
+
 # Сканируем на наличие новых сетей
 # Вместо `device` должен быть ваш интерфейс полученный из предыдущей команды
-iwctl station wlan device scan
+[iwd] station device scan
 
 # Выводим список сетей
-iwctl station wlan device get-networks
+[iwd] station device get-networks
 
 # Подключаемся к сети заполняя свои данные
-iwctl station wlan device connect SSID --passphrase ""
+[iwd] station device connect SSID --passphrase ""
 
 # Проверяем сеть
 ping archlinux.org
