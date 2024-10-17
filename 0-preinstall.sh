@@ -26,7 +26,7 @@ export HOST_NAME=${HOST_NAME:-arch}
 read -p "Имя пользователя (Может быть только в нижнем регистре и без знаков, пустое поле - user): " USER_NAME
 export USER_NAME=${USER_NAME:-user}
 
-read -p "Пароль пользователя: " USER_PASSWORD
+read -p "Пароль пользователя (поле ввода видимое): " USER_PASSWORD
 export USER_PASSWORD
 
 read -p "Sudo с запросом пароля? [y/n]: " SUDO_PRIV
@@ -64,10 +64,10 @@ done
 export time_zone=$(curl -s https://ipinfo.io/timezone)
 
 # Предупредить пользователя об удалении старой схемы разделов.
-echo "Это приведет к удалению текущей таблицы разделов в $DISK после начала установки. Вы согласны [y/N]?: "
-read -r disk_response
-if ! [[ "${disk_response,,}" =~ ^(yes|y)$ ]]; then
-    echo "Quitting."
+echo "СОДЕРЖИМОЕ ДИСКА ${DISK} БУДЕТ СТЁРТО!"
+read -p "Вы уверены что готовы начать установку? [y/N]: "
+if ! [[ ${REPLY} =~ ^(yes|y)$ ]]; then
+    echo "Выход.."
     exit
 fi
 
