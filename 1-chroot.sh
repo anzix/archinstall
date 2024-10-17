@@ -131,7 +131,8 @@ if [ "${FS}" = 'btrfs' ]; then
 
   # Пересоздаём и переподключаем /.snapshots и /home/.snapshots
   mkdir -v /.snapshots /home/.snapshots
-  mount -va
+  mount -v -o remount ${DISK_MNT} /.snapshots
+  mount -v -o remount ${DISK_MNT} /home/.snapshots
 
   # Меняем права доступа для легкой замены снимка @ в любое время без потери снимков snapper.
   chmod -v 750 /.snapshots /home/.snapshots
@@ -174,6 +175,7 @@ if [ "${FS}" = 'btrfs' ]; then
   sed -i 's/PRUNE_BIND_MOUNTS =.*/PRUNE_BIND_MOUNTS = "no"/' /etc/updatedb.conf
 
   # Предотвращение индексирования снимков программой "updatedb", что замедляло бы работу системы
+  # Сервис plocate-updatedb.timer уже будет активен при установке пакета plocate
   sed -i '/PRUNEPATHS/s/"$/ \/\.btrfsroot \/\.snapshots \/home\/\.snapshots"/' /etc/updatedb.conf
 
   # Правка mkinitcpio.conf
@@ -375,7 +377,6 @@ systemctl enable NetworkManager.service # Сеть
 systemctl enable bluetooth.service # Bluetooth
 systemctl enable sshd.service # SSH
 systemctl enable fstrim.timer # Trim для SSD
-systemctl enable plocate-updatedb.timer # Индексация файлов
 systemctl enable systemd-oomd.service # OoO Killer
 systemctl enable fancontrol.service # Контроль вентиляторов GPU
 
