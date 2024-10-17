@@ -25,6 +25,7 @@
  'xdg-utils' # CLI инструменты для решения различных задач с интеграцией рабочего стола
  'jq' # CLI обработчик JSON
  'bc' # CLI Калькулятор
+ "sox" # CLI Аудио манипулятор (предоставляет: `sox`, `play` и `rec`)
  'tree' # Древовидный список
  'eza' # Замена ls и tree
  'bat' # Замена cat
@@ -71,7 +72,7 @@
  'vdpauinfo' # Проверка VDPAU драйвера командой (vdpauinfo)
  'vulkan-tools' # Инструменты vulkan (vulkaninfo)
 
-# 'rhvoice' 'rhvoice-voice-aleksandr-hq' 'rhvoice-voice-arina' 'rhvoice-voice-alan' 'rhvoice-voice-clb' # Синтезатор речи + голоса (Английский + Русский)
+# 'rhvoice' 'rhvoice-voice-aleksandr-hq' 'rhvoice-voice-arina' 'rhvoice-voice-alan' 'rhvoice-voice-clb' # Поддержка синтеза речи + голоса (Английский + Русский)
 
 # --- Оформление
 
