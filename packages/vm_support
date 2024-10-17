@@ -5,7 +5,6 @@
  'dmidecode' # Утилиты о системной информации SMBIOS/DMI и т.д
  'dnsmasq'
  'edk2-ovmf' # Поддержка UEFI для QEMU
- 'nftables' 'iptables-nft' # Средство управления сетью пакетами данных ядра Linux используя интерфейс nft
  'qemu-desktop' # Виртуализация
  'qemu-emulators-full' # Поддержка всех архитектур для виртуализации
  'swtpm' # Поддержка TPM для QEMU
