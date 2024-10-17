@@ -370,7 +370,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 # Врубаю сервисы
 # BTRFS: discard=async можно использовать вместе с fstrim.timer
-# systemctl enable systemd-timesyncd.service # Нужно? Синхронизация времени
+systemctl enable systemd-timesyncd.service # Синхронизация времени
 systemctl enable NetworkManager.service # Сеть
 systemctl enable bluetooth.service # Bluetooth
 systemctl enable sshd.service # SSH
