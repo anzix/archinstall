@@ -130,9 +130,8 @@ if [ "${FS}" = 'btrfs' ]; then
   btrfs subvolume delete /.snapshots /home/.snapshots
 
   # Пересоздаём и переподключаем /.snapshots и /home/.snapshots
+  # INFO: Переподключение по записи fstab будет после входа в систему
   mkdir -v /.snapshots /home/.snapshots
-  mount -v -o remount ${DISK_MNT} /.snapshots
-  mount -v -o remount ${DISK_MNT} /home/.snapshots
 
   # Меняем права доступа для легкой замены снимка @ в любое время без потери снимков snapper.
   chmod -v 750 /.snapshots /home/.snapshots
