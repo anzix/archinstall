@@ -193,6 +193,9 @@ genfstab -U /mnt >> /mnt/etc/fstab
 # INFO: убрал nofail для Media по причине бага systemd, потому-что при выключении
 # ПК /media/Media не размонтируется правильно (происходит при включении музыки mpd + Mpris)
 tee -a /mnt/etc/fstab >/dev/null << EOF
+# CDROM
+/dev/sr0                /media/cdrom0   udf,iso9660     user,noauto  0 0
+
 # tmpfs
 # Чтобы не изнашивать SSD во время сборки используя makepkg
 tmpfs                   /tmp            tmpfs           rw,nosuid,nodev,noatime,size=8G,mode=1777,inode64   0 0
