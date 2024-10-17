@@ -215,7 +215,7 @@ cp -r /root/archinstall /mnt
 arch-chroot /mnt /bin/bash /archinstall/1-chroot.sh
 
 # Действия после chroot
-if read -re -p "arch-chroot /mnt? [y/N]: " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then
+if read -re -p "Желаете ли выполнить arch-chroot /mnt? [y/N]: " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then
 	arch-chroot /mnt ; echo "Не забудьте самостоятельно размонтировать /mnt перед reboot!"
 else
 	umount -R /mnt
