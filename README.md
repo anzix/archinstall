@@ -105,7 +105,7 @@ mount -v -o subvol=@ /dev/vda2 /mnt
 mount -v /dev/vda1 /mnt/boot/efi
 
 # Чрутимся
-chroot /mnt
+arch-chroot /mnt
 ```
 
 Поддержите меня за мои старания (´｡• ᵕ •｡`)
