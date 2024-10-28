@@ -40,6 +40,10 @@ yay -S "${PKGS[@]}" --noconfirm --needed
 # Редактирую конфигурационный файл snapper-rollback что точка монтирования /.btrfsroot
 sudo sed -i "s|^mountpoint.*|mountpoint = /.btrfsroot|" /etc/snapper-rollback.conf
 
+# Меняю кол-во записей снимков с 50 до 60 в grub-btrfs конфиге
+# Так как некоторые ручные снимки не появлялись в grub меню
+sudo sed -i 's|^#GRUB_BTRFS_LIMIT.*|GRUB_BTRFS_LIMIT="60"|' /etc/default/grub-btrfs/config
+
 # Пересоздаю конфиг grub для создания меток восстановления
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
