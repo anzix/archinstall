@@ -4,6 +4,7 @@
 # https://github.com/creio/dots/blob/master/.bin/creio.sh
 # https://github.com/gjpin/arch-linux
 # https://github.com/YurinDoctrine/arch-linux-base-setup/
+# https://github.com/TommyTran732/Arch-Setup-Script
 # https://github.com/classy-giraffe/easy-arch/blob/main/easy-arch.sh
 
 # раскомментируйте, чтобы просмотреть информацию об отладке
