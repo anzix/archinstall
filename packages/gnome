@@ -36,6 +36,7 @@
  'wl-clipboard' # Wayland clipboard
  'xdg-desktop-portal-gnome'
  'xdg-user-dirs-gtk'
+ 'adw-gtk-theme' # Adwaita тема для устаревших GTK3 приложений
  'kvantum' # Движок тем на основе SVG для Qt5/6
  'qt5ct' 'qt6ct' # Конфигурация тулкита Qt5/6
 # 'dconf-editor' # Все настройки gnome в одном месте
@@ -52,9 +53,10 @@
 # --- AUR
 
 # 'shared-mime-info-gnome' # Ассоциации файлов GNOME по умолчанию
+ 'extension-manager' # Продвинутый и современный менеджер расширений Gnome
  'gearlever' # Простое управдение AppImage пакетов, написано на GTK LibAdwaita
  'gcdemu' # CDEmu интеграция (эмуляция образов)
- 'adw-gtk3' # Adwaita тема для устаревших GTK3 приложений
+
  'kvantum-theme-libadwaita-git' # LibAdwaita тема для QT 5/6 приложений
  'qadwaitadecorations-qt6' 'qadwaitadecorations-qt5' # Новая адаптация QT 5/6 под GNOME
 # 'gnome-shell-extension-arch-update' # Индикатор обновлений в статус баре

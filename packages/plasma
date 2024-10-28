@@ -70,6 +70,7 @@
  'keepassxc' # Локальный менеджер паролей
  'qbittorrent' # Торрент клиент
  'qpwgraph' # GUI управления узлами PipeWire (QT)
+# 'sweeper' # Графическая чистилка (cookie, cache и т.д)
 # 'doublecmd-qt5' # Альтернатива Total Commander
 # 'krita' # Рисование
 # 'kdiskmark' # Бенчмарк для накопителей

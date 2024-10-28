@@ -3,12 +3,13 @@
 # --- TUI/CLI Утилиты и прочее необходимое
 
  'mpd' # Музыкальный демон
+ 'mpd-mpris' # MPRIS поддержка для MPD
  'mpc' # CLI Музыкальный клиент для управления mpd
  'ncmpcpp' # TUI Музыкальный плеер, обвёртка для mpd
 # 'ncspot' # TUI Spotify плеер
  'streamlink' # CLI просмотр потоков Twitch/YouTube и т.д
  'mediainfo' # CLI Информация о медиа
- 'alsa-utils' # CLI Утилиты ALSA (alsamixer, amixer)
+ 'alsa-utils' # CLI Утилиты ALSA (alsamixer, amixer, aplay)
  'pulsemixer' # TUI Регулятор громкости PulseAudio.
  'btop' # TUI Диспетчер задач
  'nvtop' # TUI Статистика утилизации GPU от AMD/Nvidia/Intel
@@ -67,6 +68,7 @@
  'jre-openjdk' # Последние Java библиотеки
  'jre21-openjdk' # Рабочая версия библиотек Java для работы с Legacy Launcher
  'glfw' # OpenGL библиотека отрисовки окон для нативного Minecraft на Wayland
+ 'swh-plugins' # Набор звуковых LADSPA плагинов для эффектов (напр. fast lookahead limiter). Нужен доп-но пакет audacity
 
  'libva-utils' # Проверка VA-API дравера командой (vainfo)
  'vdpauinfo' # Проверка VDPAU драйвера командой (vdpauinfo)

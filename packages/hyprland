@@ -22,4 +22,5 @@
 
  'nwg-look'
  'tofi' # Rofi like (дефолтная тема ужасна, необходимо сменить)
+ 'pwvucontrol' # Альтернатива Pavucontrol на Libadwaita, для оконных менеджеров (утчитывает конфиги pipewire)
 

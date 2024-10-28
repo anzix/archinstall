@@ -3,7 +3,7 @@
 # --- ПРОГРАММЫ
 
  'ungoogled-chromium-bin' # Полностью вычещенный от Гуглятины браузер Chromium
- 'librewolf-bin' # Вычищенная альтернатива браузера Firefox
+# 'librewolf-bin' # Вычищенная альтернатива браузера Firefox
 # 'czkawka-gui-bin' # Удобный инструмент для удаления дубликатов
 # 'spotify' # Стриминговый музыкальный сервис для халявных рекомендаций
  'opentabletdriver' # Драйвер для граф. планшета XP-PEN G640
@@ -31,7 +31,6 @@
 
  'appimagelauncher' # Управление AppImage пакетов, написана на QT
  'chromium-widevine' # Плагин для работы DRM контента в браузере ungoogled-chromium
- 'mpd-mpris' # MPRIS поддержка для MPD
  'obs-gstreamer' # Более эффективный плагин кодировщик для OBS (Для RDNA 1)
  'obs-vkcapture-git' 'lib32-obs-vkcapture-git' # OBS плагин для захвата напрямую через API OpenGL/Vulkan (минимизирует затраты)
 # 'amd-vulkan-prefixes' # Быстрое переключение icd драйверов AMD используя переменные (vk_radv, vk_amdvlk, vk_pro)
