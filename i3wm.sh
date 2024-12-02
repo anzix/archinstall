@@ -8,6 +8,10 @@ pushd ~/.dotfiles/i3wm
 stow -vt ~ */
 popd
 
+# Пользовательские переменные
+# Ручной запуск из TTY подхватывает настройки от выбранного $SHELL
+ln -siv $HOME/.dotfiles/base/zsh/.config/zsh/profile.zsh ~/.zprofile
+
 if [ "$(systemd-detect-virt)" = "none" ]; then
 echo "==> Настройка Xorg для AMDGPU"
 sudo bash -c 'cat <<EOF > /etc/X11/xorg.conf.d/20-amdgpu.conf
@@ -43,9 +47,10 @@ EndSection
 EOF'
 
 # Включение сервисов
-systemctl --user enable \
-	redshift.service `# Беречь глаза` \
-	greenclip.service `# dmenu менеджер буфера обмена` \
-	dunst.service `# Демон уведомлений` \
-	cdemu-daemon.service `# Эмуляция iso образов`
+# redshift - Беречь глаза
+# greenclip - dmenu менеджер буфера обмена
+# cdemu-daemon - Эмуляция iso образов
+systemctl --user enable redshift.service
+systemctl --user enable greenclip.service
+systemctl --user enable cdemu-daemon.service
 
