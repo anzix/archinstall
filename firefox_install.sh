@@ -19,6 +19,10 @@ FIREFOX_PROFILE_PATH=$(realpath "${HOME}/.mozilla/firefox/"*.default-release)
 mkdir -p "${FIREFOX_PROFILE_PATH}/extensions"
 
 # Список расширений (25)
+# Памятка для добавления в список:
+# 1) Ссылки на расширения нужно копировать из магазина расширений кликнув на install
+# 2) При указании версии latest вместо номера скачивается последняя версия
+# 3) После : идёт название расширения в папке "${HOME}/.mozilla/firefox/"*.default-release/extensions/
 EXTENSIONS=(
  "3913593/matte_black_red-latest.xpi:{a7589411-c5f6-41cf-8bdc-f66527d9d930}" # Тема браузера
  "4050539/violentmonkey-latest.xpi:{aecec67f-0d10-4fa7-b7c7-609a2db280cf}" # Violentmonkey
@@ -44,6 +48,7 @@ EXTENSIONS=(
  "3988430/bookmark_dupes-latest.xpi:bookmarkdupes@martin-vaeth.org" # Bookmark Dupes
  "1705492/fixed_zoom-latest.xpi:{a655a6b2-69a5-40de-a3b8-3f7f200c95a7}" # Fixed Zoom
  "3782841/enforce_browser_fonts-latest.xpi:{83e08b00-32de-44e7-97bb-1bab84d1350f}" # Enforce Browser Fonts - полезно особенно для Linux
+ "4228676/foxyproxy_standard-latest.xpi:foxyproxy@eric.h.jung.xpi"
 # "3941342/dont_accept_webp-latest.xpi:dont-accept-webp@jeffersonscher.com" # Don't "Accept" image/webp
 
 # "3988775/7tv-latest.xpi:{7ef0f00c-2ebe-4626-8ed7-3185847fcfad}" # 7TV (Twitch) - Удалён
@@ -64,18 +69,18 @@ done
 cp -v ~/.dotfiles/user.js "${FIREFOX_PROFILE_PATH}"
 
 # Настраиваю Firefox под окружение
-if [ "${XDG_SESSION_DESKTOP}" = 'KDE' ]; then
-# Set Firefox profile path
-FIREFOX_PROFILE_PATH=$(realpath ${HOME}/.mozilla/firefox/*.default-release)
-
-# KDE specific configurations
-tee -a ${FIREFOX_PROFILE_PATH}/user.js > /dev/null << 'EOF'
-// Использовать KDE Plasma file picker
-user_pref("widget.use-xdg-desktop-portal.mime-handler", 1);
-user_pref("widget.use-xdg-desktop-portal.file-picker", 1);
-
-// Предотвращает дублирование записей в виджете медиаплеера KDE Plasma
-user_pref("media.hardwaremediakeys.enabled", false);
-EOF
-fi
+# if [ "${XDG_SESSION_DESKTOP}" = 'KDE' ]; then
+# # Set Firefox profile path
+# FIREFOX_PROFILE_PATH=$(realpath ${HOME}/.mozilla/firefox/*.default-release)
+#
+# # KDE specific configurations
+# tee -a ${FIREFOX_PROFILE_PATH}/user.js > /dev/null << 'EOF'
+# // Использовать KDE Plasma file picker
+# user_pref("widget.use-xdg-desktop-portal.mime-handler", 1);
+# user_pref("widget.use-xdg-desktop-portal.file-picker", 1);
+#
+# // Предотвращает дублирование записей в виджете медиаплеера KDE Plasma
+# user_pref("media.hardwaremediakeys.enabled", false);
+# EOF
+# fi
 
