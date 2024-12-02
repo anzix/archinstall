@@ -74,7 +74,7 @@ cd ~/archinstall
 
 1. Для QEMU/KVM качаем пакеты `qemu-guest-agent spice-vdagent`
 
-> В оконных менеджерах (WM) для активации Shared Clipboard в терминале надо ввести `spice-vdagent`
+   > В оконных менеджерах (WM) для активации Shared Clipboard в терминале надо ввести `spice-vdagent`
 
 2. Для VirtualBox (не проверенно):
 
