@@ -43,6 +43,7 @@
 
 # --- GNOME/GTK программы
 
+ 'komikku' # GUI читалка для комиксов/манга формата CBR/CBZ
  'gitg' # GUI для Git
  'helvum' # GUI управления узлами PipeWire
  'transmission-gtk' # Торрент клиент

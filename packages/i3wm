@@ -2,6 +2,7 @@
 
 # --- Основное для оконного менеджера i3
 
+ 'picom' # Прозрачность окон + blur dual_kawase
  'dmenu' # Меню приложений
  'dunst' # Демон уведомлений
  'feh' # Минималистичный просмотрорщик изображений
@@ -11,6 +12,7 @@
  'i3-wm' # i3wm с отступами (gaps)
  'lxappearance' # GTK оформления (GTK+ 2 версия)
  'lxqt-policykit' # Супер минималистичный polkit аутентификатор
+ 'xdg-desktop-portal' # Портал для Screen Sharing'а
  'maim' # Очень минималистичный скриншотер (хорошо сочетается с xclip)
  'nitrogen' # Менеджер обоев рабочего стола X Window System
  'nsxiv' # Простой и удобный просмоторщик картинок
@@ -54,6 +56,5 @@
  'bluetuith-bin' # TUI Bluetooth менеджер
  'autotiling' # Script for sway and i3 to automatically switch the horizontal / vertical window split orientation
  'giph' # Gif рекордер (для maim)
- 'picom-git' # Прозрачность окон + blur dual_kawase
  'rofi-greenclip' # Rofi/Dmenu Менеджер буфера обмена с поддержкой картинок
  'rofi-power-menu' # Меню выключения

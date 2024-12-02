@@ -5,6 +5,7 @@
  'steam'
  'mangohud' 'lib32-mangohud' # Мониторинг для игр
  'lutris' # GUI обвёртка Wine
+ 'umu-launcher' # Ререализация Steam Runtime для пиратских игр с использованием Proton
  'gamemode' 'lib32-gamemode' # Игровой режим для игр
  'zerotier-one' # Создание и подключение к виртуальным сетям (для игр с друзьями)
 # 'gameconqueror' # (Не)Альтернатива Cheat Engine

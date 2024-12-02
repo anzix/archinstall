@@ -29,10 +29,12 @@
 
 # --- Утилиты и разное
 
- 'appimagelauncher' # Управление AppImage пакетов, написана на QT
+ 'sing-box-bin' # Очень гибкая платформа для проксирования поддерживающая Vless, Vmess, Trojan и многое другое
+ # 'appimagelauncher' # Управление AppImage пакетов, написана на QT
  'chromium-widevine' # Плагин для работы DRM контента в браузере ungoogled-chromium
  'obs-gstreamer' # Более эффективный плагин кодировщик для OBS (Для RDNA 1)
  'obs-vkcapture-git' 'lib32-obs-vkcapture-git' # OBS плагин для захвата напрямую через API OpenGL/Vulkan (минимизирует затраты)
+ 'ego' # Альтер Эго: запускать ПО под другим локальным пользователем без проблем на X11/Wayland
 # 'amd-vulkan-prefixes' # Быстрое переключение icd драйверов AMD используя переменные (vk_radv, vk_amdvlk, vk_pro)
 # 'python-eyed3' # Правка обложек для mp3 файлов
 # 'spflashtool5-bin' 'qtwebkit-bin' # Прошивальщик Android смартфонов на процессоре MTK

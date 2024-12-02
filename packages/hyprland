@@ -18,6 +18,13 @@
  'qt5ct'
  'kvantum'
 
+ 'file-roller' # System/Compression integrates well in Thunar
+ 'thunar' # Lightweight File Manager from Xfce
+ 'thunar-archive-plugin' # Thunar integration with file-roller
+ 'thunar-media-tags-plugin' # Thunar plugin to view media details
+ 'thunar-volman' # Thunar plugin to automatically manage removeable devices
+ 'tumbler' # D-Bus thumbnail service for apps like Thunar
+
 # AUR
 
  'nwg-look'
