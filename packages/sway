@@ -66,5 +66,6 @@
  'cliphist' # Менеджер буфера обмена для sway
  'wshowkeys-git' # Показ клавиш для sway
  'autotiling' # Script for sway and i3 to automatically switch the horizontal / vertical window split orientation
+ 'mimeo' # CLI утилита для лёгкого добавления ассоциаций типов для программ
 # 'virtboard' # Экранная клавиатура
 # 'polkit-dumb-agent-git' # Супер минималистичный polkit аутентификатор

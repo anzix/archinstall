@@ -34,7 +34,7 @@
  'ccache' # Ускоряет перекомпиляцию за счет кэширования предыдущих компиляций
  'man-pages' 'man-db' # Мануалы
  'nftables' 'iptables-nft' # Средство управления сетью пакетами данных ядра Linux используя интерфейс nft
- 'unzip' 'unrar' 'p7zip' 'zip' # Архивирование и распаковка файлов zip/rar/7z
+ 'unzip' 'unrar' '7zip' 'zip' # Архивирование и распаковка файлов zip/rar/7z
 
 # --- XORG
 
@@ -45,6 +45,8 @@
  'xorg-xinput' # Для работы граф.планшета XP-PEN G640 + OpenTabletDriver
  'xorg-xgamma' # Позволяет менять и исправлять гамму для игр используя Lutris
  'xorg-xlsclients' # Для показа всех запущенных клиентов Xorg командой xlsclients
+ 'xorg-xev' # Печатать ивентов для клавиш командой xev
+ 'xorg-xhost' # Для запуска программ от другого пользователя (клонированная программа)
  'xclip' # Поддержка буфер обмена
 
 # --- ВИДЕО [OPENGL+VULKAN]
@@ -114,7 +116,7 @@
  'gst-plugins-good' 'lib32-gst-plugins-good'
  'gst-plugins-bad' 'gst-plugins-ugly' # Библеотеки для воспроизведения мультимедия (для запуска старья)
  'gstreamer-vaapi' # Эффективный плагин кодировщик для GPU от AMD/Intel/NVIDIA (для использования нужен AUR пакет obs-gstreamer)
-
+ # 'libdvdcss' # Поддержка кодека DVD-медиа
 
 # --- BLUETOOTH
 
