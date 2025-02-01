@@ -73,7 +73,7 @@ pacman-key --init
 pacman-key --populate archlinux
 
 # Добавления юзера с созданием $HOME и присваивание групп к юзеру, оболочка zsh
-useradd -m -G wheel,audio,video,input,optical,users,uucp,games -s /bin/zsh "${USER_NAME}"
+useradd -m -G wheel,audio,video,render,input,optical,users,uucp,games -s /bin/zsh "${USER_NAME}"
 
 # Пароль пользователя
 echo "${USER_NAME}:${USER_PASSWORD}" | chpasswd
