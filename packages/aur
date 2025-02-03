@@ -30,6 +30,7 @@
 # --- Утилиты и разное
 
  'sing-box-bin' # Очень гибкая платформа для проксирования поддерживающая Vless, Vmess, Trojan и многое другое
+ 'proxy-ns' # Обвёртка прокси в изолированный namespace (Split-Tunneling)
  # 'appimagelauncher' # Управление AppImage пакетов, написана на QT
  'chromium-widevine' # Плагин для работы DRM контента в браузере ungoogled-chromium
  'obs-gstreamer' # Более эффективный плагин кодировщик для OBS (Для RDNA 1)
