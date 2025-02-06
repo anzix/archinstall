@@ -28,6 +28,7 @@ EXTENSIONS=(
  "4050539/violentmonkey-latest.xpi:{aecec67f-0d10-4fa7-b7c7-609a2db280cf}" # Violentmonkey
  "4011167/traduzir_paginas_web-latest.xpi:{036a55b4-5e72-4d05-a06c-cba2dfcc134a}" # TWP - Translate Web Pages
  "4003969/ublock_origin-latest.xpi:uBlock0@raymondhill.net" # UBlock Origin
+ "4098688/user_agent_string_switcher-0.5.0.xpi:{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}" # User Agent Switcher and Manager
  "4045009/auto_tab_discard-latest.xpi:{c2c003ee-bd69-42a2-b0e9-6f34222cb046}" # Auto Tab Discard (Усыпление вкладок)
  "3983730/tse_torrents_search_engine-latest.xpi:tse@example.com" # TSE - Torrents Search Engine
  "3898765/ff2mpv-latest.xpi:ff2mpv@yossarian.net" # ff2mpv
