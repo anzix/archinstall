@@ -80,7 +80,7 @@
 
  'kdialog' # GUI диалоги
  'sshfs'
- 'xwaylandvideobridge' # Для возможности транслировать экран в xwayland приложениях, которые не имеют нативную поддержку pipewire (пример: discord)
+ # 'xwaylandvideobridge' # Для возможности транслировать экран в xwayland приложениях, которые не имеют нативную поддержку pipewire (пример: discord)
 
 # --- AUR
 
