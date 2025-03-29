@@ -47,7 +47,7 @@ EXTENSIONS=(
  "4027739/dollchan_extension-latest.xpi:dollchan_extension@dscript.me" # Dollchan Extension Tools
  "1051594/switchyomega-latest.xpi:switchyomega@feliscatus.addons.mozilla.org" # Proxy SwitchyOmega
  "3452835/cookies_txt_one_click-latest.xpi:{520a19d3-2d3c-47ee-ba15-cd66aae65db2}" # cookies-txt-one-click
- "3988430/bookmark_dupes-latest.xpi:bookmarkdupes@martin-vaeth.org" # Bookmark Dupes
+ "4332550/bookmarks_clean_up-latest.xpi:{a1087d5d-d793-445a-b988-088b1d86f2a6}.xpi" # Bookmarks clean up
  "1705492/fixed_zoom-latest.xpi:{a655a6b2-69a5-40de-a3b8-3f7f200c95a7}" # Fixed Zoom
  "3782841/enforce_browser_fonts-latest.xpi:{83e08b00-32de-44e7-97bb-1bab84d1350f}" # Enforce Browser Fonts - полезно особенно для Linux
  "4228676/foxyproxy_standard-latest.xpi:foxyproxy@eric.h.jung.xpi"
