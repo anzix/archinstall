@@ -11,6 +11,9 @@
 # Диалог о начале настройки
 if read -re -p "Начать настройку? [y/N]: " ans && [[ $ans == 'y' || $ans == 'Y' ]]; then
 
+# Создаю каталог applications
+mkdir -v ${HOME}/.local/share/applications
+
 # Установка Yay (AUR помощник)
 git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin
 pushd /tmp/yay-bin && makepkg -si --noconfirm
@@ -74,6 +77,10 @@ echo "==> Установка дополнительных пакетов, мои
 sudo SNAP_PAC_SKIP=y pacman -S --noconfirm --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/{additional,fonts,programs} | column -t)
 yay -S --noconfirm --batchinstall=false --needed $(sed -e '/^#/d' -e 's/#.*//' -e "s/'//g" -e '/^\s*$/d' -e 's/ /\n/g' packages/aur | column -t)
 
+echo "==> Вытягиваю из моего dotfiles конфиги programs"
+pushd ~/.dotfiles/programs && stow -vt ~ applications
+popd
+
 # Установка и настройка окружения
 PS3="Выберите окружение/WM: "
 select ENTRY in "plasma" "gnome" "i3wm" "sway" "Пропуск"; do
@@ -112,7 +119,6 @@ APPLICATIONS=('assistant' 'avahi-discover' 'designer' 'electron' 'electron22' 'e
 	'org.kde.kuserfeedback-console' 'qdbusviewer' 'qt5ct' 'qt6ct' 'qv4l2' 'qvidcap' 'bssh' 'bvnc' 'uxterm' 'xterm' 'debian-uxterm' 'debian-xterm' 'btop' \
 	'scrcpy' 'scrcpy-console' 'rofi' 'rofi-theme-selector' 'picom' 'ncmpcpp' 'display-im6.q16')
 # 'mpv' 'jconsole-java-openjdk' 'jshell-java-openjdk'
-mkdir -v ${HOME}/.local/share/applications
 for APPLICATION in "${APPLICATIONS[@]}"
 do
     # Создаём локальную копию ярлыков в пользовательскую директорию для применение свойств
