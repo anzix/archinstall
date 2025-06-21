@@ -28,6 +28,7 @@ EXTENSIONS=(
  "4050539/violentmonkey-latest.xpi:{aecec67f-0d10-4fa7-b7c7-609a2db280cf}" # Violentmonkey
  "4011167/traduzir_paginas_web-latest.xpi:{036a55b4-5e72-4d05-a06c-cba2dfcc134a}" # TWP - Translate Web Pages
  "4003969/ublock_origin-latest.xpi:uBlock0@raymondhill.net" # UBlock Origin
+ "4494279/multi_account_containers-latest.xpi:@testpilot-containers.xpi" # Firefox Multi-Account Containers
  "4098688/user_agent_string_switcher-0.5.0.xpi:{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}" # User Agent Switcher and Manager
  "4406246/read_aloud-1.77.0.xpi:{ddc62400-f22d-4dd3-8b4a-05837de53c2e}" # Read Aloud: A Text to Speech Voice Reader
  "4045009/auto_tab_discard-latest.xpi:{c2c003ee-bd69-42a2-b0e9-6f34222cb046}" # Auto Tab Discard (Усыпление вкладок)
@@ -55,7 +56,6 @@ EXTENSIONS=(
 
 # "3988775/7tv-latest.xpi:{7ef0f00c-2ebe-4626-8ed7-3185847fcfad}" # 7TV (Twitch) - Удалён
 # "3998783/floccus-latest.xpi:floccus@handmadeideas.org.xpi"
-# "3932862/multi_account_containers-latest.xpi:@testpilot-containers.xpi"
 )
 
 # Загрузка и установка расширений
