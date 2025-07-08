@@ -68,6 +68,7 @@
  'vsftpd' # Очень защищённый FTP демон
  'scrcpy' # Демонстрация экрана Android для Linux используя USB ADB
  'i2pd' # Невидимый интернет протокол
+ 'passt' # Для работы с сокетами в созданном user network namespace (очень полезен для qemu, libvirt, virt-manager, podman и т.д)
  'cdemu-client' # Эмуляция CD/DVD привода для iso/mds/nrg образов
  'transmission-cli' # Для замены passkey в торрент файлах и многое другое
 # 'asciinema' # Запись сессий терминала
