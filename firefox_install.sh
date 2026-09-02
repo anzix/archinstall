@@ -24,6 +24,7 @@ mkdir -p "${FIREFOX_PROFILE_PATH}/extensions"
 # 2) При указании версии latest вместо номера скачивается последняя версия
 # 3) После : идёт название расширения в папке "${HOME}/.mozilla/firefox/"*.default-release/extensions/
 EXTENSIONS=(
+   "4703091/tab_session_manager-latest.xpi:Tab-Session-Manager@sienori.xpi" # Tab Session Manager (MUST HAVE)
  "3913593/matte_black_red-latest.xpi:{a7589411-c5f6-41cf-8bdc-f66527d9d930}" # Тема браузера
  "4050539/violentmonkey-latest.xpi:{aecec67f-0d10-4fa7-b7c7-609a2db280cf}" # Violentmonkey
  "4011167/traduzir_paginas_web-latest.xpi:{036a55b4-5e72-4d05-a06c-cba2dfcc134a}" # TWP - Translate Web Pages
@@ -33,6 +34,7 @@ EXTENSIONS=(
  "4406246/read_aloud-1.77.0.xpi:{ddc62400-f22d-4dd3-8b4a-05837de53c2e}" # Read Aloud: A Text to Speech Voice Reader
  "4045009/auto_tab_discard-latest.xpi:{c2c003ee-bd69-42a2-b0e9-6f34222cb046}" # Auto Tab Discard (Усыпление вкладок)
  "3983730/tse_torrents_search_engine-latest.xpi:tse@example.com" # TSE - Torrents Search Engine
+ "4517716/indie_wiki_buddy-latest.xpi:{cb31ec5d-c49a-4e5a-b240-16c767444f62}" # Indie Wiki Buddy
  "3898765/ff2mpv-latest.xpi:ff2mpv@yossarian.net" # ff2mpv
  "3009842/enhanced_h264ify-latest.xpi:{9a41dee2-b924-4161-a971-7fb35c053a4a}" # Enchanced h264ify
  "3865240/2668061-latest.xpi:{290ce447-2abb-4d96-8384-7256dd4a1c43}" # Обход блокировок Рунета

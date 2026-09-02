@@ -21,8 +21,8 @@
  'openssh' # SSH соединение
  'fastfetch' # Альтернатива neofetch, чтобы выпендриватся
  'exfat-utils' # Поддержка файловой системы exFAT (Для sd-карт)
- 'ntfs-3g' # Поддержка файловой системы NTFS
- 'dosfstools' # Поддержка файловой системы vFAT
+ 'ntfs-3g' 'ntfsprogs' # Поддержка файловой системы NTFS (+ утилиты т.к mkfs.ntfs)
+ 'dosfstools' # Поддержка файловой системы vFAT (mkfs.fat)
  'f2fs-tools' # Поддержка файловой системы f2fs
  'mtools' # Утилиты для доступа к MS-DOS дискам
  'smartmontools' # Для информации и проверки состояния здоровья HDD и SSD
@@ -83,7 +83,7 @@
  'gst-plugins-base' 'lib32-gst-plugins-base'
  'gst-plugins-good' 'lib32-gst-plugins-good'
  'gst-plugins-bad' 'gst-plugins-ugly' # Библеотеки для воспроизведения мультимедия (для запуска старья)
- 'gstreamer-vaapi' # Эффективный плагин кодировщик для GPU от AMD/Intel/NVIDIA (для использования нужен AUR пакет obs-gstreamer)
+ 'gst-plugin-va' # Эффективный плагин кодировщик для GPU от AMD/Intel/NVIDIA (для использования нужен AUR пакет obs-gstreamer)
  # 'libdvdcss' # Поддержка кодека DVD-медиа
 
 # --- BLUETOOTH

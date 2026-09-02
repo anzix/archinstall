@@ -138,6 +138,7 @@ amixer sset -c 3 Mic mute
 
 # Включение сервисов
 sudo systemctl enable pkgfile-update.timer
+systemctl --user enable ssh-agent
 systemctl --user enable mpd
 systemctl --user enable mpd-mpris
 systemctl --user enable opentabletdriver.service
