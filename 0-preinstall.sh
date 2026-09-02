@@ -77,7 +77,7 @@ sgdisk --zap-all --clear $DISK # Удаляет (уничтожает) стру�
 partprobe $DISK # Информировать ОС об изменениях в таблице разделов
 
 # Разметка диска и перечитываем таблицу разделов
-sgdisk -n 0:0:+512MiB -t 0:ef00 -c 0:boot $DISK
+sgdisk -n 0:0:+1G -t 0:ef00 -c 0:boot $DISK
 sgdisk -n 0:0:0 -t 0:8300 -c 0:root $DISK
 partprobe $DISK
 
